@@ -40,10 +40,11 @@ reviews/ID10/SELF_REVIEW.md
 문서 최상위에 붙일 때는 이 파일을 사용합니다.
 
 `_work/raw_extracted_pvs.yaml`은 누락과 환각을 줄이기 위한 중간 추출
-목록입니다. 각 raw 항목은 `raw_id`를 받고, 최종 registry나 exception 또는
-skipped 항목 중 하나로 정확히 한 번 처리되어야 합니다. 최종 사용자는 보통
-`pv_registry.yaml`과 `PV_REFERENCE.md`만 보면 되지만, 감사와 재현성을 위해
-`_work/raw_extracted_pvs.yaml`도 output과 함께 보존합니다.
+목록입니다. 각 raw 항목은 `raw_id`를 받고, registry, exception, skipped
+항목의 합집합으로 빠짐없이 처리되어야 합니다. 같은 `raw_id`가 임시 registry
+항목과 exception에 cross-link될 수 있지만 coverage에서는 한 번만 셉니다.
+최종 사용자는 보통 `pv_registry.yaml`과 `PV_REFERENCE.md`만 보면 되지만,
+감사와 재현성을 위해 `_work/raw_extracted_pvs.yaml`도 output과 함께 보존합니다.
 
 초안 생성 시 자체 검토는 `SELF_REVIEW.md`에 남깁니다. 별도 리뷰 작업을
 요청하면 리뷰 agent는 가능한 명백한 오류를 output에 직접 반영하고,

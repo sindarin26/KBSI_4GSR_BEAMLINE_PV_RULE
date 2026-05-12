@@ -19,11 +19,14 @@ registry:
       notes: list
     source_trace:
       required:
-        raw_id: string
+        raw_id: string_or_null
         source_id: string
         source_line: integer_or_null
         source_anchor: string
         source_label: string_or_null
+      conditional:
+        if_raw_extracted_pvs_exists:
+          raw_id: string
 raw_extracted_pvs:
   required:
     beamline: string

@@ -11,7 +11,7 @@ Review mode: generated-output review. No direct fixes were applied in this pass.
 - info: `PV_REFERENCE.md` PV set matches `pv_registry.yaml` in this generated pass.
 - warning: status/readback/diagnostic/scan PV naming remains open and is tracked by EXC-0001.
 - warning: IVU encoder classification remains open and is tracked by EXC-0002.
-- warning: provisional PTL assignments for FMASK/MMASK/ATT require beamline-manager confirmation.
+- warning: unresolved device-token and provisional-area choices are marked `decision_required` in `pv_registry.yaml`.
 
 ## User Decisions Needed
 

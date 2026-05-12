@@ -6,24 +6,24 @@ This is a v0 draft reference generated from mixed-format ID10 source inputs.
 
 | PV Name | Area | Device | Axis/Function | Status | Notes |
 | --- | --- | --- | --- | --- | --- |
-| `ID10:PTL:FMASK01:x` | `PTL` | `FMASK01` | `x` | `proposed` | assumed PTL; verify area later; source IOC: sim |
-| `ID10:PTL:FMASK01:y` | `PTL` | `FMASK01` | `y` | `proposed` | assumed PTL; verify area later; source IOC: sim |
-| `ID10:PTL:FMASK01:hgap` | `PTL` | `FMASK01` | `hgap` | `proposed` | assumed PTL; verify area later; source IOC: sim |
-| `ID10:PTL:FMASK01:vgap` | `PTL` | `FMASK01` | `vgap` | `proposed` | assumed PTL; verify area later; source IOC: sim |
-| `ID10:PTL:MMASK01:x` | `PTL` | `MMASK01` | `x` | `proposed` | assumed PTL; source says location not checked; source IOC: sim |
-| `ID10:PTL:MMASK01:y` | `PTL` | `MMASK01` | `y` | `proposed` | assumed PTL; source says location not checked; source IOC: sim |
-| `ID10:PTL:MMASK01:hgap` | `PTL` | `MMASK01` | `hgap` | `proposed` | assumed PTL; source says location not checked; source IOC: sim |
-| `ID10:PTL:MMASK01:vgap` | `PTL` | `MMASK01` | `vgap` | `proposed` | assumed PTL; source says location not checked; source IOC: sim |
-| `ID10:PTL:ATT01:x` | `PTL` | `ATT01` | `x` | `proposed` | assumed PTL; verify area later; source IOC: sim |
-| `ID10:PTL:ATT01:y` | `PTL` | `ATT01` | `y` | `proposed` | assumed PTL; verify area later; source IOC: sim |
-| `ID10:OH:M01:z` | `OH` | `M01` | `z` | `proposed` | legacy M1 mirror converted to two-digit device token; confirm; source IOC: sim |
-| `ID10:OH:M01:pitch` | `OH` | `M01` | `pitch` | `proposed` | legacy M1 mirror converted to two-digit device token; confirm; source IOC: sim |
-| `ID10:OH:M01:pitch_f` | `OH` | `M01` | `pitch_f` | `proposed` | legacy M1 mirror converted to two-digit device token; confirm; source IOC: sim |
-| `ID10:OH:M01:tx` | `OH` | `M01` | `tx` | `proposed` | legacy M1 mirror converted to two-digit device token; confirm; source IOC: sim |
-| `ID10:OH:M01:roll` | `OH` | `M01` | `roll` | `proposed` | legacy M1 mirror converted to two-digit device token; confirm; source IOC: sim |
-| `ID10:OH:M01:yaw` | `OH` | `M01` | `yaw` | `proposed` | legacy M1 mirror converted to two-digit device token; confirm; source IOC: sim |
-| `ID10:OH:M01:bend_u` | `OH` | `M01` | `bend_u` | `proposed` | legacy M1 mirror converted to two-digit device token; confirm; source IOC: sim |
-| `ID10:OH:M01:bend_d` | `OH` | `M01` | `bend_d` | `proposed` | legacy M1 mirror converted to two-digit device token; confirm; source IOC: sim |
+| `ID10:PTL:FMASK01:x` | `PTL` | `FMASK01` | `x` | `decision_required` | requires beamline-manager decision before approval; assumed PTL; verify area later; source IOC: sim |
+| `ID10:PTL:FMASK01:y` | `PTL` | `FMASK01` | `y` | `decision_required` | requires beamline-manager decision before approval; assumed PTL; verify area later; source IOC: sim |
+| `ID10:PTL:FMASK01:hgap` | `PTL` | `FMASK01` | `hgap` | `decision_required` | requires beamline-manager decision before approval; assumed PTL; verify area later; source IOC: sim |
+| `ID10:PTL:FMASK01:vgap` | `PTL` | `FMASK01` | `vgap` | `decision_required` | requires beamline-manager decision before approval; assumed PTL; verify area later; source IOC: sim |
+| `ID10:PTL:MMASK01:x` | `PTL` | `MMASK01` | `x` | `decision_required` | requires beamline-manager decision before approval; assumed PTL; source says location not checked; source IOC: sim |
+| `ID10:PTL:MMASK01:y` | `PTL` | `MMASK01` | `y` | `decision_required` | requires beamline-manager decision before approval; assumed PTL; source says location not checked; source IOC: sim |
+| `ID10:PTL:MMASK01:hgap` | `PTL` | `MMASK01` | `hgap` | `decision_required` | requires beamline-manager decision before approval; assumed PTL; source says location not checked; source IOC: sim |
+| `ID10:PTL:MMASK01:vgap` | `PTL` | `MMASK01` | `vgap` | `decision_required` | requires beamline-manager decision before approval; assumed PTL; source says location not checked; source IOC: sim |
+| `ID10:PTL:ATT01:x` | `PTL` | `ATT01` | `x` | `decision_required` | requires beamline-manager decision before approval; assumed PTL; verify area later; source IOC: sim |
+| `ID10:PTL:ATT01:y` | `PTL` | `ATT01` | `y` | `decision_required` | requires beamline-manager decision before approval; assumed PTL; verify area later; source IOC: sim |
+| `ID10:OH:M01:z` | `OH` | `M01` | `z` | `decision_required` | requires beamline-manager decision before approval; legacy M1 mirror converted to two-digit device token; confirm; source IOC: sim |
+| `ID10:OH:M01:pitch` | `OH` | `M01` | `pitch` | `decision_required` | requires beamline-manager decision before approval; legacy M1 mirror converted to two-digit device token; confirm; source IOC: sim |
+| `ID10:OH:M01:pitch_f` | `OH` | `M01` | `pitch_f` | `decision_required` | requires beamline-manager decision before approval; legacy M1 mirror converted to two-digit device token; confirm; source IOC: sim |
+| `ID10:OH:M01:tx` | `OH` | `M01` | `tx` | `decision_required` | requires beamline-manager decision before approval; legacy M1 mirror converted to two-digit device token; confirm; source IOC: sim |
+| `ID10:OH:M01:roll` | `OH` | `M01` | `roll` | `decision_required` | requires beamline-manager decision before approval; legacy M1 mirror converted to two-digit device token; confirm; source IOC: sim |
+| `ID10:OH:M01:yaw` | `OH` | `M01` | `yaw` | `decision_required` | requires beamline-manager decision before approval; legacy M1 mirror converted to two-digit device token; confirm; source IOC: sim |
+| `ID10:OH:M01:bend_u` | `OH` | `M01` | `bend_u` | `decision_required` | requires beamline-manager decision before approval; legacy M1 mirror converted to two-digit device token; confirm; source IOC: sim |
+| `ID10:OH:M01:bend_d` | `OH` | `M01` | `bend_d` | `decision_required` | requires beamline-manager decision before approval; legacy M1 mirror converted to two-digit device token; confirm; source IOC: sim |
 | `ID10:OH:DCM01:theta` | `OH` | `DCM01` | `theta` | `proposed` | source IOC: sim |
 | `ID10:OH:DCM01:y1` | `OH` | `DCM01` | `y1` | `proposed` | source IOC: sim |
 | `ID10:OH:DCM01:chi1` | `OH` | `DCM01` | `chi1` | `proposed` | source IOC: sim |
@@ -33,29 +33,29 @@ This is a v0 draft reference generated from mixed-format ID10 source inputs.
 | `ID10:OH:DCM01:dtheta2` | `OH` | `DCM01` | `dtheta2` | `proposed` | source IOC: sim |
 | `ID10:OH:DCM01:roll2` | `OH` | `DCM01` | `roll2` | `proposed` | source IOC: sim |
 | `ID10:OH:DCM01:dtheta2_f` | `OH` | `DCM01` | `dtheta2_f` | `proposed` | source IOC: sim |
-| `ID10:OH:M02:z` | `OH` | `M02` | `z` | `proposed` | legacy M2 mirror converted to two-digit device token; confirm; source IOC: sim |
-| `ID10:OH:M02:pitch` | `OH` | `M02` | `pitch` | `proposed` | legacy M2 mirror converted to two-digit device token; confirm; source IOC: sim |
-| `ID10:OH:M02:pitch_f` | `OH` | `M02` | `pitch_f` | `proposed` | legacy M2 mirror converted to two-digit device token; confirm; source IOC: sim |
-| `ID10:OH:M02:tx` | `OH` | `M02` | `tx` | `proposed` | legacy M2 mirror converted to two-digit device token; confirm; source IOC: sim |
-| `ID10:OH:M02:roll` | `OH` | `M02` | `roll` | `proposed` | legacy M2 mirror converted to two-digit device token; confirm; source IOC: sim |
-| `ID10:OH:M02:yaw` | `OH` | `M02` | `yaw` | `proposed` | legacy M2 mirror converted to two-digit device token; confirm; source IOC: sim |
-| `ID10:OH:M02:bend_u` | `OH` | `M02` | `bend_u` | `proposed` | legacy M2 mirror converted to two-digit device token; confirm; source IOC: sim |
-| `ID10:OH:M02:bend_d` | `OH` | `M02` | `bend_d` | `proposed` | legacy M2 mirror converted to two-digit device token; confirm; source IOC: sim |
-| `ID10:OH:KBVM01:x` | `OH` | `KBVM01` | `x` | `proposed` | device token derived from vertical KB mirror source; confirm; source IOC: sim |
-| `ID10:OH:KBVM01:y` | `OH` | `KBVM01` | `y` | `proposed` | device token derived from vertical KB mirror source; confirm; source IOC: sim |
-| `ID10:OH:KBVM01:z` | `OH` | `KBVM01` | `z` | `proposed` | device token derived from vertical KB mirror source; confirm; source IOC: sim |
-| `ID10:OH:KBVM01:pitch` | `OH` | `KBVM01` | `pitch` | `proposed` | device token derived from vertical KB mirror source; confirm; source IOC: sim |
-| `ID10:OH:KBVM01:bend_u` | `OH` | `KBVM01` | `bend_u` | `proposed` | device token derived from vertical KB mirror source; confirm; source IOC: sim |
-| `ID10:OH:KBVM01:bend_d` | `OH` | `KBVM01` | `bend_d` | `proposed` | device token derived from vertical KB mirror source; confirm; source IOC: sim |
-| `ID10:OH:KBHM01:x` | `OH` | `KBHM01` | `x` | `proposed` | device token derived from horizontal KB mirror source; confirm; source IOC: sim |
-| `ID10:OH:KBHM01:y` | `OH` | `KBHM01` | `y` | `proposed` | device token derived from horizontal KB mirror source; confirm; source IOC: sim |
-| `ID10:OH:KBHM01:z` | `OH` | `KBHM01` | `z` | `proposed` | device token derived from horizontal KB mirror source; confirm; source IOC: sim |
-| `ID10:OH:KBHM01:pitch` | `OH` | `KBHM01` | `pitch` | `proposed` | device token derived from horizontal KB mirror source; confirm; source IOC: sim |
-| `ID10:OH:KBHM01:bend_u` | `OH` | `KBHM01` | `bend_u` | `proposed` | device token derived from horizontal KB mirror source; confirm; source IOC: sim |
-| `ID10:OH:KBHM01:bend_d` | `OH` | `KBHM01` | `bend_d` | `proposed` | device token derived from horizontal KB mirror source; confirm; source IOC: sim |
-| `ID10:OH:ZP01:x` | `OH` | `ZP01` | `x` | `proposed` | zone plate area assumed OH; verify with beamline manager; source IOC: sim |
-| `ID10:OH:ZP01:y` | `OH` | `ZP01` | `y` | `proposed` | zone plate area assumed OH; verify with beamline manager; source IOC: sim |
-| `ID10:OH:ZP01:z` | `OH` | `ZP01` | `z` | `proposed` | zone plate area assumed OH; verify with beamline manager; source IOC: sim |
+| `ID10:OH:M02:z` | `OH` | `M02` | `z` | `decision_required` | requires beamline-manager decision before approval; legacy M2 mirror converted to two-digit device token; confirm; source IOC: sim |
+| `ID10:OH:M02:pitch` | `OH` | `M02` | `pitch` | `decision_required` | requires beamline-manager decision before approval; legacy M2 mirror converted to two-digit device token; confirm; source IOC: sim |
+| `ID10:OH:M02:pitch_f` | `OH` | `M02` | `pitch_f` | `decision_required` | requires beamline-manager decision before approval; legacy M2 mirror converted to two-digit device token; confirm; source IOC: sim |
+| `ID10:OH:M02:tx` | `OH` | `M02` | `tx` | `decision_required` | requires beamline-manager decision before approval; legacy M2 mirror converted to two-digit device token; confirm; source IOC: sim |
+| `ID10:OH:M02:roll` | `OH` | `M02` | `roll` | `decision_required` | requires beamline-manager decision before approval; legacy M2 mirror converted to two-digit device token; confirm; source IOC: sim |
+| `ID10:OH:M02:yaw` | `OH` | `M02` | `yaw` | `decision_required` | requires beamline-manager decision before approval; legacy M2 mirror converted to two-digit device token; confirm; source IOC: sim |
+| `ID10:OH:M02:bend_u` | `OH` | `M02` | `bend_u` | `decision_required` | requires beamline-manager decision before approval; legacy M2 mirror converted to two-digit device token; confirm; source IOC: sim |
+| `ID10:OH:M02:bend_d` | `OH` | `M02` | `bend_d` | `decision_required` | requires beamline-manager decision before approval; legacy M2 mirror converted to two-digit device token; confirm; source IOC: sim |
+| `ID10:OH:KBVM01:x` | `OH` | `KBVM01` | `x` | `decision_required` | requires beamline-manager decision before approval; device token derived from vertical KB mirror source; confirm; source IOC: sim |
+| `ID10:OH:KBVM01:y` | `OH` | `KBVM01` | `y` | `decision_required` | requires beamline-manager decision before approval; device token derived from vertical KB mirror source; confirm; source IOC: sim |
+| `ID10:OH:KBVM01:z` | `OH` | `KBVM01` | `z` | `decision_required` | requires beamline-manager decision before approval; device token derived from vertical KB mirror source; confirm; source IOC: sim |
+| `ID10:OH:KBVM01:pitch` | `OH` | `KBVM01` | `pitch` | `decision_required` | requires beamline-manager decision before approval; device token derived from vertical KB mirror source; confirm; source IOC: sim |
+| `ID10:OH:KBVM01:bend_u` | `OH` | `KBVM01` | `bend_u` | `decision_required` | requires beamline-manager decision before approval; device token derived from vertical KB mirror source; confirm; source IOC: sim |
+| `ID10:OH:KBVM01:bend_d` | `OH` | `KBVM01` | `bend_d` | `decision_required` | requires beamline-manager decision before approval; device token derived from vertical KB mirror source; confirm; source IOC: sim |
+| `ID10:OH:KBHM01:x` | `OH` | `KBHM01` | `x` | `decision_required` | requires beamline-manager decision before approval; device token derived from horizontal KB mirror source; confirm; source IOC: sim |
+| `ID10:OH:KBHM01:y` | `OH` | `KBHM01` | `y` | `decision_required` | requires beamline-manager decision before approval; device token derived from horizontal KB mirror source; confirm; source IOC: sim |
+| `ID10:OH:KBHM01:z` | `OH` | `KBHM01` | `z` | `decision_required` | requires beamline-manager decision before approval; device token derived from horizontal KB mirror source; confirm; source IOC: sim |
+| `ID10:OH:KBHM01:pitch` | `OH` | `KBHM01` | `pitch` | `decision_required` | requires beamline-manager decision before approval; device token derived from horizontal KB mirror source; confirm; source IOC: sim |
+| `ID10:OH:KBHM01:bend_u` | `OH` | `KBHM01` | `bend_u` | `decision_required` | requires beamline-manager decision before approval; device token derived from horizontal KB mirror source; confirm; source IOC: sim |
+| `ID10:OH:KBHM01:bend_d` | `OH` | `KBHM01` | `bend_d` | `decision_required` | requires beamline-manager decision before approval; device token derived from horizontal KB mirror source; confirm; source IOC: sim |
+| `ID10:OH:ZP01:x` | `OH` | `ZP01` | `x` | `decision_required` | requires beamline-manager decision before approval; zone plate area assumed OH; verify with beamline manager; source IOC: sim |
+| `ID10:OH:ZP01:y` | `OH` | `ZP01` | `y` | `decision_required` | requires beamline-manager decision before approval; zone plate area assumed OH; verify with beamline manager; source IOC: sim |
+| `ID10:OH:ZP01:z` | `OH` | `ZP01` | `z` | `decision_required` | requires beamline-manager decision before approval; zone plate area assumed OH; verify with beamline manager; source IOC: sim |
 | `ID10:EH:STG01:coarse_x` | `EH` | `STG01` | `coarse_x` | `proposed` | source IOC: HW |
 | `ID10:EH:STG01:coarse_y` | `EH` | `STG01` | `coarse_y` | `proposed` | source IOC: HW |
 | `ID10:EH:STG01:coarse_z` | `EH` | `STG01` | `coarse_z` | `proposed` | source IOC: HW |
@@ -75,14 +75,14 @@ This is a v0 draft reference generated from mixed-format ID10 source inputs.
 | `ID10:OH:WBSLT01:outb` | `OH` | `WBSLT01` | `outb` | `proposed` | source IOC: sim |
 | `ID10:OH:WBSLT01:hgap` | `OH` | `WBSLT01` | `hgap` | `proposed` | source IOC: sim |
 | `ID10:OH:WBSLT01:vgap` | `OH` | `WBSLT01` | `vgap` | `proposed` | source IOC: sim |
-| `ID10:OH:SSA01:hgap` | `OH` | `SSA01` | `hgap` | `proposed` | device token derived from source; confirm official v0 token; source IOC: sim |
-| `ID10:OH:SSA01:vgap` | `OH` | `SSA01` | `vgap` | `proposed` | device token derived from source; confirm official v0 token; source IOC: sim |
-| `ID10:OH:SSA01:hcen` | `OH` | `SSA01` | `hcen` | `proposed` | device token derived from source; confirm official v0 token; source IOC: sim |
-| `ID10:OH:SSA01:vcen` | `OH` | `SSA01` | `vcen` | `proposed` | device token derived from source; confirm official v0 token; source IOC: sim |
-| `ID10:OH:KBSLT01:hgap` | `OH` | `KBSLT01` | `hgap` | `proposed` | device token derived from source; confirm official v0 token; source IOC: sim |
-| `ID10:OH:KBSLT01:vgap` | `OH` | `KBSLT01` | `vgap` | `proposed` | device token derived from source; confirm official v0 token; source IOC: sim |
-| `ID10:OH:KBSLT01:hcen` | `OH` | `KBSLT01` | `hcen` | `proposed` | device token derived from source; confirm official v0 token; source IOC: sim |
-| `ID10:OH:KBSLT01:vcen` | `OH` | `KBSLT01` | `vcen` | `proposed` | device token derived from source; confirm official v0 token; source IOC: sim |
+| `ID10:OH:SSA01:hgap` | `OH` | `SSA01` | `hgap` | `decision_required` | requires beamline-manager decision before approval; device token derived from source; confirm official v0 token; source IOC: sim |
+| `ID10:OH:SSA01:vgap` | `OH` | `SSA01` | `vgap` | `decision_required` | requires beamline-manager decision before approval; device token derived from source; confirm official v0 token; source IOC: sim |
+| `ID10:OH:SSA01:hcen` | `OH` | `SSA01` | `hcen` | `decision_required` | requires beamline-manager decision before approval; device token derived from source; confirm official v0 token; source IOC: sim |
+| `ID10:OH:SSA01:vcen` | `OH` | `SSA01` | `vcen` | `decision_required` | requires beamline-manager decision before approval; device token derived from source; confirm official v0 token; source IOC: sim |
+| `ID10:OH:KBSLT01:hgap` | `OH` | `KBSLT01` | `hgap` | `decision_required` | requires beamline-manager decision before approval; device token derived from source; confirm official v0 token; source IOC: sim |
+| `ID10:OH:KBSLT01:vgap` | `OH` | `KBSLT01` | `vgap` | `decision_required` | requires beamline-manager decision before approval; device token derived from source; confirm official v0 token; source IOC: sim |
+| `ID10:OH:KBSLT01:hcen` | `OH` | `KBSLT01` | `hcen` | `decision_required` | requires beamline-manager decision before approval; device token derived from source; confirm official v0 token; source IOC: sim |
+| `ID10:OH:KBSLT01:vcen` | `OH` | `KBSLT01` | `vcen` | `decision_required` | requires beamline-manager decision before approval; device token derived from source; confirm official v0 token; source IOC: sim |
 | `ID10:PTL:IVU:gap` | `PTL` | `IVU` | `gap` | `proposed` | source IOC: sim |
 | `ID10:PTL:IVU:taper_gap` | `PTL` | `IVU` | `taper_gap` | `proposed` | source IOC: sim |
 | `ID10:PTL:IVU:harmonic` | `PTL` | `IVU` | `harmonic` | `proposed` | source IOC: sim |

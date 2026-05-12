@@ -5,8 +5,8 @@ pvs:
     source_trace:
       raw_id: RAW-0001
       source_id: examples/before_after/ID10_legacy_migration.md
-      source_line: null
-      source_anchor: line:9
+      source_line: 8
+      source_anchor: line:8
       source_label: BL10:IVU:GirderY
     prefix: ID10
     area: PTL
@@ -19,8 +19,8 @@ pvs:
     source_trace:
       raw_id: RAW-0002
       source_id: examples/before_after/ID10_legacy_migration.md
-      source_line: null
-      source_anchor: line:18
+      source_line: 9
+      source_anchor: line:9
       source_label: BL10:WBS:Hgap
     prefix: ID10
     area: OH

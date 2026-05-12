@@ -13,8 +13,9 @@ pvs:
     device: "FMASK01"
     axis_or_function: "x"
     pv: "ID10:PTL:FMASK01:x"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "assumed PTL; verify area later"
       - "source IOC: sim"
     metadata:
@@ -37,8 +38,9 @@ pvs:
     device: "FMASK01"
     axis_or_function: "y"
     pv: "ID10:PTL:FMASK01:y"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "assumed PTL; verify area later"
       - "source IOC: sim"
     metadata:
@@ -61,8 +63,9 @@ pvs:
     device: "FMASK01"
     axis_or_function: "hgap"
     pv: "ID10:PTL:FMASK01:hgap"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "assumed PTL; verify area later"
       - "source IOC: sim"
     metadata:
@@ -85,8 +88,9 @@ pvs:
     device: "FMASK01"
     axis_or_function: "vgap"
     pv: "ID10:PTL:FMASK01:vgap"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "assumed PTL; verify area later"
       - "source IOC: sim"
     metadata:
@@ -109,8 +113,9 @@ pvs:
     device: "MMASK01"
     axis_or_function: "x"
     pv: "ID10:PTL:MMASK01:x"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "assumed PTL; source says location not checked"
       - "source IOC: sim"
     metadata:
@@ -130,8 +135,9 @@ pvs:
     device: "MMASK01"
     axis_or_function: "y"
     pv: "ID10:PTL:MMASK01:y"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "assumed PTL; source says location not checked"
       - "source IOC: sim"
     metadata:
@@ -151,8 +157,9 @@ pvs:
     device: "MMASK01"
     axis_or_function: "hgap"
     pv: "ID10:PTL:MMASK01:hgap"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "assumed PTL; source says location not checked"
       - "source IOC: sim"
     metadata:
@@ -172,8 +179,9 @@ pvs:
     device: "MMASK01"
     axis_or_function: "vgap"
     pv: "ID10:PTL:MMASK01:vgap"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "assumed PTL; source says location not checked"
       - "source IOC: sim"
     metadata:
@@ -193,8 +201,9 @@ pvs:
     device: "ATT01"
     axis_or_function: "x"
     pv: "ID10:PTL:ATT01:x"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "assumed PTL; verify area later"
       - "source IOC: sim"
     metadata:
@@ -217,8 +226,9 @@ pvs:
     device: "ATT01"
     axis_or_function: "y"
     pv: "ID10:PTL:ATT01:y"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "assumed PTL; verify area later"
       - "source IOC: sim"
     metadata:
@@ -241,8 +251,9 @@ pvs:
     device: "M01"
     axis_or_function: "z"
     pv: "ID10:OH:M01:z"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "legacy M1 mirror converted to two-digit device token; confirm"
       - "source IOC: sim"
     metadata:
@@ -264,8 +275,9 @@ pvs:
     device: "M01"
     axis_or_function: "pitch"
     pv: "ID10:OH:M01:pitch"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "legacy M1 mirror converted to two-digit device token; confirm"
       - "source IOC: sim"
     metadata:
@@ -287,8 +299,9 @@ pvs:
     device: "M01"
     axis_or_function: "pitch_f"
     pv: "ID10:OH:M01:pitch_f"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "legacy M1 mirror converted to two-digit device token; confirm"
       - "source IOC: sim"
     metadata:
@@ -310,8 +323,9 @@ pvs:
     device: "M01"
     axis_or_function: "tx"
     pv: "ID10:OH:M01:tx"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "legacy M1 mirror converted to two-digit device token; confirm"
       - "source IOC: sim"
     metadata:
@@ -333,8 +347,9 @@ pvs:
     device: "M01"
     axis_or_function: "roll"
     pv: "ID10:OH:M01:roll"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "legacy M1 mirror converted to two-digit device token; confirm"
       - "source IOC: sim"
     metadata:
@@ -356,8 +371,9 @@ pvs:
     device: "M01"
     axis_or_function: "yaw"
     pv: "ID10:OH:M01:yaw"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "legacy M1 mirror converted to two-digit device token; confirm"
       - "source IOC: sim"
     metadata:
@@ -379,8 +395,9 @@ pvs:
     device: "M01"
     axis_or_function: "bend_u"
     pv: "ID10:OH:M01:bend_u"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "legacy M1 mirror converted to two-digit device token; confirm"
       - "source IOC: sim"
     metadata:
@@ -402,8 +419,9 @@ pvs:
     device: "M01"
     axis_or_function: "bend_d"
     pv: "ID10:OH:M01:bend_d"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "legacy M1 mirror converted to two-digit device token; confirm"
       - "source IOC: sim"
     metadata:
@@ -623,8 +641,9 @@ pvs:
     device: "M02"
     axis_or_function: "z"
     pv: "ID10:OH:M02:z"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "legacy M2 mirror converted to two-digit device token; confirm"
       - "source IOC: sim"
     metadata:
@@ -646,8 +665,9 @@ pvs:
     device: "M02"
     axis_or_function: "pitch"
     pv: "ID10:OH:M02:pitch"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "legacy M2 mirror converted to two-digit device token; confirm"
       - "source IOC: sim"
     metadata:
@@ -669,8 +689,9 @@ pvs:
     device: "M02"
     axis_or_function: "pitch_f"
     pv: "ID10:OH:M02:pitch_f"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "legacy M2 mirror converted to two-digit device token; confirm"
       - "source IOC: sim"
     metadata:
@@ -692,8 +713,9 @@ pvs:
     device: "M02"
     axis_or_function: "tx"
     pv: "ID10:OH:M02:tx"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "legacy M2 mirror converted to two-digit device token; confirm"
       - "source IOC: sim"
     metadata:
@@ -715,8 +737,9 @@ pvs:
     device: "M02"
     axis_or_function: "roll"
     pv: "ID10:OH:M02:roll"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "legacy M2 mirror converted to two-digit device token; confirm"
       - "source IOC: sim"
     metadata:
@@ -738,8 +761,9 @@ pvs:
     device: "M02"
     axis_or_function: "yaw"
     pv: "ID10:OH:M02:yaw"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "legacy M2 mirror converted to two-digit device token; confirm"
       - "source IOC: sim"
     metadata:
@@ -761,8 +785,9 @@ pvs:
     device: "M02"
     axis_or_function: "bend_u"
     pv: "ID10:OH:M02:bend_u"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "legacy M2 mirror converted to two-digit device token; confirm"
       - "source IOC: sim"
     metadata:
@@ -784,8 +809,9 @@ pvs:
     device: "M02"
     axis_or_function: "bend_d"
     pv: "ID10:OH:M02:bend_d"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "legacy M2 mirror converted to two-digit device token; confirm"
       - "source IOC: sim"
     metadata:
@@ -807,8 +833,9 @@ pvs:
     device: "KBVM01"
     axis_or_function: "x"
     pv: "ID10:OH:KBVM01:x"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "device token derived from vertical KB mirror source; confirm"
       - "source IOC: sim"
     metadata:
@@ -830,8 +857,9 @@ pvs:
     device: "KBVM01"
     axis_or_function: "y"
     pv: "ID10:OH:KBVM01:y"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "device token derived from vertical KB mirror source; confirm"
       - "source IOC: sim"
     metadata:
@@ -853,8 +881,9 @@ pvs:
     device: "KBVM01"
     axis_or_function: "z"
     pv: "ID10:OH:KBVM01:z"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "device token derived from vertical KB mirror source; confirm"
       - "source IOC: sim"
     metadata:
@@ -876,8 +905,9 @@ pvs:
     device: "KBVM01"
     axis_or_function: "pitch"
     pv: "ID10:OH:KBVM01:pitch"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "device token derived from vertical KB mirror source; confirm"
       - "source IOC: sim"
     metadata:
@@ -899,8 +929,9 @@ pvs:
     device: "KBVM01"
     axis_or_function: "bend_u"
     pv: "ID10:OH:KBVM01:bend_u"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "device token derived from vertical KB mirror source; confirm"
       - "source IOC: sim"
     metadata:
@@ -922,8 +953,9 @@ pvs:
     device: "KBVM01"
     axis_or_function: "bend_d"
     pv: "ID10:OH:KBVM01:bend_d"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "device token derived from vertical KB mirror source; confirm"
       - "source IOC: sim"
     metadata:
@@ -945,8 +977,9 @@ pvs:
     device: "KBHM01"
     axis_or_function: "x"
     pv: "ID10:OH:KBHM01:x"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "device token derived from horizontal KB mirror source; confirm"
       - "source IOC: sim"
     metadata:
@@ -968,8 +1001,9 @@ pvs:
     device: "KBHM01"
     axis_or_function: "y"
     pv: "ID10:OH:KBHM01:y"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "device token derived from horizontal KB mirror source; confirm"
       - "source IOC: sim"
     metadata:
@@ -991,8 +1025,9 @@ pvs:
     device: "KBHM01"
     axis_or_function: "z"
     pv: "ID10:OH:KBHM01:z"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "device token derived from horizontal KB mirror source; confirm"
       - "source IOC: sim"
     metadata:
@@ -1014,8 +1049,9 @@ pvs:
     device: "KBHM01"
     axis_or_function: "pitch"
     pv: "ID10:OH:KBHM01:pitch"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "device token derived from horizontal KB mirror source; confirm"
       - "source IOC: sim"
     metadata:
@@ -1037,8 +1073,9 @@ pvs:
     device: "KBHM01"
     axis_or_function: "bend_u"
     pv: "ID10:OH:KBHM01:bend_u"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "device token derived from horizontal KB mirror source; confirm"
       - "source IOC: sim"
     metadata:
@@ -1060,8 +1097,9 @@ pvs:
     device: "KBHM01"
     axis_or_function: "bend_d"
     pv: "ID10:OH:KBHM01:bend_d"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "device token derived from horizontal KB mirror source; confirm"
       - "source IOC: sim"
     metadata:
@@ -1083,8 +1121,9 @@ pvs:
     device: "ZP01"
     axis_or_function: "x"
     pv: "ID10:OH:ZP01:x"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "zone plate area assumed OH; verify with beamline manager"
       - "source IOC: sim"
     metadata:
@@ -1106,8 +1145,9 @@ pvs:
     device: "ZP01"
     axis_or_function: "y"
     pv: "ID10:OH:ZP01:y"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "zone plate area assumed OH; verify with beamline manager"
       - "source IOC: sim"
     metadata:
@@ -1129,8 +1169,9 @@ pvs:
     device: "ZP01"
     axis_or_function: "z"
     pv: "ID10:OH:ZP01:z"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "zone plate area assumed OH; verify with beamline manager"
       - "source IOC: sim"
     metadata:
@@ -1553,8 +1594,9 @@ pvs:
     device: "SSA01"
     axis_or_function: "hgap"
     pv: "ID10:OH:SSA01:hgap"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "device token derived from source; confirm official v0 token"
       - "source IOC: sim"
     metadata:
@@ -1576,8 +1618,9 @@ pvs:
     device: "SSA01"
     axis_or_function: "vgap"
     pv: "ID10:OH:SSA01:vgap"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "device token derived from source; confirm official v0 token"
       - "source IOC: sim"
     metadata:
@@ -1599,8 +1642,9 @@ pvs:
     device: "SSA01"
     axis_or_function: "hcen"
     pv: "ID10:OH:SSA01:hcen"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "device token derived from source; confirm official v0 token"
       - "source IOC: sim"
     metadata:
@@ -1622,8 +1666,9 @@ pvs:
     device: "SSA01"
     axis_or_function: "vcen"
     pv: "ID10:OH:SSA01:vcen"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "device token derived from source; confirm official v0 token"
       - "source IOC: sim"
     metadata:
@@ -1645,8 +1690,9 @@ pvs:
     device: "KBSLT01"
     axis_or_function: "hgap"
     pv: "ID10:OH:KBSLT01:hgap"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "device token derived from source; confirm official v0 token"
       - "source IOC: sim"
     metadata:
@@ -1668,8 +1714,9 @@ pvs:
     device: "KBSLT01"
     axis_or_function: "vgap"
     pv: "ID10:OH:KBSLT01:vgap"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "device token derived from source; confirm official v0 token"
       - "source IOC: sim"
     metadata:
@@ -1691,8 +1738,9 @@ pvs:
     device: "KBSLT01"
     axis_or_function: "hcen"
     pv: "ID10:OH:KBSLT01:hcen"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "device token derived from source; confirm official v0 token"
       - "source IOC: sim"
     metadata:
@@ -1714,8 +1762,9 @@ pvs:
     device: "KBSLT01"
     axis_or_function: "vcen"
     pv: "ID10:OH:KBSLT01:vcen"
-    status: "proposed"
+    status: "decision_required"
     notes:
+      - "requires beamline-manager decision before approval"
       - "device token derived from source; confirm official v0 token"
       - "source IOC: sim"
     metadata:
