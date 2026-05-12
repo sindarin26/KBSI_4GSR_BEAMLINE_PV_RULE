@@ -1,0 +1,1939 @@
+beamline: "ID10"
+rulebook_version: "v0"
+extracted_from:
+  - source_id: "inputs/ID10/front masks and attenuator.txt"
+    source_type: "text"
+    source_state: "included"
+    pv_like_entries: 10
+  - source_id: "inputs/ID10/optics motors.json"
+    source_type: "json"
+    source_state: "included"
+    pv_like_entries: 40
+  - source_id: "inputs/ID10/random manager memo.txt"
+    source_type: "text"
+    source_state: "included"
+    pv_like_entries: 0
+    notes: "supplemental memo; data only, not rule authority"
+  - source_id: "inputs/ID10/sample detector notes.md"
+    source_type: "markdown"
+    source_state: "included"
+    pv_like_entries: 13
+  - source_id: "inputs/ID10/slits etc.xml"
+    source_type: "xml"
+    source_state: "included"
+    pv_like_entries: 14
+  - source_id: "inputs/ID10/status and xbpm.txt"
+    source_type: "text"
+    source_state: "included"
+    pv_like_entries: 27
+  - source_id: "inputs/ID10/undulator.md"
+    source_type: "markdown"
+    source_state: "included"
+    pv_like_entries: 9
+entries:
+  - raw_id: "RAW-0001"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/front masks and attenuator.txt"
+      source_line: 4
+      source_anchor: "line:4"
+      source_label: "BL10:FMASK:X"
+    raw_pv: "BL10:FMASK:X"
+    raw_group: "Front mask"
+    raw_device: "FMASK"
+    raw_axis_or_function: "X"
+    raw_metadata:
+      source_text: "- BL10:FMASK:X, Front mask, mm, init 0, range -20..20, velocity 2, sim"
+      egu: "mm"
+      init: "0"
+      low: "-20"
+      high: "20"
+      velocity: "2"
+      ioc: "sim"
+  - raw_id: "RAW-0002"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/front masks and attenuator.txt"
+      source_line: 5
+      source_anchor: "line:5"
+      source_label: "BL10:FMASK:Y"
+    raw_pv: "BL10:FMASK:Y"
+    raw_group: "Front mask"
+    raw_device: "FMASK"
+    raw_axis_or_function: "Y"
+    raw_metadata:
+      source_text: "- BL10:FMASK:Y, Front mask, mm, init 0, range -20..20, velocity 2, sim"
+      egu: "mm"
+      init: "0"
+      low: "-20"
+      high: "20"
+      velocity: "2"
+      ioc: "sim"
+  - raw_id: "RAW-0003"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/front masks and attenuator.txt"
+      source_line: 6
+      source_anchor: "line:6"
+      source_label: "BL10:FMASK:Hgap"
+    raw_pv: "BL10:FMASK:Hgap"
+    raw_group: "Front mask"
+    raw_device: "FMASK"
+    raw_axis_or_function: "Hgap"
+    raw_metadata:
+      source_text: "- BL10:FMASK:Hgap, Front mask, mm, init 4.0, range 0.1..20, velocity 1, sim"
+      egu: "mm"
+      init: "4.0"
+      low: "0.1"
+      high: "20"
+      velocity: "1"
+      ioc: "sim"
+  - raw_id: "RAW-0004"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/front masks and attenuator.txt"
+      source_line: 7
+      source_anchor: "line:7"
+      source_label: "BL10:FMASK:Vgap"
+    raw_pv: "BL10:FMASK:Vgap"
+    raw_group: "Front mask"
+    raw_device: "FMASK"
+    raw_axis_or_function: "Vgap"
+    raw_metadata:
+      source_text: "- BL10:FMASK:Vgap, Front mask, mm, init 4.0, range 0.1..20, velocity 1, sim"
+      egu: "mm"
+      init: "4.0"
+      low: "0.1"
+      high: "20"
+      velocity: "1"
+      ioc: "sim"
+  - raw_id: "RAW-0005"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/front masks and attenuator.txt"
+      source_line: 10
+      source_anchor: "line:10"
+      source_label: "BL10:MMASK:X"
+    raw_pv: "BL10:MMASK:X"
+    raw_group: "Movable mask"
+    raw_device: "MMASK"
+    raw_axis_or_function: "X"
+    raw_metadata:
+      source_text: "- BL10:MMASK:X / Movable mask / mm / 0 / -20..20 / vel 2 / sim"
+      egu: "mm"
+      velocity: "2"
+      ioc: "sim"
+  - raw_id: "RAW-0006"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/front masks and attenuator.txt"
+      source_line: 11
+      source_anchor: "line:11"
+      source_label: "BL10:MMASK:Y"
+    raw_pv: "BL10:MMASK:Y"
+    raw_group: "Movable mask"
+    raw_device: "MMASK"
+    raw_axis_or_function: "Y"
+    raw_metadata:
+      source_text: "- BL10:MMASK:Y / Movable mask / mm / 0 / -20..20 / vel 2 / sim"
+      egu: "mm"
+      velocity: "2"
+      ioc: "sim"
+  - raw_id: "RAW-0007"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/front masks and attenuator.txt"
+      source_line: 12
+      source_anchor: "line:12"
+      source_label: "BL10:MMASK:Hgap"
+    raw_pv: "BL10:MMASK:Hgap"
+    raw_group: "Movable mask"
+    raw_device: "MMASK"
+    raw_axis_or_function: "Hgap"
+    raw_metadata:
+      source_text: "- BL10:MMASK:Hgap / Movable mask / mm / 4.0 / 0.1..20 / vel 1 / sim"
+      egu: "mm"
+      velocity: "1"
+      ioc: "sim"
+  - raw_id: "RAW-0008"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/front masks and attenuator.txt"
+      source_line: 13
+      source_anchor: "line:13"
+      source_label: "BL10:MMASK:Vgap"
+    raw_pv: "BL10:MMASK:Vgap"
+    raw_group: "Movable mask"
+    raw_device: "MMASK"
+    raw_axis_or_function: "Vgap"
+    raw_metadata:
+      source_text: "- BL10:MMASK:Vgap / Movable mask / mm / 4.0 / 0.1..20 / vel 1 / sim"
+      egu: "mm"
+      velocity: "1"
+      ioc: "sim"
+  - raw_id: "RAW-0009"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/front masks and attenuator.txt"
+      source_line: 16
+      source_anchor: "line:16"
+      source_label: "BL10:ATT:X"
+    raw_pv: "BL10:ATT:X"
+    raw_group: "Attenuator"
+    raw_device: "ATT"
+    raw_axis_or_function: "X"
+    raw_metadata:
+      source_text: "BL10:ATT:X  Attenuator  mm  init=0  low=-25 high=25 velocity=0.01  ioc=sim"
+      egu: "mm"
+      init: "0"
+      low: "-25"
+      high: "25"
+      velocity: "0.01"
+      ioc: "sim"
+  - raw_id: "RAW-0010"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/front masks and attenuator.txt"
+      source_line: 17
+      source_anchor: "line:17"
+      source_label: "BL10:ATT:Y"
+    raw_pv: "BL10:ATT:Y"
+    raw_group: "Attenuator"
+    raw_device: "ATT"
+    raw_axis_or_function: "Y"
+    raw_metadata:
+      source_text: "BL10:ATT:Y  Attenuator  mm  init=0  low=-25 high=25 velocity=0.01  ioc=sim"
+      egu: "mm"
+      init: "0"
+      low: "-25"
+      high: "25"
+      velocity: "0.01"
+      ioc: "sim"
+  - raw_id: "RAW-0011"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 4
+      source_anchor: "/items/0/pv"
+      source_label: "BL10:M1:Z"
+    raw_pv: "BL10:M1:Z"
+    raw_group: "M1 mirror"
+    raw_device: "M1"
+    raw_axis_or_function: "Z"
+    raw_metadata:
+      egu: "mm"
+      init: 0
+      low: -5
+      high: 5
+      velocity: 0.5
+      ioc: "sim"
+  - raw_id: "RAW-0012"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 5
+      source_anchor: "/items/1/pv"
+      source_label: "BL10:M1:Pitch"
+    raw_pv: "BL10:M1:Pitch"
+    raw_group: "M1 mirror"
+    raw_device: "M1"
+    raw_axis_or_function: "Pitch"
+    raw_metadata:
+      egu: "mrad"
+      init: 3.0
+      low: -2
+      high: 5
+      velocity: 0.5
+      ioc: "sim"
+  - raw_id: "RAW-0013"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 6
+      source_anchor: "/items/2/pv"
+      source_label: "BL10:M1:PitchF"
+    raw_pv: "BL10:M1:PitchF"
+    raw_group: "M1 mirror"
+    raw_device: "M1"
+    raw_axis_or_function: "PitchF"
+    raw_metadata:
+      egu: "urad"
+      init: 0
+      low: -50
+      high: 50
+      velocity: 100
+      ioc: "sim"
+  - raw_id: "RAW-0014"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 7
+      source_anchor: "/items/3/pv"
+      source_label: "BL10:M1:Tx"
+    raw_pv: "BL10:M1:Tx"
+    raw_group: "M1 mirror"
+    raw_device: "M1"
+    raw_axis_or_function: "Tx"
+    raw_metadata:
+      egu: "mm"
+      init: 0
+      low: -10
+      high: 10
+      velocity: 1
+      ioc: "sim"
+  - raw_id: "RAW-0015"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 8
+      source_anchor: "/items/4/pv"
+      source_label: "BL10:M1:Roll"
+    raw_pv: "BL10:M1:Roll"
+    raw_group: "M1 mirror"
+    raw_device: "M1"
+    raw_axis_or_function: "Roll"
+    raw_metadata:
+      egu: "mrad"
+      init: 0
+      low: -2
+      high: 2
+      velocity: 1
+      ioc: "sim"
+  - raw_id: "RAW-0016"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 9
+      source_anchor: "/items/5/pv"
+      source_label: "BL10:M1:Yaw"
+    raw_pv: "BL10:M1:Yaw"
+    raw_group: "M1 mirror"
+    raw_device: "M1"
+    raw_axis_or_function: "Yaw"
+    raw_metadata:
+      egu: "mrad"
+      init: 0
+      low: -2
+      high: 2
+      velocity: 1
+      ioc: "sim"
+  - raw_id: "RAW-0017"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 10
+      source_anchor: "/items/6/pv"
+      source_label: "BL10:M1:BendU"
+    raw_pv: "BL10:M1:BendU"
+    raw_group: "M1 mirror"
+    raw_device: "M1"
+    raw_axis_or_function: "BendU"
+    raw_metadata:
+      egu: "Nm"
+      init: 0
+      low: -50
+      high: 50
+      velocity: 1
+      ioc: "sim"
+  - raw_id: "RAW-0018"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 11
+      source_anchor: "/items/7/pv"
+      source_label: "BL10:M1:BendD"
+    raw_pv: "BL10:M1:BendD"
+    raw_group: "M1 mirror"
+    raw_device: "M1"
+    raw_axis_or_function: "BendD"
+    raw_metadata:
+      egu: "Nm"
+      init: 0
+      low: -50
+      high: 50
+      velocity: 1
+      ioc: "sim"
+  - raw_id: "RAW-0019"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 13
+      source_anchor: "/items/8/pv"
+      source_label: "BL10:DCM:Theta"
+    raw_pv: "BL10:DCM:Theta"
+    raw_group: "DCM"
+    raw_device: "DCM"
+    raw_axis_or_function: "Theta"
+    raw_metadata:
+      egu: "deg"
+      init: 11.402
+      low: -1
+      high: 20
+      velocity: 0.05
+      ioc: "sim"
+  - raw_id: "RAW-0020"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 14
+      source_anchor: "/items/9/pv"
+      source_label: "BL10:DCM:Y1"
+    raw_pv: "BL10:DCM:Y1"
+    raw_group: "DCM"
+    raw_device: "DCM"
+    raw_axis_or_function: "Y1"
+    raw_metadata:
+      egu: "mm"
+      init: 0
+      low: -2.5
+      high: 2.5
+      velocity: 0.5
+      ioc: "sim"
+  - raw_id: "RAW-0021"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 15
+      source_anchor: "/items/10/pv"
+      source_label: "BL10:DCM:Chi1"
+    raw_pv: "BL10:DCM:Chi1"
+    raw_group: "DCM"
+    raw_device: "DCM"
+    raw_axis_or_function: "Chi1"
+    raw_metadata:
+      egu: "arcsec"
+      init: 0
+      low: -300
+      high: 300
+      velocity: 1
+      ioc: "sim"
+  - raw_id: "RAW-0022"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 16
+      source_anchor: "/items/11/pv"
+      source_label: "BL10:DCM:TX"
+    raw_pv: "BL10:DCM:TX"
+    raw_group: "DCM"
+    raw_device: "DCM"
+    raw_axis_or_function: "TX"
+    raw_metadata:
+      egu: "mm"
+      init: 0
+      low: -12.5
+      high: 12.5
+      velocity: 0.5
+      ioc: "sim"
+  - raw_id: "RAW-0023"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 17
+      source_anchor: "/items/12/pv"
+      source_label: "BL10:DCM:Y2"
+    raw_pv: "BL10:DCM:Y2"
+    raw_group: "DCM"
+    raw_device: "DCM"
+    raw_axis_or_function: "Y2"
+    raw_metadata:
+      egu: "mm"
+      init: 0
+      low: -25
+      high: 25
+      velocity: 0.5
+      ioc: "sim"
+  - raw_id: "RAW-0024"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 18
+      source_anchor: "/items/13/pv"
+      source_label: "BL10:DCM:Z2"
+    raw_pv: "BL10:DCM:Z2"
+    raw_group: "DCM"
+    raw_device: "DCM"
+    raw_axis_or_function: "Z2"
+    raw_metadata:
+      egu: "mm"
+      init: 6.12
+      low: 0
+      high: 25
+      velocity: 0.5
+      ioc: "sim"
+  - raw_id: "RAW-0025"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 19
+      source_anchor: "/items/14/pv"
+      source_label: "BL10:DCM:DTheta2"
+    raw_pv: "BL10:DCM:DTheta2"
+    raw_group: "DCM"
+    raw_device: "DCM"
+    raw_axis_or_function: "DTheta2"
+    raw_metadata:
+      egu: "arcsec"
+      init: 0
+      low: -2520
+      high: 2520
+      velocity: 10
+      ioc: "sim"
+  - raw_id: "RAW-0026"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 20
+      source_anchor: "/items/15/pv"
+      source_label: "BL10:DCM:Roll2"
+    raw_pv: "BL10:DCM:Roll2"
+    raw_group: "DCM"
+    raw_device: "DCM"
+    raw_axis_or_function: "Roll2"
+    raw_metadata:
+      egu: "arcsec"
+      init: 0
+      low: -2520
+      high: 2520
+      velocity: 10
+      ioc: "sim"
+  - raw_id: "RAW-0027"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 21
+      source_anchor: "/items/16/pv"
+      source_label: "BL10:DCM:DTheta2F"
+    raw_pv: "BL10:DCM:DTheta2F"
+    raw_group: "DCM"
+    raw_device: "DCM"
+    raw_axis_or_function: "DTheta2F"
+    raw_metadata:
+      egu: "arcsec"
+      init: 0
+      low: -10.3
+      high: 10.3
+      velocity: 100
+      ioc: "sim"
+  - raw_id: "RAW-0028"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 23
+      source_anchor: "/items/17/pv"
+      source_label: "BL10:M2:Z"
+    raw_pv: "BL10:M2:Z"
+    raw_group: "M2 mirror"
+    raw_device: "M2"
+    raw_axis_or_function: "Z"
+    raw_metadata:
+      egu: "mm"
+      init: 0
+      low: -5
+      high: 5
+      velocity: 0.5
+      ioc: "sim"
+  - raw_id: "RAW-0029"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 24
+      source_anchor: "/items/18/pv"
+      source_label: "BL10:M2:Pitch"
+    raw_pv: "BL10:M2:Pitch"
+    raw_group: "M2 mirror"
+    raw_device: "M2"
+    raw_axis_or_function: "Pitch"
+    raw_metadata:
+      egu: "mrad"
+      init: 3.0
+      low: -2
+      high: 5
+      velocity: 0.5
+      ioc: "sim"
+  - raw_id: "RAW-0030"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 25
+      source_anchor: "/items/19/pv"
+      source_label: "BL10:M2:PitchF"
+    raw_pv: "BL10:M2:PitchF"
+    raw_group: "M2 mirror"
+    raw_device: "M2"
+    raw_axis_or_function: "PitchF"
+    raw_metadata:
+      egu: "urad"
+      init: 0
+      low: -50
+      high: 50
+      velocity: 100
+      ioc: "sim"
+  - raw_id: "RAW-0031"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 26
+      source_anchor: "/items/20/pv"
+      source_label: "BL10:M2:Tx"
+    raw_pv: "BL10:M2:Tx"
+    raw_group: "M2 mirror"
+    raw_device: "M2"
+    raw_axis_or_function: "Tx"
+    raw_metadata:
+      egu: "mm"
+      init: 0
+      low: -10
+      high: 10
+      velocity: 1
+      ioc: "sim"
+  - raw_id: "RAW-0032"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 27
+      source_anchor: "/items/21/pv"
+      source_label: "BL10:M2:Roll"
+    raw_pv: "BL10:M2:Roll"
+    raw_group: "M2 mirror"
+    raw_device: "M2"
+    raw_axis_or_function: "Roll"
+    raw_metadata:
+      egu: "mrad"
+      init: 0
+      low: -2
+      high: 2
+      velocity: 1
+      ioc: "sim"
+  - raw_id: "RAW-0033"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 28
+      source_anchor: "/items/22/pv"
+      source_label: "BL10:M2:Yaw"
+    raw_pv: "BL10:M2:Yaw"
+    raw_group: "M2 mirror"
+    raw_device: "M2"
+    raw_axis_or_function: "Yaw"
+    raw_metadata:
+      egu: "mrad"
+      init: 0
+      low: -2
+      high: 2
+      velocity: 1
+      ioc: "sim"
+  - raw_id: "RAW-0034"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 29
+      source_anchor: "/items/23/pv"
+      source_label: "BL10:M2:BendU"
+    raw_pv: "BL10:M2:BendU"
+    raw_group: "M2 mirror"
+    raw_device: "M2"
+    raw_axis_or_function: "BendU"
+    raw_metadata:
+      egu: "Nm"
+      init: 0
+      low: -50
+      high: 50
+      velocity: 1
+      ioc: "sim"
+  - raw_id: "RAW-0035"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 30
+      source_anchor: "/items/24/pv"
+      source_label: "BL10:M2:BendD"
+    raw_pv: "BL10:M2:BendD"
+    raw_group: "M2 mirror"
+    raw_device: "M2"
+    raw_axis_or_function: "BendD"
+    raw_metadata:
+      egu: "Nm"
+      init: 0
+      low: -50
+      high: 50
+      velocity: 1
+      ioc: "sim"
+  - raw_id: "RAW-0036"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 32
+      source_anchor: "/items/25/pv"
+      source_label: "BL10:KBV:X"
+    raw_pv: "BL10:KBV:X"
+    raw_group: "KB-V mirror"
+    raw_device: "KBV"
+    raw_axis_or_function: "X"
+    raw_metadata:
+      egu: "mm"
+      init: 0
+      low: -2
+      high: 2
+      velocity: 0.5
+      ioc: "sim"
+  - raw_id: "RAW-0037"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 33
+      source_anchor: "/items/26/pv"
+      source_label: "BL10:KBV:Y"
+    raw_pv: "BL10:KBV:Y"
+    raw_group: "KB-V mirror"
+    raw_device: "KBV"
+    raw_axis_or_function: "Y"
+    raw_metadata:
+      egu: "mm"
+      init: 0
+      low: -15
+      high: 15
+      velocity: 0.5
+      ioc: "sim"
+  - raw_id: "RAW-0038"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 34
+      source_anchor: "/items/27/pv"
+      source_label: "BL10:KBV:Z"
+    raw_pv: "BL10:KBV:Z"
+    raw_group: "KB-V mirror"
+    raw_device: "KBV"
+    raw_axis_or_function: "Z"
+    raw_metadata:
+      egu: "mm"
+      init: 0
+      low: -100
+      high: 100
+      velocity: 0.5
+      ioc: "sim"
+  - raw_id: "RAW-0039"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 35
+      source_anchor: "/items/28/pv"
+      source_label: "BL10:KBV:Pitch"
+    raw_pv: "BL10:KBV:Pitch"
+    raw_group: "KB-V mirror"
+    raw_device: "KBV"
+    raw_axis_or_function: "Pitch"
+    raw_metadata:
+      egu: "mrad"
+      init: 3.0
+      low: -2
+      high: 5
+      velocity: 0.2
+      ioc: "sim"
+  - raw_id: "RAW-0040"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 36
+      source_anchor: "/items/29/pv"
+      source_label: "BL10:KBV:BendU"
+    raw_pv: "BL10:KBV:BendU"
+    raw_group: "KB-V mirror"
+    raw_device: "KBV"
+    raw_axis_or_function: "BendU"
+    raw_metadata:
+      egu: "Nm"
+      init: 0
+      low: -20
+      high: 20
+      velocity: 1
+      ioc: "sim"
+  - raw_id: "RAW-0041"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 37
+      source_anchor: "/items/30/pv"
+      source_label: "BL10:KBV:BendD"
+    raw_pv: "BL10:KBV:BendD"
+    raw_group: "KB-V mirror"
+    raw_device: "KBV"
+    raw_axis_or_function: "BendD"
+    raw_metadata:
+      egu: "Nm"
+      init: 0
+      low: -20
+      high: 20
+      velocity: 1
+      ioc: "sim"
+  - raw_id: "RAW-0042"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 39
+      source_anchor: "/items/31/pv"
+      source_label: "BL10:KBH:X"
+    raw_pv: "BL10:KBH:X"
+    raw_group: "KB-H mirror"
+    raw_device: "KBH"
+    raw_axis_or_function: "X"
+    raw_metadata:
+      egu: "mm"
+      init: 0
+      low: -15
+      high: 15
+      velocity: 0.5
+      ioc: "sim"
+  - raw_id: "RAW-0043"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 40
+      source_anchor: "/items/32/pv"
+      source_label: "BL10:KBH:Y"
+    raw_pv: "BL10:KBH:Y"
+    raw_group: "KB-H mirror"
+    raw_device: "KBH"
+    raw_axis_or_function: "Y"
+    raw_metadata:
+      egu: "mm"
+      init: 0
+      low: -2
+      high: 2
+      velocity: 0.5
+      ioc: "sim"
+  - raw_id: "RAW-0044"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 41
+      source_anchor: "/items/33/pv"
+      source_label: "BL10:KBH:Z"
+    raw_pv: "BL10:KBH:Z"
+    raw_group: "KB-H mirror"
+    raw_device: "KBH"
+    raw_axis_or_function: "Z"
+    raw_metadata:
+      egu: "mm"
+      init: 0
+      low: -100
+      high: 100
+      velocity: 0.5
+      ioc: "sim"
+  - raw_id: "RAW-0045"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 42
+      source_anchor: "/items/34/pv"
+      source_label: "BL10:KBH:Pitch"
+    raw_pv: "BL10:KBH:Pitch"
+    raw_group: "KB-H mirror"
+    raw_device: "KBH"
+    raw_axis_or_function: "Pitch"
+    raw_metadata:
+      egu: "mrad"
+      init: 3.0
+      low: -2
+      high: 5
+      velocity: 0.2
+      ioc: "sim"
+  - raw_id: "RAW-0046"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 43
+      source_anchor: "/items/35/pv"
+      source_label: "BL10:KBH:BendU"
+    raw_pv: "BL10:KBH:BendU"
+    raw_group: "KB-H mirror"
+    raw_device: "KBH"
+    raw_axis_or_function: "BendU"
+    raw_metadata:
+      egu: "Nm"
+      init: 0
+      low: -20
+      high: 20
+      velocity: 1
+      ioc: "sim"
+  - raw_id: "RAW-0047"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 44
+      source_anchor: "/items/36/pv"
+      source_label: "BL10:KBH:BendD"
+    raw_pv: "BL10:KBH:BendD"
+    raw_group: "KB-H mirror"
+    raw_device: "KBH"
+    raw_axis_or_function: "BendD"
+    raw_metadata:
+      egu: "Nm"
+      init: 0
+      low: -20
+      high: 20
+      velocity: 1
+      ioc: "sim"
+  - raw_id: "RAW-0048"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 46
+      source_anchor: "/items/37/pv"
+      source_label: "BL10:ZP:X"
+    raw_pv: "BL10:ZP:X"
+    raw_group: "Zone plate"
+    raw_device: "ZP"
+    raw_axis_or_function: "X"
+    raw_metadata:
+      egu: "um"
+      init: 0
+      low: -2000
+      high: 2000
+      velocity: 1
+      ioc: "sim"
+  - raw_id: "RAW-0049"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 47
+      source_anchor: "/items/38/pv"
+      source_label: "BL10:ZP:Y"
+    raw_pv: "BL10:ZP:Y"
+    raw_group: "Zone plate"
+    raw_device: "ZP"
+    raw_axis_or_function: "Y"
+    raw_metadata:
+      egu: "um"
+      init: 0
+      low: -2000
+      high: 2000
+      velocity: 1
+      ioc: "sim"
+  - raw_id: "RAW-0050"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 48
+      source_anchor: "/items/39/pv"
+      source_label: "BL10:ZP:Z"
+    raw_pv: "BL10:ZP:Z"
+    raw_group: "Zone plate"
+    raw_device: "ZP"
+    raw_axis_or_function: "Z"
+    raw_metadata:
+      egu: "um"
+      init: 0
+      low: -5000
+      high: 5000
+      velocity: 1
+      ioc: "sim"
+  - raw_id: "RAW-0051"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/sample detector notes.md"
+      source_line: 5
+      source_anchor: "line:5"
+      source_label: "BL10:SAM:CX"
+    raw_pv: "BL10:SAM:CX"
+    raw_group: "Sample coarse stage"
+    raw_device: "SAM"
+    raw_axis_or_function: "CX"
+    raw_metadata:
+      source_text: "- BL10:SAM:CX / Sample (KOHZU) / mm / init 0 / range -34 to 34 / ioc HW"
+      egu: "mm"
+      init: "0"
+      low: "-34"
+      high: "34"
+      ioc: "HW"
+  - raw_id: "RAW-0052"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/sample detector notes.md"
+      source_line: 6
+      source_anchor: "line:6"
+      source_label: "BL10:SAM:CY"
+    raw_pv: "BL10:SAM:CY"
+    raw_group: "Sample coarse stage"
+    raw_device: "SAM"
+    raw_axis_or_function: "CY"
+    raw_metadata:
+      source_text: "- BL10:SAM:CY / Sample (KOHZU) / mm / init 0 / range -34 to 34 / ioc HW"
+      egu: "mm"
+      init: "0"
+      low: "-34"
+      high: "34"
+      ioc: "HW"
+  - raw_id: "RAW-0053"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/sample detector notes.md"
+      source_line: 7
+      source_anchor: "line:7"
+      source_label: "BL10:SAM:CZ"
+    raw_pv: "BL10:SAM:CZ"
+    raw_group: "Sample coarse stage"
+    raw_device: "SAM"
+    raw_axis_or_function: "CZ"
+    raw_metadata:
+      source_text: "- BL10:SAM:CZ / Sample (KOHZU) / mm / init 0 / range -9.5 to 9.5 / ioc HW"
+      egu: "mm"
+      init: "0"
+      low: "-9.5"
+      high: "9.5"
+      ioc: "HW"
+  - raw_id: "RAW-0054"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/sample detector notes.md"
+      source_line: 11
+      source_anchor: "line:11"
+      source_label: "BL10:SAM:Theta"
+    raw_pv: "BL10:SAM:Theta"
+    raw_group: "Sample stage"
+    raw_device: "SAM"
+    raw_axis_or_function: "Theta"
+    raw_metadata:
+      source_text: "BL10:SAM:Theta, Sample, deg, init=0, range=-180..180, velocity=200, sim"
+      egu: "deg"
+      init: "0"
+      low: "-180"
+      high: "180"
+      velocity: "200"
+      ioc: "sim"
+  - raw_id: "RAW-0055"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/sample detector notes.md"
+      source_line: 12
+      source_anchor: "line:12"
+      source_label: "BL10:SAM:Phi"
+    raw_pv: "BL10:SAM:Phi"
+    raw_group: "Sample stage"
+    raw_device: "SAM"
+    raw_axis_or_function: "Phi"
+    raw_metadata:
+      source_text: "BL10:SAM:Phi, Sample, deg, init=0, range=-5..5, velocity=2, sim"
+      egu: "deg"
+      init: "0"
+      low: "-5"
+      high: "5"
+      velocity: "2"
+      ioc: "sim"
+  - raw_id: "RAW-0056"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/sample detector notes.md"
+      source_line: 15
+      source_anchor: "line:15"
+      source_label: "BL10:SAM:FX"
+    raw_pv: "BL10:SAM:FX"
+    raw_group: "PI fine stage"
+    raw_device: "SAM"
+    raw_axis_or_function: "FX"
+    raw_metadata:
+      source_text: "BL10:SAM:FX um 0 -150..150 vel 50 sim"
+      egu: "um"
+      velocity: "50"
+      ioc: "sim"
+  - raw_id: "RAW-0057"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/sample detector notes.md"
+      source_line: 16
+      source_anchor: "line:16"
+      source_label: "BL10:SAM:FY"
+    raw_pv: "BL10:SAM:FY"
+    raw_group: "PI fine stage"
+    raw_device: "SAM"
+    raw_axis_or_function: "FY"
+    raw_metadata:
+      source_text: "BL10:SAM:FY um 0 -150..150 vel 50 sim"
+      egu: "um"
+      velocity: "50"
+      ioc: "sim"
+  - raw_id: "RAW-0058"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/sample detector notes.md"
+      source_line: 17
+      source_anchor: "line:17"
+      source_label: "BL10:SAM:FZ"
+    raw_pv: "BL10:SAM:FZ"
+    raw_group: "PI fine stage"
+    raw_device: "SAM"
+    raw_axis_or_function: "FZ"
+    raw_metadata:
+      source_text: "BL10:SAM:FZ um 0 -150..150 vel 50 sim"
+      egu: "um"
+      velocity: "50"
+      ioc: "sim"
+  - raw_id: "RAW-0059"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/sample detector notes.md"
+      source_line: 20
+      source_anchor: "line:20"
+      source_label: "BL10:SAM:SX"
+    raw_pv: "BL10:SAM:SX"
+    raw_group: "PI scan stage"
+    raw_device: "SAM"
+    raw_axis_or_function: "SX"
+    raw_metadata:
+      source_text: "BL10:SAM:SX um 0 -50..50 vel 100 sim"
+      egu: "um"
+      velocity: "100"
+      ioc: "sim"
+  - raw_id: "RAW-0060"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/sample detector notes.md"
+      source_line: 21
+      source_anchor: "line:21"
+      source_label: "BL10:SAM:SY"
+    raw_pv: "BL10:SAM:SY"
+    raw_group: "PI scan stage"
+    raw_device: "SAM"
+    raw_axis_or_function: "SY"
+    raw_metadata:
+      source_text: "BL10:SAM:SY um 0 -50..50 vel 100 sim"
+      egu: "um"
+      velocity: "100"
+      ioc: "sim"
+  - raw_id: "RAW-0061"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/sample detector notes.md"
+      source_line: 27
+      source_anchor: "line:27"
+      source_label: "BL10:DET:X"
+    raw_pv: "BL10:DET:X"
+    raw_group: "Detector"
+    raw_device: "DET"
+    raw_axis_or_function: "X"
+    raw_metadata:
+      source_text: "| BL10:DET:X | mm | 0 | -50 to 50 | 1 | sim |"
+      egu: "mm"
+      ioc: "sim"
+  - raw_id: "RAW-0062"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/sample detector notes.md"
+      source_line: 28
+      source_anchor: "line:28"
+      source_label: "BL10:DET:Y"
+    raw_pv: "BL10:DET:Y"
+    raw_group: "Detector"
+    raw_device: "DET"
+    raw_axis_or_function: "Y"
+    raw_metadata:
+      source_text: "| BL10:DET:Y | mm | 0 | -50 to 50 | 1 | sim |"
+      egu: "mm"
+      ioc: "sim"
+  - raw_id: "RAW-0063"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/sample detector notes.md"
+      source_line: 29
+      source_anchor: "line:29"
+      source_label: "BL10:DET:Z"
+    raw_pv: "BL10:DET:Z"
+    raw_group: "Detector"
+    raw_device: "DET"
+    raw_axis_or_function: "Z"
+    raw_metadata:
+      source_text: "| BL10:DET:Z | mm | 0 | 0 to 5000 | 5 | sim |"
+      egu: "mm"
+      ioc: "sim"
+  - raw_id: "RAW-0064"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/slits etc.xml"
+      source_line: 3
+      source_anchor: "/stuff/motor[1]"
+      source_label: "BL10:WBS:Top"
+    raw_pv: "BL10:WBS:Top"
+    raw_group: "WB slit"
+    raw_device: "WBS"
+    raw_axis_or_function: "Top"
+    raw_metadata:
+      egu: "mm"
+      init: "0.5"
+      low: "-25"
+      high: "25"
+      velocity: "1"
+      ioc: "sim"
+  - raw_id: "RAW-0065"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/slits etc.xml"
+      source_line: 4
+      source_anchor: "/stuff/motor[2]"
+      source_label: "BL10:WBS:Bot"
+    raw_pv: "BL10:WBS:Bot"
+    raw_group: "WB slit"
+    raw_device: "WBS"
+    raw_axis_or_function: "Bot"
+    raw_metadata:
+      egu: "mm"
+      init: "-0.5"
+      low: "-25"
+      high: "25"
+      velocity: "1"
+      ioc: "sim"
+  - raw_id: "RAW-0066"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/slits etc.xml"
+      source_line: 5
+      source_anchor: "/stuff/motor[3]"
+      source_label: "BL10:WBS:Inb"
+    raw_pv: "BL10:WBS:Inb"
+    raw_group: "WB slit"
+    raw_device: "WBS"
+    raw_axis_or_function: "Inb"
+    raw_metadata:
+      egu: "mm"
+      init: "-1.0"
+      low: "-25"
+      high: "25"
+      velocity: "1"
+      ioc: "sim"
+  - raw_id: "RAW-0067"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/slits etc.xml"
+      source_line: 6
+      source_anchor: "/stuff/motor[4]"
+      source_label: "BL10:WBS:Outb"
+    raw_pv: "BL10:WBS:Outb"
+    raw_group: "WB slit"
+    raw_device: "WBS"
+    raw_axis_or_function: "Outb"
+    raw_metadata:
+      egu: "mm"
+      init: "1.0"
+      low: "-25"
+      high: "25"
+      velocity: "1"
+      ioc: "sim"
+  - raw_id: "RAW-0068"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/slits etc.xml"
+      source_line: 7
+      source_anchor: "/stuff/motor[5]"
+      source_label: "BL10:WBS:Hgap"
+    raw_pv: "BL10:WBS:Hgap"
+    raw_group: "WB slit"
+    raw_device: "WBS"
+    raw_axis_or_function: "Hgap"
+    raw_metadata:
+      egu: "mm"
+      init: "2.0"
+      low: "0.01"
+      high: "48"
+      velocity: "1"
+      ioc: "sim"
+  - raw_id: "RAW-0069"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/slits etc.xml"
+      source_line: 8
+      source_anchor: "/stuff/motor[6]"
+      source_label: "BL10:WBS:Vgap"
+    raw_pv: "BL10:WBS:Vgap"
+    raw_group: "WB slit"
+    raw_device: "WBS"
+    raw_axis_or_function: "Vgap"
+    raw_metadata:
+      egu: "mm"
+      init: "1.0"
+      low: "0.01"
+      high: "48"
+      velocity: "1"
+      ioc: "sim"
+  - raw_id: "RAW-0070"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/slits etc.xml"
+      source_line: 11
+      source_anchor: "/stuff/aperture[@name=\"SSA\"]/axis[1]"
+      source_label: "BL10:SSA:Hgap"
+    raw_pv: "BL10:SSA:Hgap"
+    raw_group: "SSA"
+    raw_device: "SSA"
+    raw_axis_or_function: "Hgap"
+    raw_metadata:
+      egu: "um"
+      init: "50"
+      low: "1"
+      high: "500"
+      velocity: "1"
+      ioc: "sim"
+  - raw_id: "RAW-0071"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/slits etc.xml"
+      source_line: 12
+      source_anchor: "/stuff/aperture[@name=\"SSA\"]/axis[2]"
+      source_label: "BL10:SSA:Vgap"
+    raw_pv: "BL10:SSA:Vgap"
+    raw_group: "SSA"
+    raw_device: "SSA"
+    raw_axis_or_function: "Vgap"
+    raw_metadata:
+      egu: "um"
+      init: "50"
+      low: "1"
+      high: "500"
+      velocity: "1"
+      ioc: "sim"
+  - raw_id: "RAW-0072"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/slits etc.xml"
+      source_line: 13
+      source_anchor: "/stuff/aperture[@name=\"SSA\"]/axis[3]"
+      source_label: "BL10:SSA:Hcen"
+    raw_pv: "BL10:SSA:Hcen"
+    raw_group: "SSA"
+    raw_device: "SSA"
+    raw_axis_or_function: "Hcen"
+    raw_metadata:
+      egu: "um"
+      init: "0"
+      low: "-500"
+      high: "500"
+      velocity: "1"
+      ioc: "sim"
+  - raw_id: "RAW-0073"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/slits etc.xml"
+      source_line: 14
+      source_anchor: "/stuff/aperture[@name=\"SSA\"]/axis[4]"
+      source_label: "BL10:SSA:Vcen"
+    raw_pv: "BL10:SSA:Vcen"
+    raw_group: "SSA"
+    raw_device: "SSA"
+    raw_axis_or_function: "Vcen"
+    raw_metadata:
+      egu: "um"
+      init: "0"
+      low: "-500"
+      high: "500"
+      velocity: "1"
+      ioc: "sim"
+  - raw_id: "RAW-0074"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/slits etc.xml"
+      source_line: 18
+      source_anchor: "/stuff/aperture[@name=\"KBS\"]/axis[1]"
+      source_label: "BL10:KBS:Hgap"
+    raw_pv: "BL10:KBS:Hgap"
+    raw_group: "KBS"
+    raw_device: "KBS"
+    raw_axis_or_function: "Hgap"
+    raw_metadata:
+      egu: "um"
+      init: "5000"
+      low: "1"
+      high: "10000"
+      velocity: "50"
+      ioc: "sim"
+  - raw_id: "RAW-0075"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/slits etc.xml"
+      source_line: 19
+      source_anchor: "/stuff/aperture[@name=\"KBS\"]/axis[2]"
+      source_label: "BL10:KBS:Vgap"
+    raw_pv: "BL10:KBS:Vgap"
+    raw_group: "KBS"
+    raw_device: "KBS"
+    raw_axis_or_function: "Vgap"
+    raw_metadata:
+      egu: "um"
+      init: "5000"
+      low: "1"
+      high: "10000"
+      velocity: "50"
+      ioc: "sim"
+  - raw_id: "RAW-0076"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/slits etc.xml"
+      source_line: 20
+      source_anchor: "/stuff/aperture[@name=\"KBS\"]/axis[3]"
+      source_label: "BL10:KBS:Hcen"
+    raw_pv: "BL10:KBS:Hcen"
+    raw_group: "KBS"
+    raw_device: "KBS"
+    raw_axis_or_function: "Hcen"
+    raw_metadata:
+      egu: "um"
+      init: "0"
+      low: "-5000"
+      high: "5000"
+      velocity: "1"
+      ioc: "sim"
+  - raw_id: "RAW-0077"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/slits etc.xml"
+      source_line: 21
+      source_anchor: "/stuff/aperture[@name=\"KBS\"]/axis[4]"
+      source_label: "BL10:KBS:Vcen"
+    raw_pv: "BL10:KBS:Vcen"
+    raw_group: "KBS"
+    raw_device: "KBS"
+    raw_axis_or_function: "Vcen"
+    raw_metadata:
+      egu: "um"
+      init: "0"
+      low: "-5000"
+      high: "5000"
+      velocity: "1"
+      ioc: "sim"
+  - raw_id: "RAW-0078"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/status and xbpm.txt"
+      source_line: 4
+      source_anchor: "line:4"
+      source_label: "BL10:RING:Current"
+    raw_pv: "BL10:RING:Current"
+    raw_group: "RING"
+    raw_device: "RING"
+    raw_axis_or_function: "Current"
+    raw_metadata:
+      source_text: "BL10:RING:Current, mA, init 400.0, random noise about +/- 0.05, storage ring current"
+      egu: "mA"
+      init: "400.0"
+  - raw_id: "RAW-0079"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/status and xbpm.txt"
+      source_line: 5
+      source_anchor: "line:5"
+      source_label: "BL10:RING:Energy"
+    raw_pv: "BL10:RING:Energy"
+    raw_group: "RING"
+    raw_device: "RING"
+    raw_axis_or_function: "Energy"
+    raw_metadata:
+      source_text: "BL10:RING:Energy, GeV, init 4.0, static"
+      egu: "GeV"
+      init: "4.0"
+  - raw_id: "RAW-0080"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/status and xbpm.txt"
+      source_line: 6
+      source_anchor: "line:6"
+      source_label: "BL10:RING:Lifetime"
+    raw_pv: "BL10:RING:Lifetime"
+    raw_group: "RING"
+    raw_device: "RING"
+    raw_axis_or_function: "Lifetime"
+    raw_metadata:
+      source_text: "BL10:RING:Lifetime, h, init 12.5, sine-ish +/- 0.3"
+      egu: "h"
+      init: "12.5"
+  - raw_id: "RAW-0081"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/status and xbpm.txt"
+      source_line: 9
+      source_anchor: "line:9"
+      source_label: "BL10:FE:Shutter"
+    raw_pv: "BL10:FE:Shutter"
+    raw_group: "front end shutter"
+    raw_device: "FE"
+    raw_axis_or_function: "Shutter"
+    raw_metadata:
+      source_text: "BL10:FE:Shutter, no unit, init 1, static, 0/1"
+      init: "1"
+  - raw_id: "RAW-0082"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/status and xbpm.txt"
+      source_line: 12
+      source_anchor: "line:12"
+      source_label: "BL10:XBPM1:X"
+    raw_pv: "BL10:XBPM1:X"
+    raw_group: "xbpm1"
+    raw_device: "XBPM1"
+    raw_axis_or_function: "X"
+    raw_metadata:
+      source_text: "BL10:XBPM1:X mm init 0 noise +/-0.005"
+      egu: "mm"
+      init: "0"
+  - raw_id: "RAW-0083"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/status and xbpm.txt"
+      source_line: 13
+      source_anchor: "line:13"
+      source_label: "BL10:XBPM1:Y"
+    raw_pv: "BL10:XBPM1:Y"
+    raw_group: "xbpm1"
+    raw_device: "XBPM1"
+    raw_axis_or_function: "Y"
+    raw_metadata:
+      source_text: "BL10:XBPM1:Y mm init 0 noise +/-0.005"
+      egu: "mm"
+      init: "0"
+  - raw_id: "RAW-0084"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/status and xbpm.txt"
+      source_line: 16
+      source_anchor: "line:16"
+      source_label: "BL10:IC1:Current"
+    raw_pv: "BL10:IC1:Current"
+    raw_group: "ion chamber and ioc"
+    raw_device: "IC1"
+    raw_axis_or_function: "Current"
+    raw_metadata:
+      source_text: "BL10:IC1:Current A init 1e-9 noise +/-1e-11"
+      egu: "A"
+      init: "1e-9"
+  - raw_id: "RAW-0085"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/status and xbpm.txt"
+      source_line: 17
+      source_anchor: "line:17"
+      source_label: "BL10:IOC:Heartbeat"
+    raw_pv: "BL10:IOC:Heartbeat"
+    raw_group: "ion chamber and ioc"
+    raw_device: "IOC"
+    raw_axis_or_function: "Heartbeat"
+    raw_metadata:
+      source_text: "BL10:IOC:Heartbeat int init 0 increments every 100 ms"
+      egu: "int"
+      init: "0"
+  - raw_id: "RAW-0086"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/status and xbpm.txt"
+      source_line: 20
+      source_anchor: "line:20"
+      source_label: "BL10:XBPM2:Acquire"
+    raw_pv: "BL10:XBPM2:Acquire"
+    raw_group: "xbpm2 / T4U quadEM style"
+    raw_device: "XBPM2"
+    raw_axis_or_function: "Acquire"
+    raw_metadata:
+      source_text: "- BL10:XBPM2:Acquire bool Start/stop acquisition"
+      egu: "bool"
+  - raw_id: "RAW-0087"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/status and xbpm.txt"
+      source_line: 21
+      source_anchor: "line:21"
+      source_label: "BL10:XBPM2:BiasPEn"
+    raw_pv: "BL10:XBPM2:BiasPEn"
+    raw_group: "xbpm2 / T4U quadEM style"
+    raw_device: "XBPM2"
+    raw_axis_or_function: "BiasPEn"
+    raw_metadata:
+      source_text: "- BL10:XBPM2:BiasPEn bool Bias power enable"
+      egu: "bool"
+  - raw_id: "RAW-0088"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/status and xbpm.txt"
+      source_line: 22
+      source_anchor: "line:22"
+      source_label: "BL10:XBPM2:Range"
+    raw_pv: "BL10:XBPM2:Range"
+    raw_group: "xbpm2 / T4U quadEM style"
+    raw_device: "XBPM2"
+    raw_axis_or_function: "Range"
+    raw_metadata:
+      source_text: "- BL10:XBPM2:Range enum Current range setting"
+      egu: "enum"
+  - raw_id: "RAW-0089"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/status and xbpm.txt"
+      source_line: 23
+      source_anchor: "line:23"
+      source_label: "BL10:XBPM2:SampleFreq"
+    raw_pv: "BL10:XBPM2:SampleFreq"
+    raw_group: "xbpm2 / T4U quadEM style"
+    raw_device: "XBPM2"
+    raw_axis_or_function: "SampleFreq"
+    raw_metadata:
+      source_text: "- BL10:XBPM2:SampleFreq Hz Hardware sample frequency"
+      egu: "Hz"
+  - raw_id: "RAW-0090"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/status and xbpm.txt"
+      source_line: 24
+      source_anchor: "line:24"
+      source_label: "BL10:XBPM2:Current1:MeanValue_RBV"
+    raw_pv: "BL10:XBPM2:Current1:MeanValue_RBV"
+    raw_group: "xbpm2 / T4U quadEM style"
+    raw_device: "XBPM2"
+    raw_axis_or_function: "Current1:MeanValue_RBV"
+    raw_metadata:
+      source_text: "- BL10:XBPM2:Current1:MeanValue_RBV A Quad 1 current readback"
+      egu: "A"
+  - raw_id: "RAW-0091"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/status and xbpm.txt"
+      source_line: 25
+      source_anchor: "line:25"
+      source_label: "BL10:XBPM2:Current2:MeanValue_RBV"
+    raw_pv: "BL10:XBPM2:Current2:MeanValue_RBV"
+    raw_group: "xbpm2 / T4U quadEM style"
+    raw_device: "XBPM2"
+    raw_axis_or_function: "Current2:MeanValue_RBV"
+    raw_metadata:
+      source_text: "- BL10:XBPM2:Current2:MeanValue_RBV A Quad 2 current readback"
+      egu: "A"
+  - raw_id: "RAW-0092"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/status and xbpm.txt"
+      source_line: 26
+      source_anchor: "line:26"
+      source_label: "BL10:XBPM2:Current3:MeanValue_RBV"
+    raw_pv: "BL10:XBPM2:Current3:MeanValue_RBV"
+    raw_group: "xbpm2 / T4U quadEM style"
+    raw_device: "XBPM2"
+    raw_axis_or_function: "Current3:MeanValue_RBV"
+    raw_metadata:
+      source_text: "- BL10:XBPM2:Current3:MeanValue_RBV A Quad 3 current readback"
+      egu: "A"
+  - raw_id: "RAW-0093"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/status and xbpm.txt"
+      source_line: 27
+      source_anchor: "line:27"
+      source_label: "BL10:XBPM2:Current4:MeanValue_RBV"
+    raw_pv: "BL10:XBPM2:Current4:MeanValue_RBV"
+    raw_group: "xbpm2 / T4U quadEM style"
+    raw_device: "XBPM2"
+    raw_axis_or_function: "Current4:MeanValue_RBV"
+    raw_metadata:
+      source_text: "- BL10:XBPM2:Current4:MeanValue_RBV A Quad 4 current readback"
+      egu: "A"
+  - raw_id: "RAW-0094"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/status and xbpm.txt"
+      source_line: 28
+      source_anchor: "line:28"
+      source_label: "BL10:XBPM2:PosX:MeanValue_RBV"
+    raw_pv: "BL10:XBPM2:PosX:MeanValue_RBV"
+    raw_group: "xbpm2 / T4U quadEM style"
+    raw_device: "XBPM2"
+    raw_axis_or_function: "PosX:MeanValue_RBV"
+    raw_metadata:
+      source_text: "- BL10:XBPM2:PosX:MeanValue_RBV mm Centroid X readback"
+      egu: "mm"
+  - raw_id: "RAW-0095"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/status and xbpm.txt"
+      source_line: 29
+      source_anchor: "line:29"
+      source_label: "BL10:XBPM2:PosY:MeanValue_RBV"
+    raw_pv: "BL10:XBPM2:PosY:MeanValue_RBV"
+    raw_group: "xbpm2 / T4U quadEM style"
+    raw_device: "XBPM2"
+    raw_axis_or_function: "PosY:MeanValue_RBV"
+    raw_metadata:
+      source_text: "- BL10:XBPM2:PosY:MeanValue_RBV mm Centroid Y readback"
+      egu: "mm"
+  - raw_id: "RAW-0096"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/status and xbpm.txt"
+      source_line: 30
+      source_anchor: "line:30"
+      source_label: "BL10:XBPM2:SumAll:MeanValue_RBV"
+    raw_pv: "BL10:XBPM2:SumAll:MeanValue_RBV"
+    raw_group: "xbpm2 / T4U quadEM style"
+    raw_device: "XBPM2"
+    raw_axis_or_function: "SumAll:MeanValue_RBV"
+    raw_metadata:
+      source_text: "- BL10:XBPM2:SumAll:MeanValue_RBV A Total sum readback"
+      egu: "A"
+  - raw_id: "RAW-0097"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/status and xbpm.txt"
+      source_line: 33
+      source_anchor: "line:33"
+      source_label: "BL10:SCAN:Status"
+    raw_pv: "BL10:SCAN:Status"
+    raw_group: "scan publish pvs"
+    raw_device: "SCAN"
+    raw_axis_or_function: "Status"
+    raw_metadata:
+      source_text: "BL10:SCAN:Status - Scan state Idle/Running/Done"
+  - raw_id: "RAW-0098"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/status and xbpm.txt"
+      source_line: 34
+      source_anchor: "line:34"
+      source_label: "BL10:SCAN:Progress"
+    raw_pv: "BL10:SCAN:Progress"
+    raw_group: "scan publish pvs"
+    raw_device: "SCAN"
+    raw_axis_or_function: "Progress"
+    raw_metadata:
+      source_text: "BL10:SCAN:Progress - Scan progress 0-1"
+  - raw_id: "RAW-0099"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/status and xbpm.txt"
+      source_line: 35
+      source_anchor: "line:35"
+      source_label: "BL10:SCAN:X"
+    raw_pv: "BL10:SCAN:X"
+    raw_group: "scan publish pvs"
+    raw_device: "SCAN"
+    raw_axis_or_function: "X"
+    raw_metadata:
+      source_text: "BL10:SCAN:X - Current scan X position"
+  - raw_id: "RAW-0100"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/status and xbpm.txt"
+      source_line: 36
+      source_anchor: "line:36"
+      source_label: "BL10:SCAN:Y"
+    raw_pv: "BL10:SCAN:Y"
+    raw_group: "scan publish pvs"
+    raw_device: "SCAN"
+    raw_axis_or_function: "Y"
+    raw_metadata:
+      source_text: "BL10:SCAN:Y - Current scan Y position"
+  - raw_id: "RAW-0101"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/status and xbpm.txt"
+      source_line: 37
+      source_anchor: "line:37"
+      source_label: "BL10:SCAN:Z"
+    raw_pv: "BL10:SCAN:Z"
+    raw_group: "scan publish pvs"
+    raw_device: "SCAN"
+    raw_axis_or_function: "Z"
+    raw_metadata:
+      source_text: "BL10:SCAN:Z - Current scan Z position"
+  - raw_id: "RAW-0102"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/status and xbpm.txt"
+      source_line: 38
+      source_anchor: "line:38"
+      source_label: "BL10:SCAN:PX"
+    raw_pv: "BL10:SCAN:PX"
+    raw_group: "scan publish pvs"
+    raw_device: "SCAN"
+    raw_axis_or_function: "PX"
+    raw_metadata:
+      source_text: "BL10:SCAN:PX - Last point X"
+  - raw_id: "RAW-0103"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/status and xbpm.txt"
+      source_line: 39
+      source_anchor: "line:39"
+      source_label: "BL10:SCAN:PY"
+    raw_pv: "BL10:SCAN:PY"
+    raw_group: "scan publish pvs"
+    raw_device: "SCAN"
+    raw_axis_or_function: "PY"
+    raw_metadata:
+      source_text: "BL10:SCAN:PY - Last point Y"
+  - raw_id: "RAW-0104"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/status and xbpm.txt"
+      source_line: 40
+      source_anchor: "line:40"
+      source_label: "BL10:SCAN:PZ"
+    raw_pv: "BL10:SCAN:PZ"
+    raw_group: "scan publish pvs"
+    raw_device: "SCAN"
+    raw_axis_or_function: "PZ"
+    raw_metadata:
+      source_text: "BL10:SCAN:PZ - Last point Z"
+  - raw_id: "RAW-0105"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/undulator.md"
+      source_line: 5
+      source_anchor: "line:5"
+      source_label: "BL10:IVU:Gap"
+    raw_pv: "BL10:IVU:Gap"
+    raw_group: "IVU24"
+    raw_device: "IVU"
+    raw_axis_or_function: "Gap"
+    raw_metadata:
+      egu: "mm"
+      init: "7.0"
+      low: "5"
+      high: "25"
+      velocity: "0.5"
+      ioc: "sim"
+  - raw_id: "RAW-0106"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/undulator.md"
+      source_line: 6
+      source_anchor: "line:6"
+      source_label: "BL10:IVU:TaperGap"
+    raw_pv: "BL10:IVU:TaperGap"
+    raw_group: "IVU24"
+    raw_device: "IVU"
+    raw_axis_or_function: "TaperGap"
+    raw_metadata:
+      egu: "mm"
+      init: "0"
+      low: "-2"
+      high: "2"
+      velocity: "0.5"
+      ioc: "sim"
+  - raw_id: "RAW-0107"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/undulator.md"
+      source_line: 7
+      source_anchor: "line:7"
+      source_label: "BL10:IVU:Harmonic"
+    raw_pv: "BL10:IVU:Harmonic"
+    raw_group: "IVU24"
+    raw_device: "IVU"
+    raw_axis_or_function: "Harmonic"
+    raw_metadata:
+      egu: "-"
+      init: "5"
+      low: "1"
+      high: "13"
+      velocity: "1"
+      ioc: "sim"
+  - raw_id: "RAW-0108"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/undulator.md"
+      source_line: 8
+      source_anchor: "line:8"
+      source_label: "BL10:IVU:GirderX"
+    raw_pv: "BL10:IVU:GirderX"
+    raw_group: "IVU24"
+    raw_device: "IVU"
+    raw_axis_or_function: "GirderX"
+    raw_metadata:
+      egu: "mm"
+      init: "0"
+      low: "-5"
+      high: "5"
+      velocity: "1"
+      ioc: "sim"
+  - raw_id: "RAW-0109"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/undulator.md"
+      source_line: 9
+      source_anchor: "line:9"
+      source_label: "BL10:IVU:GirderY"
+    raw_pv: "BL10:IVU:GirderY"
+    raw_group: "IVU24"
+    raw_device: "IVU"
+    raw_axis_or_function: "GirderY"
+    raw_metadata:
+      egu: "mm"
+      init: "0"
+      low: "-5"
+      high: "5"
+      velocity: "1"
+      ioc: "sim"
+  - raw_id: "RAW-0110"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/undulator.md"
+      source_line: 10
+      source_anchor: "line:10"
+      source_label: "BL10:IVU:GirderPitch"
+    raw_pv: "BL10:IVU:GirderPitch"
+    raw_group: "IVU24"
+    raw_device: "IVU"
+    raw_axis_or_function: "GirderPitch"
+    raw_metadata:
+      egu: "urad"
+      init: "0"
+      low: "-200"
+      high: "200"
+      velocity: "50"
+      ioc: "sim"
+  - raw_id: "RAW-0111"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/undulator.md"
+      source_line: 11
+      source_anchor: "line:11"
+      source_label: "BL10:IVU:GirderYaw"
+    raw_pv: "BL10:IVU:GirderYaw"
+    raw_group: "IVU24"
+    raw_device: "IVU"
+    raw_axis_or_function: "GirderYaw"
+    raw_metadata:
+      egu: "urad"
+      init: "0"
+      low: "-200"
+      high: "200"
+      velocity: "50"
+      ioc: "sim"
+  - raw_id: "RAW-0112"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/undulator.md"
+      source_line: 12
+      source_anchor: "line:12"
+      source_label: "BL10:IVU:EncUS"
+    raw_pv: "BL10:IVU:EncUS"
+    raw_group: "IVU24"
+    raw_device: "IVU"
+    raw_axis_or_function: "EncUS"
+    raw_metadata:
+      egu: "mm"
+      init: "7.0"
+      low: "5"
+      high: "25"
+      velocity: "0.5"
+      ioc: "sim"
+  - raw_id: "RAW-0113"
+    status: "extracted"
+    source_trace:
+      source_id: "inputs/ID10/undulator.md"
+      source_line: 13
+      source_anchor: "line:13"
+      source_label: "BL10:IVU:EncDS"
+    raw_pv: "BL10:IVU:EncDS"
+    raw_group: "IVU24"
+    raw_device: "IVU"
+    raw_axis_or_function: "EncDS"
+    raw_metadata:
+      egu: "mm"
+      init: "7.0"
+      low: "5"
+      high: "25"
+      velocity: "0.5"
+      ioc: "sim"
