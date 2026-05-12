@@ -1,0 +1,24 @@
+<stuff>
+  <note>some slit-ish things pasted from the BL10 sim table</note>
+  <motor pv="BL10:WBS:Top" group="WB slit" egu="mm" init="0.5" low="-25" high="25" velocity="1" ioc="sim"/>
+  <motor pv="BL10:WBS:Bot" group="WB slit" egu="mm" init="-0.5" low="-25" high="25" velocity="1" ioc="sim"/>
+  <motor pv="BL10:WBS:Inb" group="WB slit" egu="mm" init="-1.0" low="-25" high="25" velocity="1" ioc="sim"/>
+  <motor pv="BL10:WBS:Outb" group="WB slit" egu="mm" init="1.0" low="-25" high="25" velocity="1" ioc="sim"/>
+  <motor pv="BL10:WBS:Hgap" group="WB slit" egu="mm" init="2.0" low="0.01" high="48" velocity="1" ioc="sim"/>
+  <motor pv="BL10:WBS:Vgap" group="WB slit" egu="mm" init="1.0" low="0.01" high="48" velocity="1" ioc="sim"/>
+
+  <aperture name="SSA">
+    <axis pv="BL10:SSA:Hgap" egu="um" init="50" low="1" high="500" velocity="1" ioc="sim"/>
+    <axis pv="BL10:SSA:Vgap" egu="um" init="50" low="1" high="500" velocity="1" ioc="sim"/>
+    <axis pv="BL10:SSA:Hcen" egu="um" init="0" low="-500" high="500" velocity="1" ioc="sim"/>
+    <axis pv="BL10:SSA:Vcen" egu="um" init="0" low="-500" high="500" velocity="1" ioc="sim"/>
+  </aperture>
+
+  <aperture name="KBS">
+    <axis pv="BL10:KBS:Hgap" egu="um" init="5000" low="1" high="10000" velocity="50" ioc="sim"/>
+    <axis pv="BL10:KBS:Vgap" egu="um" init="5000" low="1" high="10000" velocity="50" ioc="sim"/>
+    <axis pv="BL10:KBS:Hcen" egu="um" init="0" low="-5000" high="5000" velocity="1" ioc="sim"/>
+    <axis pv="BL10:KBS:Vcen" egu="um" init="0" low="-5000" high="5000" velocity="1" ioc="sim"/>
+  </aperture>
+</stuff>
+

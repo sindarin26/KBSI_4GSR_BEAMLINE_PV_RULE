@@ -1,0 +1,41 @@
+status pvs from old sim doc
+
+RING:
+BL10:RING:Current, mA, init 400.0, random noise about +/- 0.05, storage ring current
+BL10:RING:Energy, GeV, init 4.0, static
+BL10:RING:Lifetime, h, init 12.5, sine-ish +/- 0.3
+
+front end shutter:
+BL10:FE:Shutter, no unit, init 1, static, 0/1
+
+xbpm1:
+BL10:XBPM1:X mm init 0 noise +/-0.005
+BL10:XBPM1:Y mm init 0 noise +/-0.005
+
+ion chamber and ioc:
+BL10:IC1:Current A init 1e-9 noise +/-1e-11
+BL10:IOC:Heartbeat int init 0 increments every 100 ms
+
+xbpm2 / T4U quadEM style:
+- BL10:XBPM2:Acquire bool Start/stop acquisition
+- BL10:XBPM2:BiasPEn bool Bias power enable
+- BL10:XBPM2:Range enum Current range setting
+- BL10:XBPM2:SampleFreq Hz Hardware sample frequency
+- BL10:XBPM2:Current1:MeanValue_RBV A Quad 1 current readback
+- BL10:XBPM2:Current2:MeanValue_RBV A Quad 2 current readback
+- BL10:XBPM2:Current3:MeanValue_RBV A Quad 3 current readback
+- BL10:XBPM2:Current4:MeanValue_RBV A Quad 4 current readback
+- BL10:XBPM2:PosX:MeanValue_RBV mm Centroid X readback
+- BL10:XBPM2:PosY:MeanValue_RBV mm Centroid Y readback
+- BL10:XBPM2:SumAll:MeanValue_RBV A Total sum readback
+
+scan publish pvs:
+BL10:SCAN:Status - Scan state Idle/Running/Done
+BL10:SCAN:Progress - Scan progress 0-1
+BL10:SCAN:X - Current scan X position
+BL10:SCAN:Y - Current scan Y position
+BL10:SCAN:Z - Current scan Z position
+BL10:SCAN:PX - Last point X
+BL10:SCAN:PY - Last point Y
+BL10:SCAN:PZ - Last point Z
+

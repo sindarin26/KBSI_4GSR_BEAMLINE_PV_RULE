@@ -1,0 +1,17 @@
+quick memo from naming chat
+
+Use ID10 for now. If facility people later want BL-ID10, handle that in rendering.
+
+Areas we think we know:
+IVU should be PTL.
+DCM and the major optics should be OH.
+White beam slit should be OH.
+Sample stage and detector are user side, probably EH.
+Movable mask location was not checked. If unsure, assume PTL and mark it.
+
+For white beam slit, do not use SLIT in the token. I can look like 1.
+Use WBSLT. Keep old blade words short: top, bot, inb, outb, hgap, vgap.
+
+For IVU girder, keep IVU as the device and put girder_x, girder_y, etc. in the final part.
+
+Status/readback/alarm stuff is not settled yet. Do not silently convert those as if they were motors.

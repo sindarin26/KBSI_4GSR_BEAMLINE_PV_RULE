@@ -1,0 +1,18 @@
+front side misc from the old BL10 sim list
+
+FMASK:
+- BL10:FMASK:X, Front mask, mm, init 0, range -20..20, velocity 2, sim
+- BL10:FMASK:Y, Front mask, mm, init 0, range -20..20, velocity 2, sim
+- BL10:FMASK:Hgap, Front mask, mm, init 4.0, range 0.1..20, velocity 1, sim
+- BL10:FMASK:Vgap, Front mask, mm, init 4.0, range 0.1..20, velocity 1, sim
+
+MMASK: location not checked yet
+- BL10:MMASK:X / Movable mask / mm / 0 / -20..20 / vel 2 / sim
+- BL10:MMASK:Y / Movable mask / mm / 0 / -20..20 / vel 2 / sim
+- BL10:MMASK:Hgap / Movable mask / mm / 4.0 / 0.1..20 / vel 1 / sim
+- BL10:MMASK:Vgap / Movable mask / mm / 4.0 / 0.1..20 / vel 1 / sim
+
+attenuator:
+BL10:ATT:X  Attenuator  mm  init=0  low=-25 high=25 velocity=0.01  ioc=sim
+BL10:ATT:Y  Attenuator  mm  init=0  low=-25 high=25 velocity=0.01  ioc=sim
+

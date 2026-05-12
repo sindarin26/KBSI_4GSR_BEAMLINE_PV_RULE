@@ -1,0 +1,51 @@
+{
+  "comment": "old sim motor rows for mirrors, dcm, kb mirrors, and zone plate",
+  "items": [
+    {"pv": "BL10:M1:Z", "group": "M1 mirror", "egu": "mm", "init": 0, "low": -5, "high": 5, "velocity": 0.5, "ioc": "sim"},
+    {"pv": "BL10:M1:Pitch", "group": "M1 mirror", "egu": "mrad", "init": 3.0, "low": -2, "high": 5, "velocity": 0.5, "ioc": "sim"},
+    {"pv": "BL10:M1:PitchF", "group": "M1 mirror", "egu": "urad", "init": 0, "low": -50, "high": 50, "velocity": 100, "ioc": "sim"},
+    {"pv": "BL10:M1:Tx", "group": "M1 mirror", "egu": "mm", "init": 0, "low": -10, "high": 10, "velocity": 1, "ioc": "sim"},
+    {"pv": "BL10:M1:Roll", "group": "M1 mirror", "egu": "mrad", "init": 0, "low": -2, "high": 2, "velocity": 1, "ioc": "sim"},
+    {"pv": "BL10:M1:Yaw", "group": "M1 mirror", "egu": "mrad", "init": 0, "low": -2, "high": 2, "velocity": 1, "ioc": "sim"},
+    {"pv": "BL10:M1:BendU", "group": "M1 mirror", "egu": "Nm", "init": 0, "low": -50, "high": 50, "velocity": 1, "ioc": "sim"},
+    {"pv": "BL10:M1:BendD", "group": "M1 mirror", "egu": "Nm", "init": 0, "low": -50, "high": 50, "velocity": 1, "ioc": "sim"},
+
+    {"pv": "BL10:DCM:Theta", "group": "DCM", "egu": "deg", "init": 11.402, "low": -1, "high": 20, "velocity": 0.05, "ioc": "sim"},
+    {"pv": "BL10:DCM:Y1", "group": "DCM", "egu": "mm", "init": 0, "low": -2.5, "high": 2.5, "velocity": 0.5, "ioc": "sim"},
+    {"pv": "BL10:DCM:Chi1", "group": "DCM", "egu": "arcsec", "init": 0, "low": -300, "high": 300, "velocity": 1, "ioc": "sim"},
+    {"pv": "BL10:DCM:TX", "group": "DCM", "egu": "mm", "init": 0, "low": -12.5, "high": 12.5, "velocity": 0.5, "ioc": "sim"},
+    {"pv": "BL10:DCM:Y2", "group": "DCM", "egu": "mm", "init": 0, "low": -25, "high": 25, "velocity": 0.5, "ioc": "sim"},
+    {"pv": "BL10:DCM:Z2", "group": "DCM", "egu": "mm", "init": 6.12, "low": 0, "high": 25, "velocity": 0.5, "ioc": "sim"},
+    {"pv": "BL10:DCM:DTheta2", "group": "DCM", "egu": "arcsec", "init": 0, "low": -2520, "high": 2520, "velocity": 10, "ioc": "sim"},
+    {"pv": "BL10:DCM:Roll2", "group": "DCM", "egu": "arcsec", "init": 0, "low": -2520, "high": 2520, "velocity": 10, "ioc": "sim"},
+    {"pv": "BL10:DCM:DTheta2F", "group": "DCM", "egu": "arcsec", "init": 0, "low": -10.3, "high": 10.3, "velocity": 100, "ioc": "sim"},
+
+    {"pv": "BL10:M2:Z", "group": "M2 mirror", "egu": "mm", "init": 0, "low": -5, "high": 5, "velocity": 0.5, "ioc": "sim"},
+    {"pv": "BL10:M2:Pitch", "group": "M2 mirror", "egu": "mrad", "init": 3.0, "low": -2, "high": 5, "velocity": 0.5, "ioc": "sim"},
+    {"pv": "BL10:M2:PitchF", "group": "M2 mirror", "egu": "urad", "init": 0, "low": -50, "high": 50, "velocity": 100, "ioc": "sim"},
+    {"pv": "BL10:M2:Tx", "group": "M2 mirror", "egu": "mm", "init": 0, "low": -10, "high": 10, "velocity": 1, "ioc": "sim"},
+    {"pv": "BL10:M2:Roll", "group": "M2 mirror", "egu": "mrad", "init": 0, "low": -2, "high": 2, "velocity": 1, "ioc": "sim"},
+    {"pv": "BL10:M2:Yaw", "group": "M2 mirror", "egu": "mrad", "init": 0, "low": -2, "high": 2, "velocity": 1, "ioc": "sim"},
+    {"pv": "BL10:M2:BendU", "group": "M2 mirror", "egu": "Nm", "init": 0, "low": -50, "high": 50, "velocity": 1, "ioc": "sim"},
+    {"pv": "BL10:M2:BendD", "group": "M2 mirror", "egu": "Nm", "init": 0, "low": -50, "high": 50, "velocity": 1, "ioc": "sim"},
+
+    {"pv": "BL10:KBV:X", "group": "KB-V mirror", "egu": "mm", "init": 0, "low": -2, "high": 2, "velocity": 0.5, "ioc": "sim"},
+    {"pv": "BL10:KBV:Y", "group": "KB-V mirror", "egu": "mm", "init": 0, "low": -15, "high": 15, "velocity": 0.5, "ioc": "sim"},
+    {"pv": "BL10:KBV:Z", "group": "KB-V mirror", "egu": "mm", "init": 0, "low": -100, "high": 100, "velocity": 0.5, "ioc": "sim"},
+    {"pv": "BL10:KBV:Pitch", "group": "KB-V mirror", "egu": "mrad", "init": 3.0, "low": -2, "high": 5, "velocity": 0.2, "ioc": "sim"},
+    {"pv": "BL10:KBV:BendU", "group": "KB-V mirror", "egu": "Nm", "init": 0, "low": -20, "high": 20, "velocity": 1, "ioc": "sim"},
+    {"pv": "BL10:KBV:BendD", "group": "KB-V mirror", "egu": "Nm", "init": 0, "low": -20, "high": 20, "velocity": 1, "ioc": "sim"},
+
+    {"pv": "BL10:KBH:X", "group": "KB-H mirror", "egu": "mm", "init": 0, "low": -15, "high": 15, "velocity": 0.5, "ioc": "sim"},
+    {"pv": "BL10:KBH:Y", "group": "KB-H mirror", "egu": "mm", "init": 0, "low": -2, "high": 2, "velocity": 0.5, "ioc": "sim"},
+    {"pv": "BL10:KBH:Z", "group": "KB-H mirror", "egu": "mm", "init": 0, "low": -100, "high": 100, "velocity": 0.5, "ioc": "sim"},
+    {"pv": "BL10:KBH:Pitch", "group": "KB-H mirror", "egu": "mrad", "init": 3.0, "low": -2, "high": 5, "velocity": 0.2, "ioc": "sim"},
+    {"pv": "BL10:KBH:BendU", "group": "KB-H mirror", "egu": "Nm", "init": 0, "low": -20, "high": 20, "velocity": 1, "ioc": "sim"},
+    {"pv": "BL10:KBH:BendD", "group": "KB-H mirror", "egu": "Nm", "init": 0, "low": -20, "high": 20, "velocity": 1, "ioc": "sim"},
+
+    {"pv": "BL10:ZP:X", "group": "Zone plate", "egu": "um", "init": 0, "low": -2000, "high": 2000, "velocity": 1, "ioc": "sim"},
+    {"pv": "BL10:ZP:Y", "group": "Zone plate", "egu": "um", "init": 0, "low": -2000, "high": 2000, "velocity": 1, "ioc": "sim"},
+    {"pv": "BL10:ZP:Z", "group": "Zone plate", "egu": "um", "init": 0, "low": -5000, "high": 5000, "velocity": 1, "ioc": "sim"}
+  ]
+}
+
