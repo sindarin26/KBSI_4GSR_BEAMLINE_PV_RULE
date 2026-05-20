@@ -121,9 +121,11 @@ raw_extracted_pvs:
     optional:
       raw_pv: string_or_null
       raw_source_pv: string_or_null
+      raw_group: string_or_null
       raw_area: string_or_null
       raw_device: string_or_null
       raw_subdevice: string_or_null
+      raw_axis_or_function: string_or_null
       raw_signal: string_or_null
       raw_metadata: object
       skip_reason: non_empty_string_when_status_skipped
@@ -132,6 +134,7 @@ raw_extracted_pvs:
         require_one_of:
           - raw_source_pv
           - raw_device
+          - raw_axis_or_function
           - raw_signal
           - raw_metadata
       if_status_skipped:
@@ -152,3 +155,20 @@ raw_extracted_pvs:
       source: string_or_null
       egu: string_or_null
       ioc: string_or_null
+output_status:
+  required:
+    beamline: string
+    rulebook_version: string
+    output_status: draft_reviewed_approved_or_legacy
+    canonical_registry: string
+    reference: string
+    raw_extraction: string
+  optional:
+    review_log: string_or_null
+    open_exceptions: list
+    notes: list
+  status_values:
+    - draft
+    - reviewed
+    - approved
+    - legacy

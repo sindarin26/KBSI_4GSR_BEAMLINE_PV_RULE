@@ -1,13 +1,43 @@
-# KBSI 4GSR Beamline PV Naming Rule Kit
+# KBSI 4GSR Beamline PV Rule Workbench
 
-빔라인 PV 원자료를 표준 PV registry와 reference 문서로 정리하기 위한
-rule kit입니다.
+빔라인 PV 원자료를 SEO_v2 기준 PV registry와 reference 문서로 정리하고
+검증하기 위한 내부 workbench입니다.
 
-사용자는 빔라인별 원자료를 `inputs/`에 넣고 agent에게 정리를 요청합니다.
-원자료는 Markdown, JSON, XML, txt, 메모처럼 섞여 있어도 됩니다. agent는
-먼저 원자료에서 PV 후보를 한 줄씩 추출한 뒤, 룰북과 의사결정 기록을 참고해
-`outputs/`에 바로 사용할 수 있는 PV 목록을 만들고, 예외나 미정 항목은
-`reviews/`와 `exceptions/`에 남깁니다.
+이 저장소의 목적은 사람에게 공유할 표준 문서 하나를 보관하는 것이 아니라,
+원자료 추출, registry 생성/검토, Markdown 렌더링, coverage 검증, 예외 추적을
+반복 가능하게 만드는 것입니다. 사람에게 공유할 문서는 `standards/`나
+`outputs/<beamline>/PV_REFERENCE.md`만 골라서 사용합니다.
+
+## Workbench Commands
+
+SEO_v2 rule/source 자체를 확인합니다.
+
+```text
+node scripts/validate_seo_v2_rules.js
+```
+
+특정 beamline output을 검증합니다.
+
+```text
+node scripts/validate_registry.js ID10
+```
+
+`pv_registry.yaml`에서 `PV_REFERENCE.md`를 렌더링하거나 현재 상태를
+확인합니다.
+
+```text
+node scripts/render_reference.js ID10 --check
+node scripts/render_reference.js ID10 --write
+```
+
+커밋 전 기본 확인:
+
+```text
+node scripts/validate_seo_v2_rules.js
+node scripts/validate_registry.js ID10
+node scripts/render_reference.js ID10 --check
+git diff --check
+```
 
 ## Quick Start
 
@@ -29,6 +59,7 @@ inputs/ID10 자료를 보고 PV 리스트를 정리해줘.
 outputs/ID10/pv_registry.yaml
 outputs/ID10/PV_REFERENCE.md
 outputs/ID10/_work/raw_extracted_pvs.yaml
+outputs/ID10/status.yaml
 reviews/ID10/SELF_REVIEW.md
 ```
 
@@ -45,6 +76,9 @@ reviews/ID10/SELF_REVIEW.md
 항목과 exception에 cross-link될 수 있지만 coverage에서는 한 번만 셉니다.
 최종 사용자는 보통 `pv_registry.yaml`과 `PV_REFERENCE.md`만 보면 되지만,
 감사와 재현성을 위해 `_work/raw_extracted_pvs.yaml`도 output과 함께 보존합니다.
+
+`status.yaml`은 해당 output directory가 `draft`, `reviewed`, `approved`, 또는
+`legacy` 중 어디에 해당하는지 기계가 읽을 수 있게 기록합니다.
 
 초안 생성 시 자체 검토는 `SELF_REVIEW.md`에 남깁니다. 별도 리뷰 작업을
 요청하면 리뷰 agent는 가능한 명백한 오류를 output에 직접 반영하고,
@@ -112,7 +146,7 @@ BL-10C:SYS-CTRL-LOGIC:UserAve1
 - `exceptions/`: 현재 룰로 처리하기 어려운 실제 케이스
 - `proposals/`: exception을 공식 룰로 편입하기 위한 변경 제안
 - `examples/`: good/bad/before-after 예제
-- `schemas/`: 추후 canonical data schema
+- `schemas/`: SEO_v2 registry/raw/status schema contract
 - `scripts/`: 검증/유지보수 스크립트
 
 `temp/`와 `notes/`는 작업용 디렉토리이며 배포 대상에서 제외합니다.

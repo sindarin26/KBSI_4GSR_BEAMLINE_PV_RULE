@@ -46,6 +46,7 @@ schemas/
 outputs/
   <beamline>/
     _work/
+    status.yaml
 
 reviews/
   <beamline>/
@@ -120,6 +121,9 @@ schema may replace or extend the informal contracts later.
 
 Contains generated PV draft outputs. Use one subdirectory per beamline.
 Intermediate extraction artifacts live under `outputs/<beamline>/_work/`.
+Each active generated output directory should include `status.yaml` so scripts
+and agents can tell whether the output is `draft`, `reviewed`, `approved`, or
+`legacy`.
 For audited or distributed generated outputs, keep `_work/raw_extracted_pvs.yaml`
 with the output so registry entries remain traceable to source material.
 
@@ -149,6 +153,15 @@ Contains lightweight repository validation or maintenance scripts. Scripts may
 check rulebook/schema/example consistency, but they do not define naming policy.
 Active policy still belongs in `rules/`.
 
+Current workbench entry points:
+
+```text
+node scripts/validate_seo_v2_rules.js
+node scripts/validate_registry.js <beamline>
+node scripts/render_reference.js <beamline> --check
+node scripts/render_reference.js <beamline> --write
+```
+
 ## Workflow
 
 1. Put source material under `inputs/<beamline>/`.
@@ -162,11 +175,13 @@ Active policy still belongs in `rules/`.
    `outputs/<beamline>/_work/` for directory, mixed-format, structured, or
    multi-entry source material, then writes generated results under
    `outputs/<beamline>/`.
-7. Draft mode performs a self-review using `rules/review/` and writes
+7. Generated output directories should declare their status in
+   `outputs/<beamline>/status.yaml`.
+8. Draft mode performs a self-review using `rules/review/` and writes
    `reviews/<beamline>/SELF_REVIEW.md`.
-8. Exceptions are recorded under `exceptions/<beamline>/` when current rules are
+9. Exceptions are recorded under `exceptions/<beamline>/` when current rules are
    insufficient.
-9. Review mode reads existing output, applies clear rule-based fixes unless the
+10. Review mode reads existing output, applies clear rule-based fixes unless the
    user requested read-only review, and writes a review log to
    `reviews/<beamline>/REVIEW.md`.
 

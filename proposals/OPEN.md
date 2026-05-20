@@ -13,5 +13,10 @@ and link it here.
   etc.) should be promoted into the published human-facing standard tables.
 - Final coordinate convention for source axes and physical motion semantics.
 - Status/readback/alarm/diagnostic PV naming beyond basic SEO_v2 signal naming.
-- Canonical table columns for `PV_REFERENCE.md`.
+- Owner-approved mappings for unresolved ID10 legacy devices and areas tracked
+  by `exceptions/ID10/EXC-0003-unresolved-legacy-device-area-mappings.md`.
+- IVU encoder classification tracked by
+  `exceptions/ID10/EXC-0002-ivu-encoder-readback-classification.md`.
+- Whether to add optional metadata columns beyond the active
+  `PV_REFERENCE.md` table columns required by the review rulebook.
 - Formal schema under `schemas/` for strict validation of `pv_registry.yaml`.

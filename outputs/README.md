@@ -14,6 +14,22 @@ Generated outputs intended to be current must declare:
 rulebook_version: SEO_v2
 ```
 
-Existing `outputs/ID10/` files that still declare `rulebook_version: v0` are
-legacy generated material and should be regenerated before use as active
-SEO_v2 output.
+Each output directory should include:
+
+```text
+pv_registry.yaml
+PV_REFERENCE.md
+_work/raw_extracted_pvs.yaml
+status.yaml
+```
+
+`status.yaml` records whether the directory is `draft`, `reviewed`, `approved`,
+or `legacy` and points to the canonical registry, reference, raw extraction, and
+review log.
+
+Validate a current output directory with:
+
+```text
+node scripts/validate_registry.js <beamline>
+node scripts/render_reference.js <beamline> --check
+```

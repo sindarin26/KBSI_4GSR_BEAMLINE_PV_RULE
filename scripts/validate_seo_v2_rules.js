@@ -39,10 +39,19 @@ const requiredFiles = [
   "examples/good/ID10_minimal_registry.yaml",
   "reviews/SEO_v2/REVIEW.md",
   "exceptions/SEO_v2/EXC-0001-duplicate-standardpv-instance-policy.md",
+  "scripts/validate_registry.js",
+  "scripts/render_reference.js",
+  "scripts/lib/yaml_subset.js",
+  "scripts/lib/pv_workbench.js",
 ];
 
 for (const file of requiredFiles) {
   requireFile(file);
+}
+
+if (failures > 0) {
+  console.error(`Validation failed with ${failures} failure(s).`);
+  process.exit(1);
 }
 
 const draft = readText("rules/draft/PV_NAMING_RULEBOOK.md");

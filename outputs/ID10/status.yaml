@@ -1,0 +1,14 @@
+beamline: "BL-10C"
+rulebook_version: "SEO_v2"
+output_status: "reviewed"
+canonical_registry: "outputs/ID10/pv_registry.yaml"
+reference: "outputs/ID10/PV_REFERENCE.md"
+raw_extraction: "outputs/ID10/_work/raw_extracted_pvs.yaml"
+review_log: "reviews/ID10/REVIEW.md"
+open_exceptions:
+  - "exceptions/ID10/EXC-0001-status-readback-diagnostic-pvs.md"
+  - "exceptions/ID10/EXC-0002-ivu-encoder-readback-classification.md"
+  - "exceptions/ID10/EXC-0003-unresolved-legacy-device-area-mappings.md"
+notes:
+  - "Registry and reference are active SEO_v2 reviewed outputs."
+  - "Legacy source PVs remain only as source trace and metadata."

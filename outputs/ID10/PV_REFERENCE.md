@@ -1,8 +1,8 @@
-# ID10 PV Reference
+# 10C PV Reference
 
 Generated from pv_registry.yaml. Do not hand-edit this file directly.
 
-This reference reflects the active SEO_v2 / 4GSR standard v1.0 review-fixed registry. Legacy source PVs are preserved in `source_pv` and source trace metadata in `pv_registry.yaml`.
+This reference reflects the active SEO_v2 / 4GSR standard v1.0 registry. Legacy source PVs are preserved in `source_pv` and source trace metadata in `pv_registry.yaml`.
 
 | PV Name | Port | Area | Device | Subdevice | Signal | Status | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- |

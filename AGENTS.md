@@ -124,6 +124,8 @@ Architecture agents must:
 - Keep distributable source material under `inputs/`; keep `temp/` as local
   scratch only.
 - Keep generated outputs under `outputs/`.
+- Keep generated output status in `outputs/<beamline>/status.yaml` when an
+  output directory is current enough to validate.
 - Keep validation reports under `reviews/`.
 - Keep unsupported cases under `exceptions/`.
 - Keep proposed rule changes under `proposals/`.
@@ -150,6 +152,13 @@ BL-[PORT]:[AREA]-[DEV]-[SUBDEV]:[SignalName]
 Historical v0 material using `ID10:{Area}:{Device}:{AxisOrFunction}` may remain
 in decisions, reviews, or legacy outputs, but it is not the active generation
 target for new work.
+
+Current generated outputs should be machine-checkable with:
+
+```text
+node scripts/validate_registry.js <beamline>
+node scripts/render_reference.js <beamline> --check
+```
 
 When an active rulebook does not cover a case, agents must state that limitation
 and use the exception/proposal workflow instead of pretending a full rule exists.
