@@ -1,0 +1,154 @@
+# Informal SEO_v2 registry contract.
+# This is not yet a full JSON Schema or validation schema.
+
+registry:
+  required:
+    beamline: string
+    rulebook_version: string
+    pvs: list
+  expected:
+    rulebook_version: SEO_v2
+    beamline_format: BL-[0-9]{2}[A-Z]
+  pv_entry:
+    required:
+      rulebook_version: string
+      source_trace: object
+      section: string
+      port: string
+      area: string
+      device: string
+      subdevice: string
+      signal: string
+      pv: string
+      status: string
+      notes: list
+    optional:
+      source_pv: string_or_null
+      metadata: object
+    field_constraints:
+      section: BL
+      port_regex: "[0-9]{2}[A-Z]"
+      area_values:
+        - FE
+        - PTL
+        - OH
+        - EH
+        - SYS
+      device_values:
+        - ATT
+        - CCD
+        - CTRL
+        - FRMASK
+        - HHLM
+        - ION
+        - IVU
+        - KBHM
+        - KBSLT
+        - KBVM
+        - MONO
+        - MOTOR
+        - MVMASK
+        - SH
+        - SMPL
+        - WBSLT
+      subdevice_values:
+        - BODY
+        - CRYS
+        - CTRL
+        - DIAG
+        - ENC
+        - GIRD
+        - INFO
+        - LOGIC
+        - MIRR
+        - QUEUE
+        - RES
+        - SAVE
+        - SCAN
+        - SLIT
+        - STG
+        - TIME
+        - UTIL
+        - VALV
+      signal_regex: "[A-Z][A-Za-z0-9]*"
+      pv_format: section + "-" + port + ":" + area + "-" + device + "-" + subdevice + ":" + signal
+      pv_regex: "BL-[0-9]{2}[A-Z]:[A-Z0-9]+-[A-Z0-9]+-[A-Z0-9]+:[A-Z][A-Za-z0-9]*"
+    source_trace:
+      required:
+        raw_id: string_or_null
+        source_id: string
+        source_line: integer_or_null
+        source_anchor: string
+        source_label: string_or_null
+      conditional:
+        if_raw_extracted_pvs_exists:
+          raw_id: string
+    status_values:
+      - proposed
+      - reviewed
+      - approved
+      - decision_required
+      - exception
+      - deprecated
+      - legacy
+raw_extracted_pvs:
+  required:
+    beamline: string
+    rulebook_version: string
+    extracted_from: list
+    entries: list
+  expected:
+    rulebook_version: SEO_v2
+  extracted_from_entry:
+    required:
+      source_id: string
+      source_type: string
+      source_state: included_or_excluded
+      pv_like_entries: integer_or_null
+    optional:
+      exclude_reason: string_or_null
+      notes: string_or_null
+    conditional:
+      if_source_state_included:
+        pv_like_entries: integer
+      if_source_state_excluded:
+        exclude_reason: non_empty_string
+  entry:
+    required:
+      raw_id: string
+      status: extracted_or_skipped
+      source_trace: object
+    optional:
+      raw_pv: string_or_null
+      raw_source_pv: string_or_null
+      raw_area: string_or_null
+      raw_device: string_or_null
+      raw_subdevice: string_or_null
+      raw_signal: string_or_null
+      raw_metadata: object
+      skip_reason: non_empty_string_when_status_skipped
+    conditional:
+      if_raw_pv_missing_or_null:
+        require_one_of:
+          - raw_source_pv
+          - raw_device
+          - raw_signal
+          - raw_metadata
+      if_status_skipped:
+        skip_reason: non_empty_string
+    raw_id_format: RAW-[0-9]{4}
+    status_values:
+      - extracted
+      - skipped
+    source_trace:
+      required:
+        source_id: string
+        source_line: integer_or_null
+        source_anchor: string
+        source_label: string_or_null
+    optional_metadata:
+      seq: number_string_or_null
+      note: string_or_null
+      source: string_or_null
+      egu: string_or_null
+      ioc: string_or_null

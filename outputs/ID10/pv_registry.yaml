@@ -1,1927 +1,1140 @@
-beamline: "ID10"
-rulebook_version: "v0"
+beamline: "BL-10C"
+rulebook_version: "SEO_v2"
 pvs:
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0001"
-      source_id: "inputs/ID10/front masks and attenuator.txt"
-      source_line: 4
-      source_anchor: "line:4"
-      source_label: "BL10:FMASK:X"
-    prefix: "ID10"
-    area: "PTL"
-    device: "FMASK01"
-    axis_or_function: "x"
-    pv: "ID10:PTL:FMASK01:x"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "assumed PTL; verify area later"
-      - "source IOC: sim"
-    metadata:
-      source_text: "- BL10:FMASK:X, Front mask, mm, init 0, range -20..20, velocity 2, sim"
-      egu: "mm"
-      init: "0"
-      low: "-20"
-      high: "20"
-      velocity: "2"
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0002"
-      source_id: "inputs/ID10/front masks and attenuator.txt"
-      source_line: 5
-      source_anchor: "line:5"
-      source_label: "BL10:FMASK:Y"
-    prefix: "ID10"
-    area: "PTL"
-    device: "FMASK01"
-    axis_or_function: "y"
-    pv: "ID10:PTL:FMASK01:y"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "assumed PTL; verify area later"
-      - "source IOC: sim"
-    metadata:
-      source_text: "- BL10:FMASK:Y, Front mask, mm, init 0, range -20..20, velocity 2, sim"
-      egu: "mm"
-      init: "0"
-      low: "-20"
-      high: "20"
-      velocity: "2"
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0003"
-      source_id: "inputs/ID10/front masks and attenuator.txt"
-      source_line: 6
-      source_anchor: "line:6"
-      source_label: "BL10:FMASK:Hgap"
-    prefix: "ID10"
-    area: "PTL"
-    device: "FMASK01"
-    axis_or_function: "hgap"
-    pv: "ID10:PTL:FMASK01:hgap"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "assumed PTL; verify area later"
-      - "source IOC: sim"
-    metadata:
-      source_text: "- BL10:FMASK:Hgap, Front mask, mm, init 4.0, range 0.1..20, velocity 1, sim"
-      egu: "mm"
-      init: "4.0"
-      low: "0.1"
-      high: "20"
-      velocity: "1"
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0004"
-      source_id: "inputs/ID10/front masks and attenuator.txt"
-      source_line: 7
-      source_anchor: "line:7"
-      source_label: "BL10:FMASK:Vgap"
-    prefix: "ID10"
-    area: "PTL"
-    device: "FMASK01"
-    axis_or_function: "vgap"
-    pv: "ID10:PTL:FMASK01:vgap"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "assumed PTL; verify area later"
-      - "source IOC: sim"
-    metadata:
-      source_text: "- BL10:FMASK:Vgap, Front mask, mm, init 4.0, range 0.1..20, velocity 1, sim"
-      egu: "mm"
-      init: "4.0"
-      low: "0.1"
-      high: "20"
-      velocity: "1"
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0005"
-      source_id: "inputs/ID10/front masks and attenuator.txt"
-      source_line: 10
-      source_anchor: "line:10"
-      source_label: "BL10:MMASK:X"
-    prefix: "ID10"
-    area: "PTL"
-    device: "MMASK01"
-    axis_or_function: "x"
-    pv: "ID10:PTL:MMASK01:x"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "assumed PTL; source says location not checked"
-      - "source IOC: sim"
-    metadata:
-      source_text: "- BL10:MMASK:X / Movable mask / mm / 0 / -20..20 / vel 2 / sim"
-      egu: "mm"
-      velocity: "2"
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0006"
-      source_id: "inputs/ID10/front masks and attenuator.txt"
-      source_line: 11
-      source_anchor: "line:11"
-      source_label: "BL10:MMASK:Y"
-    prefix: "ID10"
-    area: "PTL"
-    device: "MMASK01"
-    axis_or_function: "y"
-    pv: "ID10:PTL:MMASK01:y"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "assumed PTL; source says location not checked"
-      - "source IOC: sim"
-    metadata:
-      source_text: "- BL10:MMASK:Y / Movable mask / mm / 0 / -20..20 / vel 2 / sim"
-      egu: "mm"
-      velocity: "2"
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0007"
-      source_id: "inputs/ID10/front masks and attenuator.txt"
-      source_line: 12
-      source_anchor: "line:12"
-      source_label: "BL10:MMASK:Hgap"
-    prefix: "ID10"
-    area: "PTL"
-    device: "MMASK01"
-    axis_or_function: "hgap"
-    pv: "ID10:PTL:MMASK01:hgap"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "assumed PTL; source says location not checked"
-      - "source IOC: sim"
-    metadata:
-      source_text: "- BL10:MMASK:Hgap / Movable mask / mm / 4.0 / 0.1..20 / vel 1 / sim"
-      egu: "mm"
-      velocity: "1"
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0008"
-      source_id: "inputs/ID10/front masks and attenuator.txt"
-      source_line: 13
-      source_anchor: "line:13"
-      source_label: "BL10:MMASK:Vgap"
-    prefix: "ID10"
-    area: "PTL"
-    device: "MMASK01"
-    axis_or_function: "vgap"
-    pv: "ID10:PTL:MMASK01:vgap"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "assumed PTL; source says location not checked"
-      - "source IOC: sim"
-    metadata:
-      source_text: "- BL10:MMASK:Vgap / Movable mask / mm / 4.0 / 0.1..20 / vel 1 / sim"
-      egu: "mm"
-      velocity: "1"
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0009"
-      source_id: "inputs/ID10/front masks and attenuator.txt"
-      source_line: 16
-      source_anchor: "line:16"
-      source_label: "BL10:ATT:X"
-    prefix: "ID10"
-    area: "PTL"
-    device: "ATT01"
-    axis_or_function: "x"
-    pv: "ID10:PTL:ATT01:x"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "assumed PTL; verify area later"
-      - "source IOC: sim"
-    metadata:
-      source_text: "BL10:ATT:X  Attenuator  mm  init=0  low=-25 high=25 velocity=0.01  ioc=sim"
-      egu: "mm"
-      init: "0"
-      low: "-25"
-      high: "25"
-      velocity: "0.01"
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0010"
-      source_id: "inputs/ID10/front masks and attenuator.txt"
-      source_line: 17
-      source_anchor: "line:17"
-      source_label: "BL10:ATT:Y"
-    prefix: "ID10"
-    area: "PTL"
-    device: "ATT01"
-    axis_or_function: "y"
-    pv: "ID10:PTL:ATT01:y"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "assumed PTL; verify area later"
-      - "source IOC: sim"
-    metadata:
-      source_text: "BL10:ATT:Y  Attenuator  mm  init=0  low=-25 high=25 velocity=0.01  ioc=sim"
-      egu: "mm"
-      init: "0"
-      low: "-25"
-      high: "25"
-      velocity: "0.01"
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0011"
-      source_id: "inputs/ID10/optics motors.json"
-      source_line: 4
-      source_anchor: "/items/0/pv"
-      source_label: "BL10:M1:Z"
-    prefix: "ID10"
-    area: "OH"
-    device: "M01"
-    axis_or_function: "z"
-    pv: "ID10:OH:M01:z"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "legacy M1 mirror converted to two-digit device token; confirm"
-      - "source IOC: sim"
-    metadata:
-      egu: "mm"
-      init: 0
-      low: -5
-      high: 5
-      velocity: 0.5
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0012"
-      source_id: "inputs/ID10/optics motors.json"
-      source_line: 5
-      source_anchor: "/items/1/pv"
-      source_label: "BL10:M1:Pitch"
-    prefix: "ID10"
-    area: "OH"
-    device: "M01"
-    axis_or_function: "pitch"
-    pv: "ID10:OH:M01:pitch"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "legacy M1 mirror converted to two-digit device token; confirm"
-      - "source IOC: sim"
-    metadata:
-      egu: "mrad"
-      init: 3.0
-      low: -2
-      high: 5
-      velocity: 0.5
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0013"
-      source_id: "inputs/ID10/optics motors.json"
-      source_line: 6
-      source_anchor: "/items/2/pv"
-      source_label: "BL10:M1:PitchF"
-    prefix: "ID10"
-    area: "OH"
-    device: "M01"
-    axis_or_function: "pitch_f"
-    pv: "ID10:OH:M01:pitch_f"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "legacy M1 mirror converted to two-digit device token; confirm"
-      - "source IOC: sim"
-    metadata:
-      egu: "urad"
-      init: 0
-      low: -50
-      high: 50
-      velocity: 100
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0014"
-      source_id: "inputs/ID10/optics motors.json"
-      source_line: 7
-      source_anchor: "/items/3/pv"
-      source_label: "BL10:M1:Tx"
-    prefix: "ID10"
-    area: "OH"
-    device: "M01"
-    axis_or_function: "tx"
-    pv: "ID10:OH:M01:tx"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "legacy M1 mirror converted to two-digit device token; confirm"
-      - "source IOC: sim"
-    metadata:
-      egu: "mm"
-      init: 0
-      low: -10
-      high: 10
-      velocity: 1
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0015"
-      source_id: "inputs/ID10/optics motors.json"
-      source_line: 8
-      source_anchor: "/items/4/pv"
-      source_label: "BL10:M1:Roll"
-    prefix: "ID10"
-    area: "OH"
-    device: "M01"
-    axis_or_function: "roll"
-    pv: "ID10:OH:M01:roll"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "legacy M1 mirror converted to two-digit device token; confirm"
-      - "source IOC: sim"
-    metadata:
-      egu: "mrad"
-      init: 0
-      low: -2
-      high: 2
-      velocity: 1
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0016"
-      source_id: "inputs/ID10/optics motors.json"
-      source_line: 9
-      source_anchor: "/items/5/pv"
-      source_label: "BL10:M1:Yaw"
-    prefix: "ID10"
-    area: "OH"
-    device: "M01"
-    axis_or_function: "yaw"
-    pv: "ID10:OH:M01:yaw"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "legacy M1 mirror converted to two-digit device token; confirm"
-      - "source IOC: sim"
-    metadata:
-      egu: "mrad"
-      init: 0
-      low: -2
-      high: 2
-      velocity: 1
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0017"
-      source_id: "inputs/ID10/optics motors.json"
-      source_line: 10
-      source_anchor: "/items/6/pv"
-      source_label: "BL10:M1:BendU"
-    prefix: "ID10"
-    area: "OH"
-    device: "M01"
-    axis_or_function: "bend_u"
-    pv: "ID10:OH:M01:bend_u"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "legacy M1 mirror converted to two-digit device token; confirm"
-      - "source IOC: sim"
-    metadata:
-      egu: "Nm"
-      init: 0
-      low: -50
-      high: 50
-      velocity: 1
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0018"
-      source_id: "inputs/ID10/optics motors.json"
-      source_line: 11
-      source_anchor: "/items/7/pv"
-      source_label: "BL10:M1:BendD"
-    prefix: "ID10"
-    area: "OH"
-    device: "M01"
-    axis_or_function: "bend_d"
-    pv: "ID10:OH:M01:bend_d"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "legacy M1 mirror converted to two-digit device token; confirm"
-      - "source IOC: sim"
-    metadata:
-      egu: "Nm"
-      init: 0
-      low: -50
-      high: 50
-      velocity: 1
-      ioc: "sim"
-  - rulebook_version: "v0"
+  - rulebook_version: "SEO_v2"
     source_trace:
       raw_id: "RAW-0019"
       source_id: "inputs/ID10/optics motors.json"
       source_line: 13
       source_anchor: "/items/8/pv"
       source_label: "BL10:DCM:Theta"
-    prefix: "ID10"
+    section: "BL"
+    port: "10C"
     area: "OH"
-    device: "DCM01"
-    axis_or_function: "theta"
-    pv: "ID10:OH:DCM01:theta"
-    status: "proposed"
+    device: "MONO"
+    subdevice: "CRYS"
+    signal: "Theta"
+    pv: "BL-10C:OH-MONO-CRYS:Theta"
+    source_pv: "BL10:DCM:Theta"
+    status: "reviewed"
     notes:
+      - "normalized from legacy source PV BL10:DCM:Theta"
+      - "legacy DCM token mapped to active MONO-CRYS per SEO_v2 migration example"
       - "source IOC: sim"
     metadata:
+      raw_group: "DCM"
+      raw_device: "DCM"
+      raw_axis_or_function: "Theta"
       egu: "deg"
-      init: 11.402
-      low: -1
-      high: 20
-      velocity: 0.05
+      init: "11.402"
+      low: "-1"
+      high: "20"
+      velocity: "0.05"
       ioc: "sim"
-  - rulebook_version: "v0"
+  - rulebook_version: "SEO_v2"
     source_trace:
       raw_id: "RAW-0020"
       source_id: "inputs/ID10/optics motors.json"
       source_line: 14
       source_anchor: "/items/9/pv"
       source_label: "BL10:DCM:Y1"
-    prefix: "ID10"
+    section: "BL"
+    port: "10C"
     area: "OH"
-    device: "DCM01"
-    axis_or_function: "y1"
-    pv: "ID10:OH:DCM01:y1"
-    status: "proposed"
+    device: "MONO"
+    subdevice: "CRYS"
+    signal: "Y1"
+    pv: "BL-10C:OH-MONO-CRYS:Y1"
+    source_pv: "BL10:DCM:Y1"
+    status: "reviewed"
     notes:
+      - "normalized from legacy source PV BL10:DCM:Y1"
+      - "legacy DCM token mapped to active MONO-CRYS per SEO_v2 migration example"
       - "source IOC: sim"
     metadata:
+      raw_group: "DCM"
+      raw_device: "DCM"
+      raw_axis_or_function: "Y1"
       egu: "mm"
-      init: 0
-      low: -2.5
-      high: 2.5
-      velocity: 0.5
+      init: "0"
+      low: "-2.5"
+      high: "2.5"
+      velocity: "0.5"
       ioc: "sim"
-  - rulebook_version: "v0"
+  - rulebook_version: "SEO_v2"
     source_trace:
       raw_id: "RAW-0021"
       source_id: "inputs/ID10/optics motors.json"
       source_line: 15
       source_anchor: "/items/10/pv"
       source_label: "BL10:DCM:Chi1"
-    prefix: "ID10"
+    section: "BL"
+    port: "10C"
     area: "OH"
-    device: "DCM01"
-    axis_or_function: "chi1"
-    pv: "ID10:OH:DCM01:chi1"
-    status: "proposed"
+    device: "MONO"
+    subdevice: "CRYS"
+    signal: "Chi1"
+    pv: "BL-10C:OH-MONO-CRYS:Chi1"
+    source_pv: "BL10:DCM:Chi1"
+    status: "reviewed"
     notes:
+      - "normalized from legacy source PV BL10:DCM:Chi1"
+      - "legacy DCM token mapped to active MONO-CRYS per SEO_v2 migration example"
       - "source IOC: sim"
     metadata:
+      raw_group: "DCM"
+      raw_device: "DCM"
+      raw_axis_or_function: "Chi1"
       egu: "arcsec"
-      init: 0
-      low: -300
-      high: 300
-      velocity: 1
+      init: "0"
+      low: "-300"
+      high: "300"
+      velocity: "1"
       ioc: "sim"
-  - rulebook_version: "v0"
+  - rulebook_version: "SEO_v2"
     source_trace:
       raw_id: "RAW-0022"
       source_id: "inputs/ID10/optics motors.json"
       source_line: 16
       source_anchor: "/items/11/pv"
       source_label: "BL10:DCM:TX"
-    prefix: "ID10"
+    section: "BL"
+    port: "10C"
     area: "OH"
-    device: "DCM01"
-    axis_or_function: "tx"
-    pv: "ID10:OH:DCM01:tx"
-    status: "proposed"
+    device: "MONO"
+    subdevice: "CRYS"
+    signal: "Tx"
+    pv: "BL-10C:OH-MONO-CRYS:Tx"
+    source_pv: "BL10:DCM:TX"
+    status: "reviewed"
     notes:
+      - "normalized from legacy source PV BL10:DCM:TX"
+      - "legacy DCM token mapped to active MONO-CRYS per SEO_v2 migration example"
       - "source IOC: sim"
     metadata:
+      raw_group: "DCM"
+      raw_device: "DCM"
+      raw_axis_or_function: "TX"
       egu: "mm"
-      init: 0
-      low: -12.5
-      high: 12.5
-      velocity: 0.5
+      init: "0"
+      low: "-12.5"
+      high: "12.5"
+      velocity: "0.5"
       ioc: "sim"
-  - rulebook_version: "v0"
+  - rulebook_version: "SEO_v2"
     source_trace:
       raw_id: "RAW-0023"
       source_id: "inputs/ID10/optics motors.json"
       source_line: 17
       source_anchor: "/items/12/pv"
       source_label: "BL10:DCM:Y2"
-    prefix: "ID10"
+    section: "BL"
+    port: "10C"
     area: "OH"
-    device: "DCM01"
-    axis_or_function: "y2"
-    pv: "ID10:OH:DCM01:y2"
-    status: "proposed"
+    device: "MONO"
+    subdevice: "CRYS"
+    signal: "Y2"
+    pv: "BL-10C:OH-MONO-CRYS:Y2"
+    source_pv: "BL10:DCM:Y2"
+    status: "reviewed"
     notes:
+      - "normalized from legacy source PV BL10:DCM:Y2"
+      - "legacy DCM token mapped to active MONO-CRYS per SEO_v2 migration example"
       - "source IOC: sim"
     metadata:
+      raw_group: "DCM"
+      raw_device: "DCM"
+      raw_axis_or_function: "Y2"
       egu: "mm"
-      init: 0
-      low: -25
-      high: 25
-      velocity: 0.5
+      init: "0"
+      low: "-25"
+      high: "25"
+      velocity: "0.5"
       ioc: "sim"
-  - rulebook_version: "v0"
+  - rulebook_version: "SEO_v2"
     source_trace:
       raw_id: "RAW-0024"
       source_id: "inputs/ID10/optics motors.json"
       source_line: 18
       source_anchor: "/items/13/pv"
       source_label: "BL10:DCM:Z2"
-    prefix: "ID10"
+    section: "BL"
+    port: "10C"
     area: "OH"
-    device: "DCM01"
-    axis_or_function: "z2"
-    pv: "ID10:OH:DCM01:z2"
-    status: "proposed"
+    device: "MONO"
+    subdevice: "CRYS"
+    signal: "Z2"
+    pv: "BL-10C:OH-MONO-CRYS:Z2"
+    source_pv: "BL10:DCM:Z2"
+    status: "reviewed"
     notes:
+      - "normalized from legacy source PV BL10:DCM:Z2"
+      - "legacy DCM token mapped to active MONO-CRYS per SEO_v2 migration example"
       - "source IOC: sim"
     metadata:
+      raw_group: "DCM"
+      raw_device: "DCM"
+      raw_axis_or_function: "Z2"
       egu: "mm"
-      init: 6.12
-      low: 0
-      high: 25
-      velocity: 0.5
+      init: "6.12"
+      low: "0"
+      high: "25"
+      velocity: "0.5"
       ioc: "sim"
-  - rulebook_version: "v0"
+  - rulebook_version: "SEO_v2"
     source_trace:
       raw_id: "RAW-0025"
       source_id: "inputs/ID10/optics motors.json"
       source_line: 19
       source_anchor: "/items/14/pv"
       source_label: "BL10:DCM:DTheta2"
-    prefix: "ID10"
+    section: "BL"
+    port: "10C"
     area: "OH"
-    device: "DCM01"
-    axis_or_function: "dtheta2"
-    pv: "ID10:OH:DCM01:dtheta2"
-    status: "proposed"
+    device: "MONO"
+    subdevice: "CRYS"
+    signal: "DTheta2"
+    pv: "BL-10C:OH-MONO-CRYS:DTheta2"
+    source_pv: "BL10:DCM:DTheta2"
+    status: "reviewed"
     notes:
+      - "normalized from legacy source PV BL10:DCM:DTheta2"
+      - "legacy DCM token mapped to active MONO-CRYS per SEO_v2 migration example"
       - "source IOC: sim"
     metadata:
+      raw_group: "DCM"
+      raw_device: "DCM"
+      raw_axis_or_function: "DTheta2"
       egu: "arcsec"
-      init: 0
-      low: -2520
-      high: 2520
-      velocity: 10
+      init: "0"
+      low: "-2520"
+      high: "2520"
+      velocity: "10"
       ioc: "sim"
-  - rulebook_version: "v0"
+  - rulebook_version: "SEO_v2"
     source_trace:
       raw_id: "RAW-0026"
       source_id: "inputs/ID10/optics motors.json"
       source_line: 20
       source_anchor: "/items/15/pv"
       source_label: "BL10:DCM:Roll2"
-    prefix: "ID10"
+    section: "BL"
+    port: "10C"
     area: "OH"
-    device: "DCM01"
-    axis_or_function: "roll2"
-    pv: "ID10:OH:DCM01:roll2"
-    status: "proposed"
+    device: "MONO"
+    subdevice: "CRYS"
+    signal: "Roll2"
+    pv: "BL-10C:OH-MONO-CRYS:Roll2"
+    source_pv: "BL10:DCM:Roll2"
+    status: "reviewed"
     notes:
+      - "normalized from legacy source PV BL10:DCM:Roll2"
+      - "legacy DCM token mapped to active MONO-CRYS per SEO_v2 migration example"
       - "source IOC: sim"
     metadata:
+      raw_group: "DCM"
+      raw_device: "DCM"
+      raw_axis_or_function: "Roll2"
       egu: "arcsec"
-      init: 0
-      low: -2520
-      high: 2520
-      velocity: 10
+      init: "0"
+      low: "-2520"
+      high: "2520"
+      velocity: "10"
       ioc: "sim"
-  - rulebook_version: "v0"
+  - rulebook_version: "SEO_v2"
     source_trace:
       raw_id: "RAW-0027"
       source_id: "inputs/ID10/optics motors.json"
       source_line: 21
       source_anchor: "/items/16/pv"
       source_label: "BL10:DCM:DTheta2F"
-    prefix: "ID10"
+    section: "BL"
+    port: "10C"
     area: "OH"
-    device: "DCM01"
-    axis_or_function: "dtheta2_f"
-    pv: "ID10:OH:DCM01:dtheta2_f"
-    status: "proposed"
+    device: "MONO"
+    subdevice: "CRYS"
+    signal: "DTheta2F"
+    pv: "BL-10C:OH-MONO-CRYS:DTheta2F"
+    source_pv: "BL10:DCM:DTheta2F"
+    status: "reviewed"
     notes:
+      - "normalized from legacy source PV BL10:DCM:DTheta2F"
+      - "legacy DCM token mapped to active MONO-CRYS per SEO_v2 migration example"
       - "source IOC: sim"
     metadata:
+      raw_group: "DCM"
+      raw_device: "DCM"
+      raw_axis_or_function: "DTheta2F"
       egu: "arcsec"
-      init: 0
-      low: -10.3
-      high: 10.3
-      velocity: 100
+      init: "0"
+      low: "-10.3"
+      high: "10.3"
+      velocity: "100"
       ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0028"
-      source_id: "inputs/ID10/optics motors.json"
-      source_line: 23
-      source_anchor: "/items/17/pv"
-      source_label: "BL10:M2:Z"
-    prefix: "ID10"
-    area: "OH"
-    device: "M02"
-    axis_or_function: "z"
-    pv: "ID10:OH:M02:z"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "legacy M2 mirror converted to two-digit device token; confirm"
-      - "source IOC: sim"
-    metadata:
-      egu: "mm"
-      init: 0
-      low: -5
-      high: 5
-      velocity: 0.5
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0029"
-      source_id: "inputs/ID10/optics motors.json"
-      source_line: 24
-      source_anchor: "/items/18/pv"
-      source_label: "BL10:M2:Pitch"
-    prefix: "ID10"
-    area: "OH"
-    device: "M02"
-    axis_or_function: "pitch"
-    pv: "ID10:OH:M02:pitch"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "legacy M2 mirror converted to two-digit device token; confirm"
-      - "source IOC: sim"
-    metadata:
-      egu: "mrad"
-      init: 3.0
-      low: -2
-      high: 5
-      velocity: 0.5
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0030"
-      source_id: "inputs/ID10/optics motors.json"
-      source_line: 25
-      source_anchor: "/items/19/pv"
-      source_label: "BL10:M2:PitchF"
-    prefix: "ID10"
-    area: "OH"
-    device: "M02"
-    axis_or_function: "pitch_f"
-    pv: "ID10:OH:M02:pitch_f"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "legacy M2 mirror converted to two-digit device token; confirm"
-      - "source IOC: sim"
-    metadata:
-      egu: "urad"
-      init: 0
-      low: -50
-      high: 50
-      velocity: 100
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0031"
-      source_id: "inputs/ID10/optics motors.json"
-      source_line: 26
-      source_anchor: "/items/20/pv"
-      source_label: "BL10:M2:Tx"
-    prefix: "ID10"
-    area: "OH"
-    device: "M02"
-    axis_or_function: "tx"
-    pv: "ID10:OH:M02:tx"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "legacy M2 mirror converted to two-digit device token; confirm"
-      - "source IOC: sim"
-    metadata:
-      egu: "mm"
-      init: 0
-      low: -10
-      high: 10
-      velocity: 1
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0032"
-      source_id: "inputs/ID10/optics motors.json"
-      source_line: 27
-      source_anchor: "/items/21/pv"
-      source_label: "BL10:M2:Roll"
-    prefix: "ID10"
-    area: "OH"
-    device: "M02"
-    axis_or_function: "roll"
-    pv: "ID10:OH:M02:roll"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "legacy M2 mirror converted to two-digit device token; confirm"
-      - "source IOC: sim"
-    metadata:
-      egu: "mrad"
-      init: 0
-      low: -2
-      high: 2
-      velocity: 1
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0033"
-      source_id: "inputs/ID10/optics motors.json"
-      source_line: 28
-      source_anchor: "/items/22/pv"
-      source_label: "BL10:M2:Yaw"
-    prefix: "ID10"
-    area: "OH"
-    device: "M02"
-    axis_or_function: "yaw"
-    pv: "ID10:OH:M02:yaw"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "legacy M2 mirror converted to two-digit device token; confirm"
-      - "source IOC: sim"
-    metadata:
-      egu: "mrad"
-      init: 0
-      low: -2
-      high: 2
-      velocity: 1
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0034"
-      source_id: "inputs/ID10/optics motors.json"
-      source_line: 29
-      source_anchor: "/items/23/pv"
-      source_label: "BL10:M2:BendU"
-    prefix: "ID10"
-    area: "OH"
-    device: "M02"
-    axis_or_function: "bend_u"
-    pv: "ID10:OH:M02:bend_u"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "legacy M2 mirror converted to two-digit device token; confirm"
-      - "source IOC: sim"
-    metadata:
-      egu: "Nm"
-      init: 0
-      low: -50
-      high: 50
-      velocity: 1
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0035"
-      source_id: "inputs/ID10/optics motors.json"
-      source_line: 30
-      source_anchor: "/items/24/pv"
-      source_label: "BL10:M2:BendD"
-    prefix: "ID10"
-    area: "OH"
-    device: "M02"
-    axis_or_function: "bend_d"
-    pv: "ID10:OH:M02:bend_d"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "legacy M2 mirror converted to two-digit device token; confirm"
-      - "source IOC: sim"
-    metadata:
-      egu: "Nm"
-      init: 0
-      low: -50
-      high: 50
-      velocity: 1
-      ioc: "sim"
-  - rulebook_version: "v0"
+  - rulebook_version: "SEO_v2"
     source_trace:
       raw_id: "RAW-0036"
       source_id: "inputs/ID10/optics motors.json"
       source_line: 32
       source_anchor: "/items/25/pv"
       source_label: "BL10:KBV:X"
-    prefix: "ID10"
+    section: "BL"
+    port: "10C"
     area: "OH"
-    device: "KBVM01"
-    axis_or_function: "x"
-    pv: "ID10:OH:KBVM01:x"
-    status: "decision_required"
+    device: "KBVM"
+    subdevice: "MIRR"
+    signal: "X"
+    pv: "BL-10C:OH-KBVM-MIRR:X"
+    source_pv: "BL10:KBV:X"
+    status: "reviewed"
     notes:
-      - "requires beamline-manager decision before approval"
-      - "device token derived from vertical KB mirror source; confirm"
+      - "normalized from legacy source PV BL10:KBV:X"
+      - "legacy KBV token mapped to active KBVM-MIRR"
       - "source IOC: sim"
     metadata:
-      egu: "mm"
-      init: 0
-      low: -2
-      high: 2
-      velocity: 0.5
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0037"
-      source_id: "inputs/ID10/optics motors.json"
-      source_line: 33
-      source_anchor: "/items/26/pv"
-      source_label: "BL10:KBV:Y"
-    prefix: "ID10"
-    area: "OH"
-    device: "KBVM01"
-    axis_or_function: "y"
-    pv: "ID10:OH:KBVM01:y"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "device token derived from vertical KB mirror source; confirm"
-      - "source IOC: sim"
-    metadata:
-      egu: "mm"
-      init: 0
-      low: -15
-      high: 15
-      velocity: 0.5
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0038"
-      source_id: "inputs/ID10/optics motors.json"
-      source_line: 34
-      source_anchor: "/items/27/pv"
-      source_label: "BL10:KBV:Z"
-    prefix: "ID10"
-    area: "OH"
-    device: "KBVM01"
-    axis_or_function: "z"
-    pv: "ID10:OH:KBVM01:z"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "device token derived from vertical KB mirror source; confirm"
-      - "source IOC: sim"
-    metadata:
-      egu: "mm"
-      init: 0
-      low: -100
-      high: 100
-      velocity: 0.5
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0039"
-      source_id: "inputs/ID10/optics motors.json"
-      source_line: 35
-      source_anchor: "/items/28/pv"
-      source_label: "BL10:KBV:Pitch"
-    prefix: "ID10"
-    area: "OH"
-    device: "KBVM01"
-    axis_or_function: "pitch"
-    pv: "ID10:OH:KBVM01:pitch"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "device token derived from vertical KB mirror source; confirm"
-      - "source IOC: sim"
-    metadata:
-      egu: "mrad"
-      init: 3.0
-      low: -2
-      high: 5
-      velocity: 0.2
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0040"
-      source_id: "inputs/ID10/optics motors.json"
-      source_line: 36
-      source_anchor: "/items/29/pv"
-      source_label: "BL10:KBV:BendU"
-    prefix: "ID10"
-    area: "OH"
-    device: "KBVM01"
-    axis_or_function: "bend_u"
-    pv: "ID10:OH:KBVM01:bend_u"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "device token derived from vertical KB mirror source; confirm"
-      - "source IOC: sim"
-    metadata:
-      egu: "Nm"
-      init: 0
-      low: -20
-      high: 20
-      velocity: 1
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0041"
-      source_id: "inputs/ID10/optics motors.json"
-      source_line: 37
-      source_anchor: "/items/30/pv"
-      source_label: "BL10:KBV:BendD"
-    prefix: "ID10"
-    area: "OH"
-    device: "KBVM01"
-    axis_or_function: "bend_d"
-    pv: "ID10:OH:KBVM01:bend_d"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "device token derived from vertical KB mirror source; confirm"
-      - "source IOC: sim"
-    metadata:
-      egu: "Nm"
-      init: 0
-      low: -20
-      high: 20
-      velocity: 1
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0042"
-      source_id: "inputs/ID10/optics motors.json"
-      source_line: 39
-      source_anchor: "/items/31/pv"
-      source_label: "BL10:KBH:X"
-    prefix: "ID10"
-    area: "OH"
-    device: "KBHM01"
-    axis_or_function: "x"
-    pv: "ID10:OH:KBHM01:x"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "device token derived from horizontal KB mirror source; confirm"
-      - "source IOC: sim"
-    metadata:
-      egu: "mm"
-      init: 0
-      low: -15
-      high: 15
-      velocity: 0.5
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0043"
-      source_id: "inputs/ID10/optics motors.json"
-      source_line: 40
-      source_anchor: "/items/32/pv"
-      source_label: "BL10:KBH:Y"
-    prefix: "ID10"
-    area: "OH"
-    device: "KBHM01"
-    axis_or_function: "y"
-    pv: "ID10:OH:KBHM01:y"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "device token derived from horizontal KB mirror source; confirm"
-      - "source IOC: sim"
-    metadata:
-      egu: "mm"
-      init: 0
-      low: -2
-      high: 2
-      velocity: 0.5
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0044"
-      source_id: "inputs/ID10/optics motors.json"
-      source_line: 41
-      source_anchor: "/items/33/pv"
-      source_label: "BL10:KBH:Z"
-    prefix: "ID10"
-    area: "OH"
-    device: "KBHM01"
-    axis_or_function: "z"
-    pv: "ID10:OH:KBHM01:z"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "device token derived from horizontal KB mirror source; confirm"
-      - "source IOC: sim"
-    metadata:
-      egu: "mm"
-      init: 0
-      low: -100
-      high: 100
-      velocity: 0.5
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0045"
-      source_id: "inputs/ID10/optics motors.json"
-      source_line: 42
-      source_anchor: "/items/34/pv"
-      source_label: "BL10:KBH:Pitch"
-    prefix: "ID10"
-    area: "OH"
-    device: "KBHM01"
-    axis_or_function: "pitch"
-    pv: "ID10:OH:KBHM01:pitch"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "device token derived from horizontal KB mirror source; confirm"
-      - "source IOC: sim"
-    metadata:
-      egu: "mrad"
-      init: 3.0
-      low: -2
-      high: 5
-      velocity: 0.2
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0046"
-      source_id: "inputs/ID10/optics motors.json"
-      source_line: 43
-      source_anchor: "/items/35/pv"
-      source_label: "BL10:KBH:BendU"
-    prefix: "ID10"
-    area: "OH"
-    device: "KBHM01"
-    axis_or_function: "bend_u"
-    pv: "ID10:OH:KBHM01:bend_u"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "device token derived from horizontal KB mirror source; confirm"
-      - "source IOC: sim"
-    metadata:
-      egu: "Nm"
-      init: 0
-      low: -20
-      high: 20
-      velocity: 1
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0047"
-      source_id: "inputs/ID10/optics motors.json"
-      source_line: 44
-      source_anchor: "/items/36/pv"
-      source_label: "BL10:KBH:BendD"
-    prefix: "ID10"
-    area: "OH"
-    device: "KBHM01"
-    axis_or_function: "bend_d"
-    pv: "ID10:OH:KBHM01:bend_d"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "device token derived from horizontal KB mirror source; confirm"
-      - "source IOC: sim"
-    metadata:
-      egu: "Nm"
-      init: 0
-      low: -20
-      high: 20
-      velocity: 1
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0048"
-      source_id: "inputs/ID10/optics motors.json"
-      source_line: 46
-      source_anchor: "/items/37/pv"
-      source_label: "BL10:ZP:X"
-    prefix: "ID10"
-    area: "OH"
-    device: "ZP01"
-    axis_or_function: "x"
-    pv: "ID10:OH:ZP01:x"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "zone plate area assumed OH; verify with beamline manager"
-      - "source IOC: sim"
-    metadata:
-      egu: "um"
-      init: 0
-      low: -2000
-      high: 2000
-      velocity: 1
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0049"
-      source_id: "inputs/ID10/optics motors.json"
-      source_line: 47
-      source_anchor: "/items/38/pv"
-      source_label: "BL10:ZP:Y"
-    prefix: "ID10"
-    area: "OH"
-    device: "ZP01"
-    axis_or_function: "y"
-    pv: "ID10:OH:ZP01:y"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "zone plate area assumed OH; verify with beamline manager"
-      - "source IOC: sim"
-    metadata:
-      egu: "um"
-      init: 0
-      low: -2000
-      high: 2000
-      velocity: 1
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0050"
-      source_id: "inputs/ID10/optics motors.json"
-      source_line: 48
-      source_anchor: "/items/39/pv"
-      source_label: "BL10:ZP:Z"
-    prefix: "ID10"
-    area: "OH"
-    device: "ZP01"
-    axis_or_function: "z"
-    pv: "ID10:OH:ZP01:z"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "zone plate area assumed OH; verify with beamline manager"
-      - "source IOC: sim"
-    metadata:
-      egu: "um"
-      init: 0
-      low: -5000
-      high: 5000
-      velocity: 1
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0051"
-      source_id: "inputs/ID10/sample detector notes.md"
-      source_line: 5
-      source_anchor: "line:5"
-      source_label: "BL10:SAM:CX"
-    prefix: "ID10"
-    area: "EH"
-    device: "STG01"
-    axis_or_function: "coarse_x"
-    pv: "ID10:EH:STG01:coarse_x"
-    status: "proposed"
-    notes:
-      - "source IOC: HW"
-    metadata:
-      source_text: "- BL10:SAM:CX / Sample (KOHZU) / mm / init 0 / range -34 to 34 / ioc HW"
-      egu: "mm"
-      init: "0"
-      low: "-34"
-      high: "34"
-      ioc: "HW"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0052"
-      source_id: "inputs/ID10/sample detector notes.md"
-      source_line: 6
-      source_anchor: "line:6"
-      source_label: "BL10:SAM:CY"
-    prefix: "ID10"
-    area: "EH"
-    device: "STG01"
-    axis_or_function: "coarse_y"
-    pv: "ID10:EH:STG01:coarse_y"
-    status: "proposed"
-    notes:
-      - "source IOC: HW"
-    metadata:
-      source_text: "- BL10:SAM:CY / Sample (KOHZU) / mm / init 0 / range -34 to 34 / ioc HW"
-      egu: "mm"
-      init: "0"
-      low: "-34"
-      high: "34"
-      ioc: "HW"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0053"
-      source_id: "inputs/ID10/sample detector notes.md"
-      source_line: 7
-      source_anchor: "line:7"
-      source_label: "BL10:SAM:CZ"
-    prefix: "ID10"
-    area: "EH"
-    device: "STG01"
-    axis_or_function: "coarse_z"
-    pv: "ID10:EH:STG01:coarse_z"
-    status: "proposed"
-    notes:
-      - "source IOC: HW"
-    metadata:
-      source_text: "- BL10:SAM:CZ / Sample (KOHZU) / mm / init 0 / range -9.5 to 9.5 / ioc HW"
-      egu: "mm"
-      init: "0"
-      low: "-9.5"
-      high: "9.5"
-      ioc: "HW"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0054"
-      source_id: "inputs/ID10/sample detector notes.md"
-      source_line: 11
-      source_anchor: "line:11"
-      source_label: "BL10:SAM:Theta"
-    prefix: "ID10"
-    area: "EH"
-    device: "STG01"
-    axis_or_function: "theta"
-    pv: "ID10:EH:STG01:theta"
-    status: "proposed"
-    notes:
-      - "source IOC: sim"
-    metadata:
-      source_text: "BL10:SAM:Theta, Sample, deg, init=0, range=-180..180, velocity=200, sim"
-      egu: "deg"
-      init: "0"
-      low: "-180"
-      high: "180"
-      velocity: "200"
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0055"
-      source_id: "inputs/ID10/sample detector notes.md"
-      source_line: 12
-      source_anchor: "line:12"
-      source_label: "BL10:SAM:Phi"
-    prefix: "ID10"
-    area: "EH"
-    device: "STG01"
-    axis_or_function: "phi"
-    pv: "ID10:EH:STG01:phi"
-    status: "proposed"
-    notes:
-      - "source IOC: sim"
-    metadata:
-      source_text: "BL10:SAM:Phi, Sample, deg, init=0, range=-5..5, velocity=2, sim"
-      egu: "deg"
-      init: "0"
-      low: "-5"
-      high: "5"
-      velocity: "2"
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0056"
-      source_id: "inputs/ID10/sample detector notes.md"
-      source_line: 15
-      source_anchor: "line:15"
-      source_label: "BL10:SAM:FX"
-    prefix: "ID10"
-    area: "EH"
-    device: "STG01"
-    axis_or_function: "fine_x"
-    pv: "ID10:EH:STG01:fine_x"
-    status: "proposed"
-    notes:
-      - "source IOC: sim"
-    metadata:
-      source_text: "BL10:SAM:FX um 0 -150..150 vel 50 sim"
-      egu: "um"
-      velocity: "50"
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0057"
-      source_id: "inputs/ID10/sample detector notes.md"
-      source_line: 16
-      source_anchor: "line:16"
-      source_label: "BL10:SAM:FY"
-    prefix: "ID10"
-    area: "EH"
-    device: "STG01"
-    axis_or_function: "fine_y"
-    pv: "ID10:EH:STG01:fine_y"
-    status: "proposed"
-    notes:
-      - "source IOC: sim"
-    metadata:
-      source_text: "BL10:SAM:FY um 0 -150..150 vel 50 sim"
-      egu: "um"
-      velocity: "50"
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0058"
-      source_id: "inputs/ID10/sample detector notes.md"
-      source_line: 17
-      source_anchor: "line:17"
-      source_label: "BL10:SAM:FZ"
-    prefix: "ID10"
-    area: "EH"
-    device: "STG01"
-    axis_or_function: "fine_z"
-    pv: "ID10:EH:STG01:fine_z"
-    status: "proposed"
-    notes:
-      - "source IOC: sim"
-    metadata:
-      source_text: "BL10:SAM:FZ um 0 -150..150 vel 50 sim"
-      egu: "um"
-      velocity: "50"
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0059"
-      source_id: "inputs/ID10/sample detector notes.md"
-      source_line: 20
-      source_anchor: "line:20"
-      source_label: "BL10:SAM:SX"
-    prefix: "ID10"
-    area: "EH"
-    device: "STG01"
-    axis_or_function: "scan_x"
-    pv: "ID10:EH:STG01:scan_x"
-    status: "proposed"
-    notes:
-      - "source IOC: sim"
-    metadata:
-      source_text: "BL10:SAM:SX um 0 -50..50 vel 100 sim"
-      egu: "um"
-      velocity: "100"
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0060"
-      source_id: "inputs/ID10/sample detector notes.md"
-      source_line: 21
-      source_anchor: "line:21"
-      source_label: "BL10:SAM:SY"
-    prefix: "ID10"
-    area: "EH"
-    device: "STG01"
-    axis_or_function: "scan_y"
-    pv: "ID10:EH:STG01:scan_y"
-    status: "proposed"
-    notes:
-      - "source IOC: sim"
-    metadata:
-      source_text: "BL10:SAM:SY um 0 -50..50 vel 100 sim"
-      egu: "um"
-      velocity: "100"
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0061"
-      source_id: "inputs/ID10/sample detector notes.md"
-      source_line: 27
-      source_anchor: "line:27"
-      source_label: "BL10:DET:X"
-    prefix: "ID10"
-    area: "EH"
-    device: "DET01"
-    axis_or_function: "x"
-    pv: "ID10:EH:DET01:x"
-    status: "proposed"
-    notes:
-      - "source IOC: sim"
-    metadata:
-      source_text: "| BL10:DET:X | mm | 0 | -50 to 50 | 1 | sim |"
-      egu: "mm"
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0062"
-      source_id: "inputs/ID10/sample detector notes.md"
-      source_line: 28
-      source_anchor: "line:28"
-      source_label: "BL10:DET:Y"
-    prefix: "ID10"
-    area: "EH"
-    device: "DET01"
-    axis_or_function: "y"
-    pv: "ID10:EH:DET01:y"
-    status: "proposed"
-    notes:
-      - "source IOC: sim"
-    metadata:
-      source_text: "| BL10:DET:Y | mm | 0 | -50 to 50 | 1 | sim |"
-      egu: "mm"
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0063"
-      source_id: "inputs/ID10/sample detector notes.md"
-      source_line: 29
-      source_anchor: "line:29"
-      source_label: "BL10:DET:Z"
-    prefix: "ID10"
-    area: "EH"
-    device: "DET01"
-    axis_or_function: "z"
-    pv: "ID10:EH:DET01:z"
-    status: "proposed"
-    notes:
-      - "source IOC: sim"
-    metadata:
-      source_text: "| BL10:DET:Z | mm | 0 | 0 to 5000 | 5 | sim |"
-      egu: "mm"
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0064"
-      source_id: "inputs/ID10/slits etc.xml"
-      source_line: 3
-      source_anchor: "/stuff/motor[1]"
-      source_label: "BL10:WBS:Top"
-    prefix: "ID10"
-    area: "OH"
-    device: "WBSLT01"
-    axis_or_function: "top"
-    pv: "ID10:OH:WBSLT01:top"
-    status: "proposed"
-    notes:
-      - "source IOC: sim"
-    metadata:
-      egu: "mm"
-      init: "0.5"
-      low: "-25"
-      high: "25"
-      velocity: "1"
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0065"
-      source_id: "inputs/ID10/slits etc.xml"
-      source_line: 4
-      source_anchor: "/stuff/motor[2]"
-      source_label: "BL10:WBS:Bot"
-    prefix: "ID10"
-    area: "OH"
-    device: "WBSLT01"
-    axis_or_function: "bot"
-    pv: "ID10:OH:WBSLT01:bot"
-    status: "proposed"
-    notes:
-      - "source IOC: sim"
-    metadata:
-      egu: "mm"
-      init: "-0.5"
-      low: "-25"
-      high: "25"
-      velocity: "1"
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0066"
-      source_id: "inputs/ID10/slits etc.xml"
-      source_line: 5
-      source_anchor: "/stuff/motor[3]"
-      source_label: "BL10:WBS:Inb"
-    prefix: "ID10"
-    area: "OH"
-    device: "WBSLT01"
-    axis_or_function: "inb"
-    pv: "ID10:OH:WBSLT01:inb"
-    status: "proposed"
-    notes:
-      - "source IOC: sim"
-    metadata:
-      egu: "mm"
-      init: "-1.0"
-      low: "-25"
-      high: "25"
-      velocity: "1"
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0067"
-      source_id: "inputs/ID10/slits etc.xml"
-      source_line: 6
-      source_anchor: "/stuff/motor[4]"
-      source_label: "BL10:WBS:Outb"
-    prefix: "ID10"
-    area: "OH"
-    device: "WBSLT01"
-    axis_or_function: "outb"
-    pv: "ID10:OH:WBSLT01:outb"
-    status: "proposed"
-    notes:
-      - "source IOC: sim"
-    metadata:
-      egu: "mm"
-      init: "1.0"
-      low: "-25"
-      high: "25"
-      velocity: "1"
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0068"
-      source_id: "inputs/ID10/slits etc.xml"
-      source_line: 7
-      source_anchor: "/stuff/motor[5]"
-      source_label: "BL10:WBS:Hgap"
-    prefix: "ID10"
-    area: "OH"
-    device: "WBSLT01"
-    axis_or_function: "hgap"
-    pv: "ID10:OH:WBSLT01:hgap"
-    status: "proposed"
-    notes:
-      - "source IOC: sim"
-    metadata:
-      egu: "mm"
-      init: "2.0"
-      low: "0.01"
-      high: "48"
-      velocity: "1"
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0069"
-      source_id: "inputs/ID10/slits etc.xml"
-      source_line: 8
-      source_anchor: "/stuff/motor[6]"
-      source_label: "BL10:WBS:Vgap"
-    prefix: "ID10"
-    area: "OH"
-    device: "WBSLT01"
-    axis_or_function: "vgap"
-    pv: "ID10:OH:WBSLT01:vgap"
-    status: "proposed"
-    notes:
-      - "source IOC: sim"
-    metadata:
-      egu: "mm"
-      init: "1.0"
-      low: "0.01"
-      high: "48"
-      velocity: "1"
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0070"
-      source_id: "inputs/ID10/slits etc.xml"
-      source_line: 11
-      source_anchor: "/stuff/aperture[@name=\"SSA\"]/axis[1]"
-      source_label: "BL10:SSA:Hgap"
-    prefix: "ID10"
-    area: "OH"
-    device: "SSA01"
-    axis_or_function: "hgap"
-    pv: "ID10:OH:SSA01:hgap"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "device token derived from source; confirm official v0 token"
-      - "source IOC: sim"
-    metadata:
-      egu: "um"
-      init: "50"
-      low: "1"
-      high: "500"
-      velocity: "1"
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0071"
-      source_id: "inputs/ID10/slits etc.xml"
-      source_line: 12
-      source_anchor: "/stuff/aperture[@name=\"SSA\"]/axis[2]"
-      source_label: "BL10:SSA:Vgap"
-    prefix: "ID10"
-    area: "OH"
-    device: "SSA01"
-    axis_or_function: "vgap"
-    pv: "ID10:OH:SSA01:vgap"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "device token derived from source; confirm official v0 token"
-      - "source IOC: sim"
-    metadata:
-      egu: "um"
-      init: "50"
-      low: "1"
-      high: "500"
-      velocity: "1"
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0072"
-      source_id: "inputs/ID10/slits etc.xml"
-      source_line: 13
-      source_anchor: "/stuff/aperture[@name=\"SSA\"]/axis[3]"
-      source_label: "BL10:SSA:Hcen"
-    prefix: "ID10"
-    area: "OH"
-    device: "SSA01"
-    axis_or_function: "hcen"
-    pv: "ID10:OH:SSA01:hcen"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "device token derived from source; confirm official v0 token"
-      - "source IOC: sim"
-    metadata:
-      egu: "um"
-      init: "0"
-      low: "-500"
-      high: "500"
-      velocity: "1"
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0073"
-      source_id: "inputs/ID10/slits etc.xml"
-      source_line: 14
-      source_anchor: "/stuff/aperture[@name=\"SSA\"]/axis[4]"
-      source_label: "BL10:SSA:Vcen"
-    prefix: "ID10"
-    area: "OH"
-    device: "SSA01"
-    axis_or_function: "vcen"
-    pv: "ID10:OH:SSA01:vcen"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "device token derived from source; confirm official v0 token"
-      - "source IOC: sim"
-    metadata:
-      egu: "um"
-      init: "0"
-      low: "-500"
-      high: "500"
-      velocity: "1"
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0074"
-      source_id: "inputs/ID10/slits etc.xml"
-      source_line: 18
-      source_anchor: "/stuff/aperture[@name=\"KBS\"]/axis[1]"
-      source_label: "BL10:KBS:Hgap"
-    prefix: "ID10"
-    area: "OH"
-    device: "KBSLT01"
-    axis_or_function: "hgap"
-    pv: "ID10:OH:KBSLT01:hgap"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "device token derived from source; confirm official v0 token"
-      - "source IOC: sim"
-    metadata:
-      egu: "um"
-      init: "5000"
-      low: "1"
-      high: "10000"
-      velocity: "50"
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0075"
-      source_id: "inputs/ID10/slits etc.xml"
-      source_line: 19
-      source_anchor: "/stuff/aperture[@name=\"KBS\"]/axis[2]"
-      source_label: "BL10:KBS:Vgap"
-    prefix: "ID10"
-    area: "OH"
-    device: "KBSLT01"
-    axis_or_function: "vgap"
-    pv: "ID10:OH:KBSLT01:vgap"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "device token derived from source; confirm official v0 token"
-      - "source IOC: sim"
-    metadata:
-      egu: "um"
-      init: "5000"
-      low: "1"
-      high: "10000"
-      velocity: "50"
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0076"
-      source_id: "inputs/ID10/slits etc.xml"
-      source_line: 20
-      source_anchor: "/stuff/aperture[@name=\"KBS\"]/axis[3]"
-      source_label: "BL10:KBS:Hcen"
-    prefix: "ID10"
-    area: "OH"
-    device: "KBSLT01"
-    axis_or_function: "hcen"
-    pv: "ID10:OH:KBSLT01:hcen"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "device token derived from source; confirm official v0 token"
-      - "source IOC: sim"
-    metadata:
-      egu: "um"
-      init: "0"
-      low: "-5000"
-      high: "5000"
-      velocity: "1"
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0077"
-      source_id: "inputs/ID10/slits etc.xml"
-      source_line: 21
-      source_anchor: "/stuff/aperture[@name=\"KBS\"]/axis[4]"
-      source_label: "BL10:KBS:Vcen"
-    prefix: "ID10"
-    area: "OH"
-    device: "KBSLT01"
-    axis_or_function: "vcen"
-    pv: "ID10:OH:KBSLT01:vcen"
-    status: "decision_required"
-    notes:
-      - "requires beamline-manager decision before approval"
-      - "device token derived from source; confirm official v0 token"
-      - "source IOC: sim"
-    metadata:
-      egu: "um"
-      init: "0"
-      low: "-5000"
-      high: "5000"
-      velocity: "1"
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0105"
-      source_id: "inputs/ID10/undulator.md"
-      source_line: 5
-      source_anchor: "line:5"
-      source_label: "BL10:IVU:Gap"
-    prefix: "ID10"
-    area: "PTL"
-    device: "IVU"
-    axis_or_function: "gap"
-    pv: "ID10:PTL:IVU:gap"
-    status: "proposed"
-    notes:
-      - "source IOC: sim"
-    metadata:
-      egu: "mm"
-      init: "7.0"
-      low: "5"
-      high: "25"
-      velocity: "0.5"
-      ioc: "sim"
-  - rulebook_version: "v0"
-    source_trace:
-      raw_id: "RAW-0106"
-      source_id: "inputs/ID10/undulator.md"
-      source_line: 6
-      source_anchor: "line:6"
-      source_label: "BL10:IVU:TaperGap"
-    prefix: "ID10"
-    area: "PTL"
-    device: "IVU"
-    axis_or_function: "taper_gap"
-    pv: "ID10:PTL:IVU:taper_gap"
-    status: "proposed"
-    notes:
-      - "source IOC: sim"
-    metadata:
+      raw_group: "KB-V mirror"
+      raw_device: "KBV"
+      raw_axis_or_function: "X"
       egu: "mm"
       init: "0"
       low: "-2"
       high: "2"
       velocity: "0.5"
       ioc: "sim"
-  - rulebook_version: "v0"
+  - rulebook_version: "SEO_v2"
+    source_trace:
+      raw_id: "RAW-0037"
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 33
+      source_anchor: "/items/26/pv"
+      source_label: "BL10:KBV:Y"
+    section: "BL"
+    port: "10C"
+    area: "OH"
+    device: "KBVM"
+    subdevice: "MIRR"
+    signal: "Y"
+    pv: "BL-10C:OH-KBVM-MIRR:Y"
+    source_pv: "BL10:KBV:Y"
+    status: "reviewed"
+    notes:
+      - "normalized from legacy source PV BL10:KBV:Y"
+      - "legacy KBV token mapped to active KBVM-MIRR"
+      - "source IOC: sim"
+    metadata:
+      raw_group: "KB-V mirror"
+      raw_device: "KBV"
+      raw_axis_or_function: "Y"
+      egu: "mm"
+      init: "0"
+      low: "-15"
+      high: "15"
+      velocity: "0.5"
+      ioc: "sim"
+  - rulebook_version: "SEO_v2"
+    source_trace:
+      raw_id: "RAW-0038"
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 34
+      source_anchor: "/items/27/pv"
+      source_label: "BL10:KBV:Z"
+    section: "BL"
+    port: "10C"
+    area: "OH"
+    device: "KBVM"
+    subdevice: "MIRR"
+    signal: "Z"
+    pv: "BL-10C:OH-KBVM-MIRR:Z"
+    source_pv: "BL10:KBV:Z"
+    status: "reviewed"
+    notes:
+      - "normalized from legacy source PV BL10:KBV:Z"
+      - "legacy KBV token mapped to active KBVM-MIRR"
+      - "source IOC: sim"
+    metadata:
+      raw_group: "KB-V mirror"
+      raw_device: "KBV"
+      raw_axis_or_function: "Z"
+      egu: "mm"
+      init: "0"
+      low: "-100"
+      high: "100"
+      velocity: "0.5"
+      ioc: "sim"
+  - rulebook_version: "SEO_v2"
+    source_trace:
+      raw_id: "RAW-0039"
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 35
+      source_anchor: "/items/28/pv"
+      source_label: "BL10:KBV:Pitch"
+    section: "BL"
+    port: "10C"
+    area: "OH"
+    device: "KBVM"
+    subdevice: "MIRR"
+    signal: "Pitch"
+    pv: "BL-10C:OH-KBVM-MIRR:Pitch"
+    source_pv: "BL10:KBV:Pitch"
+    status: "reviewed"
+    notes:
+      - "normalized from legacy source PV BL10:KBV:Pitch"
+      - "legacy KBV token mapped to active KBVM-MIRR"
+      - "source IOC: sim"
+    metadata:
+      raw_group: "KB-V mirror"
+      raw_device: "KBV"
+      raw_axis_or_function: "Pitch"
+      egu: "mrad"
+      init: "3.0"
+      low: "-2"
+      high: "5"
+      velocity: "0.2"
+      ioc: "sim"
+  - rulebook_version: "SEO_v2"
+    source_trace:
+      raw_id: "RAW-0040"
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 36
+      source_anchor: "/items/29/pv"
+      source_label: "BL10:KBV:BendU"
+    section: "BL"
+    port: "10C"
+    area: "OH"
+    device: "KBVM"
+    subdevice: "MIRR"
+    signal: "BendU"
+    pv: "BL-10C:OH-KBVM-MIRR:BendU"
+    source_pv: "BL10:KBV:BendU"
+    status: "reviewed"
+    notes:
+      - "normalized from legacy source PV BL10:KBV:BendU"
+      - "legacy KBV token mapped to active KBVM-MIRR"
+      - "source IOC: sim"
+    metadata:
+      raw_group: "KB-V mirror"
+      raw_device: "KBV"
+      raw_axis_or_function: "BendU"
+      egu: "Nm"
+      init: "0"
+      low: "-20"
+      high: "20"
+      velocity: "1"
+      ioc: "sim"
+  - rulebook_version: "SEO_v2"
+    source_trace:
+      raw_id: "RAW-0041"
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 37
+      source_anchor: "/items/30/pv"
+      source_label: "BL10:KBV:BendD"
+    section: "BL"
+    port: "10C"
+    area: "OH"
+    device: "KBVM"
+    subdevice: "MIRR"
+    signal: "BendD"
+    pv: "BL-10C:OH-KBVM-MIRR:BendD"
+    source_pv: "BL10:KBV:BendD"
+    status: "reviewed"
+    notes:
+      - "normalized from legacy source PV BL10:KBV:BendD"
+      - "legacy KBV token mapped to active KBVM-MIRR"
+      - "source IOC: sim"
+    metadata:
+      raw_group: "KB-V mirror"
+      raw_device: "KBV"
+      raw_axis_or_function: "BendD"
+      egu: "Nm"
+      init: "0"
+      low: "-20"
+      high: "20"
+      velocity: "1"
+      ioc: "sim"
+  - rulebook_version: "SEO_v2"
+    source_trace:
+      raw_id: "RAW-0042"
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 39
+      source_anchor: "/items/31/pv"
+      source_label: "BL10:KBH:X"
+    section: "BL"
+    port: "10C"
+    area: "OH"
+    device: "KBHM"
+    subdevice: "MIRR"
+    signal: "X"
+    pv: "BL-10C:OH-KBHM-MIRR:X"
+    source_pv: "BL10:KBH:X"
+    status: "reviewed"
+    notes:
+      - "normalized from legacy source PV BL10:KBH:X"
+      - "legacy KBH token mapped to active KBHM-MIRR"
+      - "source IOC: sim"
+    metadata:
+      raw_group: "KB-H mirror"
+      raw_device: "KBH"
+      raw_axis_or_function: "X"
+      egu: "mm"
+      init: "0"
+      low: "-15"
+      high: "15"
+      velocity: "0.5"
+      ioc: "sim"
+  - rulebook_version: "SEO_v2"
+    source_trace:
+      raw_id: "RAW-0043"
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 40
+      source_anchor: "/items/32/pv"
+      source_label: "BL10:KBH:Y"
+    section: "BL"
+    port: "10C"
+    area: "OH"
+    device: "KBHM"
+    subdevice: "MIRR"
+    signal: "Y"
+    pv: "BL-10C:OH-KBHM-MIRR:Y"
+    source_pv: "BL10:KBH:Y"
+    status: "reviewed"
+    notes:
+      - "normalized from legacy source PV BL10:KBH:Y"
+      - "legacy KBH token mapped to active KBHM-MIRR"
+      - "source IOC: sim"
+    metadata:
+      raw_group: "KB-H mirror"
+      raw_device: "KBH"
+      raw_axis_or_function: "Y"
+      egu: "mm"
+      init: "0"
+      low: "-2"
+      high: "2"
+      velocity: "0.5"
+      ioc: "sim"
+  - rulebook_version: "SEO_v2"
+    source_trace:
+      raw_id: "RAW-0044"
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 41
+      source_anchor: "/items/33/pv"
+      source_label: "BL10:KBH:Z"
+    section: "BL"
+    port: "10C"
+    area: "OH"
+    device: "KBHM"
+    subdevice: "MIRR"
+    signal: "Z"
+    pv: "BL-10C:OH-KBHM-MIRR:Z"
+    source_pv: "BL10:KBH:Z"
+    status: "reviewed"
+    notes:
+      - "normalized from legacy source PV BL10:KBH:Z"
+      - "legacy KBH token mapped to active KBHM-MIRR"
+      - "source IOC: sim"
+    metadata:
+      raw_group: "KB-H mirror"
+      raw_device: "KBH"
+      raw_axis_or_function: "Z"
+      egu: "mm"
+      init: "0"
+      low: "-100"
+      high: "100"
+      velocity: "0.5"
+      ioc: "sim"
+  - rulebook_version: "SEO_v2"
+    source_trace:
+      raw_id: "RAW-0045"
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 42
+      source_anchor: "/items/34/pv"
+      source_label: "BL10:KBH:Pitch"
+    section: "BL"
+    port: "10C"
+    area: "OH"
+    device: "KBHM"
+    subdevice: "MIRR"
+    signal: "Pitch"
+    pv: "BL-10C:OH-KBHM-MIRR:Pitch"
+    source_pv: "BL10:KBH:Pitch"
+    status: "reviewed"
+    notes:
+      - "normalized from legacy source PV BL10:KBH:Pitch"
+      - "legacy KBH token mapped to active KBHM-MIRR"
+      - "source IOC: sim"
+    metadata:
+      raw_group: "KB-H mirror"
+      raw_device: "KBH"
+      raw_axis_or_function: "Pitch"
+      egu: "mrad"
+      init: "3.0"
+      low: "-2"
+      high: "5"
+      velocity: "0.2"
+      ioc: "sim"
+  - rulebook_version: "SEO_v2"
+    source_trace:
+      raw_id: "RAW-0046"
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 43
+      source_anchor: "/items/35/pv"
+      source_label: "BL10:KBH:BendU"
+    section: "BL"
+    port: "10C"
+    area: "OH"
+    device: "KBHM"
+    subdevice: "MIRR"
+    signal: "BendU"
+    pv: "BL-10C:OH-KBHM-MIRR:BendU"
+    source_pv: "BL10:KBH:BendU"
+    status: "reviewed"
+    notes:
+      - "normalized from legacy source PV BL10:KBH:BendU"
+      - "legacy KBH token mapped to active KBHM-MIRR"
+      - "source IOC: sim"
+    metadata:
+      raw_group: "KB-H mirror"
+      raw_device: "KBH"
+      raw_axis_or_function: "BendU"
+      egu: "Nm"
+      init: "0"
+      low: "-20"
+      high: "20"
+      velocity: "1"
+      ioc: "sim"
+  - rulebook_version: "SEO_v2"
+    source_trace:
+      raw_id: "RAW-0047"
+      source_id: "inputs/ID10/optics motors.json"
+      source_line: 44
+      source_anchor: "/items/36/pv"
+      source_label: "BL10:KBH:BendD"
+    section: "BL"
+    port: "10C"
+    area: "OH"
+    device: "KBHM"
+    subdevice: "MIRR"
+    signal: "BendD"
+    pv: "BL-10C:OH-KBHM-MIRR:BendD"
+    source_pv: "BL10:KBH:BendD"
+    status: "reviewed"
+    notes:
+      - "normalized from legacy source PV BL10:KBH:BendD"
+      - "legacy KBH token mapped to active KBHM-MIRR"
+      - "source IOC: sim"
+    metadata:
+      raw_group: "KB-H mirror"
+      raw_device: "KBH"
+      raw_axis_or_function: "BendD"
+      egu: "Nm"
+      init: "0"
+      low: "-20"
+      high: "20"
+      velocity: "1"
+      ioc: "sim"
+  - rulebook_version: "SEO_v2"
+    source_trace:
+      raw_id: "RAW-0064"
+      source_id: "inputs/ID10/slits etc.xml"
+      source_line: 3
+      source_anchor: "/stuff/motor[1]"
+      source_label: "BL10:WBS:Top"
+    section: "BL"
+    port: "10C"
+    area: "OH"
+    device: "WBSLT"
+    subdevice: "SLIT"
+    signal: "Top"
+    pv: "BL-10C:OH-WBSLT-SLIT:Top"
+    source_pv: "BL10:WBS:Top"
+    status: "reviewed"
+    notes:
+      - "normalized from legacy source PV BL10:WBS:Top"
+      - "legacy WBS token mapped to active WBSLT-SLIT per SEO_v2 migration example"
+      - "source IOC: sim"
+    metadata:
+      raw_group: "WB slit"
+      raw_device: "WBS"
+      raw_axis_or_function: "Top"
+      egu: "mm"
+      init: "0.5"
+      low: "-25"
+      high: "25"
+      velocity: "1"
+      ioc: "sim"
+  - rulebook_version: "SEO_v2"
+    source_trace:
+      raw_id: "RAW-0065"
+      source_id: "inputs/ID10/slits etc.xml"
+      source_line: 4
+      source_anchor: "/stuff/motor[2]"
+      source_label: "BL10:WBS:Bot"
+    section: "BL"
+    port: "10C"
+    area: "OH"
+    device: "WBSLT"
+    subdevice: "SLIT"
+    signal: "Bot"
+    pv: "BL-10C:OH-WBSLT-SLIT:Bot"
+    source_pv: "BL10:WBS:Bot"
+    status: "reviewed"
+    notes:
+      - "normalized from legacy source PV BL10:WBS:Bot"
+      - "legacy WBS token mapped to active WBSLT-SLIT per SEO_v2 migration example"
+      - "source IOC: sim"
+    metadata:
+      raw_group: "WB slit"
+      raw_device: "WBS"
+      raw_axis_or_function: "Bot"
+      egu: "mm"
+      init: "-0.5"
+      low: "-25"
+      high: "25"
+      velocity: "1"
+      ioc: "sim"
+  - rulebook_version: "SEO_v2"
+    source_trace:
+      raw_id: "RAW-0066"
+      source_id: "inputs/ID10/slits etc.xml"
+      source_line: 5
+      source_anchor: "/stuff/motor[3]"
+      source_label: "BL10:WBS:Inb"
+    section: "BL"
+    port: "10C"
+    area: "OH"
+    device: "WBSLT"
+    subdevice: "SLIT"
+    signal: "Inb"
+    pv: "BL-10C:OH-WBSLT-SLIT:Inb"
+    source_pv: "BL10:WBS:Inb"
+    status: "reviewed"
+    notes:
+      - "normalized from legacy source PV BL10:WBS:Inb"
+      - "legacy WBS token mapped to active WBSLT-SLIT per SEO_v2 migration example"
+      - "source IOC: sim"
+    metadata:
+      raw_group: "WB slit"
+      raw_device: "WBS"
+      raw_axis_or_function: "Inb"
+      egu: "mm"
+      init: "-1.0"
+      low: "-25"
+      high: "25"
+      velocity: "1"
+      ioc: "sim"
+  - rulebook_version: "SEO_v2"
+    source_trace:
+      raw_id: "RAW-0067"
+      source_id: "inputs/ID10/slits etc.xml"
+      source_line: 6
+      source_anchor: "/stuff/motor[4]"
+      source_label: "BL10:WBS:Outb"
+    section: "BL"
+    port: "10C"
+    area: "OH"
+    device: "WBSLT"
+    subdevice: "SLIT"
+    signal: "Outb"
+    pv: "BL-10C:OH-WBSLT-SLIT:Outb"
+    source_pv: "BL10:WBS:Outb"
+    status: "reviewed"
+    notes:
+      - "normalized from legacy source PV BL10:WBS:Outb"
+      - "legacy WBS token mapped to active WBSLT-SLIT per SEO_v2 migration example"
+      - "source IOC: sim"
+    metadata:
+      raw_group: "WB slit"
+      raw_device: "WBS"
+      raw_axis_or_function: "Outb"
+      egu: "mm"
+      init: "1.0"
+      low: "-25"
+      high: "25"
+      velocity: "1"
+      ioc: "sim"
+  - rulebook_version: "SEO_v2"
+    source_trace:
+      raw_id: "RAW-0068"
+      source_id: "inputs/ID10/slits etc.xml"
+      source_line: 7
+      source_anchor: "/stuff/motor[5]"
+      source_label: "BL10:WBS:Hgap"
+    section: "BL"
+    port: "10C"
+    area: "OH"
+    device: "WBSLT"
+    subdevice: "SLIT"
+    signal: "Hgap"
+    pv: "BL-10C:OH-WBSLT-SLIT:Hgap"
+    source_pv: "BL10:WBS:Hgap"
+    status: "reviewed"
+    notes:
+      - "normalized from legacy source PV BL10:WBS:Hgap"
+      - "legacy WBS token mapped to active WBSLT-SLIT per SEO_v2 migration example"
+      - "source IOC: sim"
+    metadata:
+      raw_group: "WB slit"
+      raw_device: "WBS"
+      raw_axis_or_function: "Hgap"
+      egu: "mm"
+      init: "2.0"
+      low: "0.01"
+      high: "48"
+      velocity: "1"
+      ioc: "sim"
+  - rulebook_version: "SEO_v2"
+    source_trace:
+      raw_id: "RAW-0069"
+      source_id: "inputs/ID10/slits etc.xml"
+      source_line: 8
+      source_anchor: "/stuff/motor[6]"
+      source_label: "BL10:WBS:Vgap"
+    section: "BL"
+    port: "10C"
+    area: "OH"
+    device: "WBSLT"
+    subdevice: "SLIT"
+    signal: "Vgap"
+    pv: "BL-10C:OH-WBSLT-SLIT:Vgap"
+    source_pv: "BL10:WBS:Vgap"
+    status: "reviewed"
+    notes:
+      - "normalized from legacy source PV BL10:WBS:Vgap"
+      - "legacy WBS token mapped to active WBSLT-SLIT per SEO_v2 migration example"
+      - "source IOC: sim"
+    metadata:
+      raw_group: "WB slit"
+      raw_device: "WBS"
+      raw_axis_or_function: "Vgap"
+      egu: "mm"
+      init: "1.0"
+      low: "0.01"
+      high: "48"
+      velocity: "1"
+      ioc: "sim"
+  - rulebook_version: "SEO_v2"
+    source_trace:
+      raw_id: "RAW-0074"
+      source_id: "inputs/ID10/slits etc.xml"
+      source_line: 18
+      source_anchor: "/stuff/aperture[@name=\"KBS\"]/axis[1]"
+      source_label: "BL10:KBS:Hgap"
+    section: "BL"
+    port: "10C"
+    area: "OH"
+    device: "KBSLT"
+    subdevice: "SLIT"
+    signal: "Hgap"
+    pv: "BL-10C:OH-KBSLT-SLIT:Hgap"
+    source_pv: "BL10:KBS:Hgap"
+    status: "reviewed"
+    notes:
+      - "normalized from legacy source PV BL10:KBS:Hgap"
+      - "legacy KBS token mapped to active KBSLT-SLIT"
+      - "source IOC: sim"
+    metadata:
+      raw_group: "KBS"
+      raw_device: "KBS"
+      raw_axis_or_function: "Hgap"
+      egu: "um"
+      init: "5000"
+      low: "1"
+      high: "10000"
+      velocity: "50"
+      ioc: "sim"
+  - rulebook_version: "SEO_v2"
+    source_trace:
+      raw_id: "RAW-0075"
+      source_id: "inputs/ID10/slits etc.xml"
+      source_line: 19
+      source_anchor: "/stuff/aperture[@name=\"KBS\"]/axis[2]"
+      source_label: "BL10:KBS:Vgap"
+    section: "BL"
+    port: "10C"
+    area: "OH"
+    device: "KBSLT"
+    subdevice: "SLIT"
+    signal: "Vgap"
+    pv: "BL-10C:OH-KBSLT-SLIT:Vgap"
+    source_pv: "BL10:KBS:Vgap"
+    status: "reviewed"
+    notes:
+      - "normalized from legacy source PV BL10:KBS:Vgap"
+      - "legacy KBS token mapped to active KBSLT-SLIT"
+      - "source IOC: sim"
+    metadata:
+      raw_group: "KBS"
+      raw_device: "KBS"
+      raw_axis_or_function: "Vgap"
+      egu: "um"
+      init: "5000"
+      low: "1"
+      high: "10000"
+      velocity: "50"
+      ioc: "sim"
+  - rulebook_version: "SEO_v2"
+    source_trace:
+      raw_id: "RAW-0076"
+      source_id: "inputs/ID10/slits etc.xml"
+      source_line: 20
+      source_anchor: "/stuff/aperture[@name=\"KBS\"]/axis[3]"
+      source_label: "BL10:KBS:Hcen"
+    section: "BL"
+    port: "10C"
+    area: "OH"
+    device: "KBSLT"
+    subdevice: "SLIT"
+    signal: "Hcen"
+    pv: "BL-10C:OH-KBSLT-SLIT:Hcen"
+    source_pv: "BL10:KBS:Hcen"
+    status: "reviewed"
+    notes:
+      - "normalized from legacy source PV BL10:KBS:Hcen"
+      - "legacy KBS token mapped to active KBSLT-SLIT"
+      - "source IOC: sim"
+    metadata:
+      raw_group: "KBS"
+      raw_device: "KBS"
+      raw_axis_or_function: "Hcen"
+      egu: "um"
+      init: "0"
+      low: "-5000"
+      high: "5000"
+      velocity: "1"
+      ioc: "sim"
+  - rulebook_version: "SEO_v2"
+    source_trace:
+      raw_id: "RAW-0077"
+      source_id: "inputs/ID10/slits etc.xml"
+      source_line: 21
+      source_anchor: "/stuff/aperture[@name=\"KBS\"]/axis[4]"
+      source_label: "BL10:KBS:Vcen"
+    section: "BL"
+    port: "10C"
+    area: "OH"
+    device: "KBSLT"
+    subdevice: "SLIT"
+    signal: "Vcen"
+    pv: "BL-10C:OH-KBSLT-SLIT:Vcen"
+    source_pv: "BL10:KBS:Vcen"
+    status: "reviewed"
+    notes:
+      - "normalized from legacy source PV BL10:KBS:Vcen"
+      - "legacy KBS token mapped to active KBSLT-SLIT"
+      - "source IOC: sim"
+    metadata:
+      raw_group: "KBS"
+      raw_device: "KBS"
+      raw_axis_or_function: "Vcen"
+      egu: "um"
+      init: "0"
+      low: "-5000"
+      high: "5000"
+      velocity: "1"
+      ioc: "sim"
+  - rulebook_version: "SEO_v2"
+    source_trace:
+      raw_id: "RAW-0105"
+      source_id: "inputs/ID10/undulator.md"
+      source_line: 5
+      source_anchor: "line:5"
+      source_label: "BL10:IVU:Gap"
+    section: "BL"
+    port: "10C"
+    area: "FE"
+    device: "IVU"
+    subdevice: "BODY"
+    signal: "Gap"
+    pv: "BL-10C:FE-IVU-BODY:Gap"
+    source_pv: "BL10:IVU:Gap"
+    status: "reviewed"
+    notes:
+      - "normalized from legacy source PV BL10:IVU:Gap"
+      - "IVU body-level signal uses active BODY subdevice placeholder"
+      - "source IOC: sim"
+    metadata:
+      raw_group: "IVU24"
+      raw_device: "IVU"
+      raw_axis_or_function: "Gap"
+      egu: "mm"
+      init: "7.0"
+      low: "5"
+      high: "25"
+      velocity: "0.5"
+      ioc: "sim"
+  - rulebook_version: "SEO_v2"
+    source_trace:
+      raw_id: "RAW-0106"
+      source_id: "inputs/ID10/undulator.md"
+      source_line: 6
+      source_anchor: "line:6"
+      source_label: "BL10:IVU:TaperGap"
+    section: "BL"
+    port: "10C"
+    area: "FE"
+    device: "IVU"
+    subdevice: "BODY"
+    signal: "TaperGap"
+    pv: "BL-10C:FE-IVU-BODY:TaperGap"
+    source_pv: "BL10:IVU:TaperGap"
+    status: "reviewed"
+    notes:
+      - "normalized from legacy source PV BL10:IVU:TaperGap"
+      - "IVU body-level signal uses active BODY subdevice placeholder"
+      - "source IOC: sim"
+    metadata:
+      raw_group: "IVU24"
+      raw_device: "IVU"
+      raw_axis_or_function: "TaperGap"
+      egu: "mm"
+      init: "0"
+      low: "-2"
+      high: "2"
+      velocity: "0.5"
+      ioc: "sim"
+  - rulebook_version: "SEO_v2"
     source_trace:
       raw_id: "RAW-0107"
       source_id: "inputs/ID10/undulator.md"
       source_line: 7
       source_anchor: "line:7"
       source_label: "BL10:IVU:Harmonic"
-    prefix: "ID10"
-    area: "PTL"
+    section: "BL"
+    port: "10C"
+    area: "FE"
     device: "IVU"
-    axis_or_function: "harmonic"
-    pv: "ID10:PTL:IVU:harmonic"
-    status: "proposed"
+    subdevice: "BODY"
+    signal: "Harmonic"
+    pv: "BL-10C:FE-IVU-BODY:Harmonic"
+    source_pv: "BL10:IVU:Harmonic"
+    status: "reviewed"
     notes:
+      - "normalized from legacy source PV BL10:IVU:Harmonic"
+      - "IVU body-level signal uses active BODY subdevice placeholder"
       - "source IOC: sim"
     metadata:
+      raw_group: "IVU24"
+      raw_device: "IVU"
+      raw_axis_or_function: "Harmonic"
       egu: "-"
       init: "5"
       low: "1"
       high: "13"
       velocity: "1"
       ioc: "sim"
-  - rulebook_version: "v0"
+  - rulebook_version: "SEO_v2"
     source_trace:
       raw_id: "RAW-0108"
       source_id: "inputs/ID10/undulator.md"
       source_line: 8
       source_anchor: "line:8"
       source_label: "BL10:IVU:GirderX"
-    prefix: "ID10"
-    area: "PTL"
+    section: "BL"
+    port: "10C"
+    area: "FE"
     device: "IVU"
-    axis_or_function: "girder_x"
-    pv: "ID10:PTL:IVU:girder_x"
-    status: "proposed"
+    subdevice: "GIRD"
+    signal: "X"
+    pv: "BL-10C:FE-IVU-GIRD:X"
+    source_pv: "BL10:IVU:GirderX"
+    status: "reviewed"
     notes:
+      - "normalized from legacy source PV BL10:IVU:GirderX"
+      - "legacy IVU girder signal mapped to active IVU-GIRD per SEO_v2 migration example"
       - "source IOC: sim"
     metadata:
+      raw_group: "IVU24"
+      raw_device: "IVU"
+      raw_axis_or_function: "GirderX"
       egu: "mm"
       init: "0"
       low: "-5"
       high: "5"
       velocity: "1"
       ioc: "sim"
-  - rulebook_version: "v0"
+  - rulebook_version: "SEO_v2"
     source_trace:
       raw_id: "RAW-0109"
       source_id: "inputs/ID10/undulator.md"
       source_line: 9
       source_anchor: "line:9"
       source_label: "BL10:IVU:GirderY"
-    prefix: "ID10"
-    area: "PTL"
+    section: "BL"
+    port: "10C"
+    area: "FE"
     device: "IVU"
-    axis_or_function: "girder_y"
-    pv: "ID10:PTL:IVU:girder_y"
-    status: "proposed"
+    subdevice: "GIRD"
+    signal: "Y"
+    pv: "BL-10C:FE-IVU-GIRD:Y"
+    source_pv: "BL10:IVU:GirderY"
+    status: "reviewed"
     notes:
+      - "normalized from legacy source PV BL10:IVU:GirderY"
+      - "legacy IVU girder signal mapped to active IVU-GIRD per SEO_v2 migration example"
       - "source IOC: sim"
     metadata:
+      raw_group: "IVU24"
+      raw_device: "IVU"
+      raw_axis_or_function: "GirderY"
       egu: "mm"
       init: "0"
       low: "-5"
       high: "5"
       velocity: "1"
       ioc: "sim"
-  - rulebook_version: "v0"
+  - rulebook_version: "SEO_v2"
     source_trace:
       raw_id: "RAW-0110"
       source_id: "inputs/ID10/undulator.md"
       source_line: 10
       source_anchor: "line:10"
       source_label: "BL10:IVU:GirderPitch"
-    prefix: "ID10"
-    area: "PTL"
+    section: "BL"
+    port: "10C"
+    area: "FE"
     device: "IVU"
-    axis_or_function: "girder_pitch"
-    pv: "ID10:PTL:IVU:girder_pitch"
-    status: "proposed"
+    subdevice: "GIRD"
+    signal: "Pitch"
+    pv: "BL-10C:FE-IVU-GIRD:Pitch"
+    source_pv: "BL10:IVU:GirderPitch"
+    status: "reviewed"
     notes:
+      - "normalized from legacy source PV BL10:IVU:GirderPitch"
+      - "legacy IVU girder signal mapped to active IVU-GIRD per SEO_v2 migration example"
       - "source IOC: sim"
     metadata:
+      raw_group: "IVU24"
+      raw_device: "IVU"
+      raw_axis_or_function: "GirderPitch"
       egu: "urad"
       init: "0"
       low: "-200"
       high: "200"
       velocity: "50"
       ioc: "sim"
-  - rulebook_version: "v0"
+  - rulebook_version: "SEO_v2"
     source_trace:
       raw_id: "RAW-0111"
       source_id: "inputs/ID10/undulator.md"
       source_line: 11
       source_anchor: "line:11"
       source_label: "BL10:IVU:GirderYaw"
-    prefix: "ID10"
-    area: "PTL"
+    section: "BL"
+    port: "10C"
+    area: "FE"
     device: "IVU"
-    axis_or_function: "girder_yaw"
-    pv: "ID10:PTL:IVU:girder_yaw"
-    status: "proposed"
+    subdevice: "GIRD"
+    signal: "Yaw"
+    pv: "BL-10C:FE-IVU-GIRD:Yaw"
+    source_pv: "BL10:IVU:GirderYaw"
+    status: "reviewed"
     notes:
+      - "normalized from legacy source PV BL10:IVU:GirderYaw"
+      - "legacy IVU girder signal mapped to active IVU-GIRD per SEO_v2 migration example"
       - "source IOC: sim"
     metadata:
+      raw_group: "IVU24"
+      raw_device: "IVU"
+      raw_axis_or_function: "GirderYaw"
       egu: "urad"
       init: "0"
       low: "-200"

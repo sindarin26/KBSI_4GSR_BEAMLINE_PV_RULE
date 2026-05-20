@@ -3,6 +3,7 @@ id: EXC-0001
 beamline: ID10
 status: open
 created: 2026-05-12
+updated: 2026-05-20
 source: inputs/ID10/status and xbpm.txt
 raw_ids:
   - RAW-0078
@@ -37,8 +38,8 @@ related_proposals: []
 
 # Status, Readback, Diagnostic, And Scan PVs
 
-These raw PVs are real source items, but v0 does not define final naming for status, readback, alarm, diagnostic, or scan-publish PVs.
+These raw PVs are real source items, but the active SEO_v2 review did not normalize them because their device/subdevice classification still requires an owner decision.
 
 Temporary handling: keep them out of `pv_registry.yaml` and account for them through this exception record.
 
-Required decision: define status/readback/diagnostic naming before promoting these into the canonical registry.
+Required decision: define status/readback/diagnostic, XBPM, ring, IOC heartbeat, and scan-publish naming before promoting these into the canonical registry.

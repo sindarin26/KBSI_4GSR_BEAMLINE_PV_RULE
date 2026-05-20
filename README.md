@@ -60,7 +60,7 @@ exceptions/<beamline>/
 
 ## Current Rule Summary
 
-현재 v0 기준 요약입니다. 자세한 active rule은
+현재 SEO_v2 / 4GSR standard v1.0 기준 요약입니다. 자세한 active rule은
 `rules/draft/PV_NAMING_RULEBOOK.md`와 `rules/review/PV_REVIEW_RULEBOOK.md`를
 봅니다. 결정 이유와 배경은 `rules/decisions/`에 있습니다.
 
@@ -69,15 +69,15 @@ exceptions/<beamline>/
 반영해야 실제 생성 규칙이 됩니다.
 
 ```text
-Prefix: ID10
-Structure: ID10:{Area}:{Device}:{AxisOrFunction}
-Area: PTL, FE, OH, EH
-Unknown area: PTL + note
-Default area examples: IVU -> PTL, DCM01/WBSLT01/PH01 -> OH, STG01 -> EH
-Axis/function suffix: lowercase
-Multi-word suffix: underscore
-Directionless axis: m01, m02, ...
+Structure: BL-[PORT]:[AREA]-[DEV]-[SUBDEV]:[SignalName]
+Section: BL
+Port example: 10C
+Area: FE, PTL, OH, EH, SYS
+Device examples: IVU, MONO, HHLM, WBSLT, ION, CTRL, MOTOR
+Subdevice examples: GIRD, ENC, CRYS, MIRR, SLIT, DIAG, LOGIC, STG
+SignalName: upper-initial CamelCase/PascalCase
 White beam slit token: WBSLT
+Canonical schema: schemas/pv_registry.seo_v2.yaml
 Canonical output: outputs/<beamline>/pv_registry.yaml
 Rendered document: outputs/<beamline>/PV_REFERENCE.md
 Raw extraction: outputs/<beamline>/_work/raw_extracted_pvs.yaml
@@ -88,12 +88,15 @@ Review/fix log: reviews/<beamline>/REVIEW.md
 예시:
 
 ```text
-ID10:PTL:IVU:girder_y
-ID10:OH:DCM01:yaw
-ID10:EH:STG01:x
-ID10:OH:PH01:m01
-ID10:OH:WBSLT01:hgap
+BL-10C:FE-IVU-GIRD:Y
+BL-10C:FE-IVU-ENC:US
+BL-10C:OH-MONO-CRYS:Theta
+BL-10C:OH-WBSLT-SLIT:Hgap
+BL-10C:SYS-CTRL-LOGIC:UserAve1
 ```
+
+과거 `ID10:{Area}:{Device}:{AxisOrFunction}` v0 자료는 migration/reference
+용도로만 남겨둡니다. 새 산출물은 active SEO_v2 구조로 작성해야 합니다.
 
 ## Repository Map
 
@@ -110,5 +113,6 @@ ID10:OH:WBSLT01:hgap
 - `proposals/`: exception을 공식 룰로 편입하기 위한 변경 제안
 - `examples/`: good/bad/before-after 예제
 - `schemas/`: 추후 canonical data schema
+- `scripts/`: 검증/유지보수 스크립트
 
 `temp/`와 `notes/`는 작업용 디렉토리이며 배포 대상에서 제외합니다.

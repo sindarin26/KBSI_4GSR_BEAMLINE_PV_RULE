@@ -1,13 +1,13 @@
 # PV Naming Structure Options
 
 Date: 2026-05-12
-Status: discussion candidate, not an active rulebook
+Status: historical discussion candidate, superseded by SEO_v2 promotion
 
-This document records the current structure-level discussion before the final
-beamline PV naming standard is fixed.
+This document records the historical structure-level discussion before the
+SEO_v2 promotion fixed the active beamline PV naming standard.
 
-The current repository can still be completed as a v0 rule kit. The final naming
-syntax can be changed later by updating active rulebooks, schemas, and examples.
+The repository previously used a v0 rule kit. The active naming syntax was
+changed on 2026-05-20 by updating active rulebooks, schemas, and examples.
 
 ## Current Situation
 
@@ -100,18 +100,24 @@ Regardless of the final structure, keep these principles:
 - Keep `DEV` vs `SUBDEV` or equivalent device/subcomponent logic explicit.
 - Keep source traceability from input material to generated output.
 
-## Current Working Decision
+## Historical Working Decision
 
-For now:
+At the time of this discussion:
 
 - Distribute a simple human-facing standard document first.
 - Complete this repository as a v0 working rule kit.
-- Keep the current active rulebooks usable until the final structure decision is
-  made.
+- Keep the then-current active rulebooks usable until the final structure
+  decision was made.
 - Treat the 3-tier accelerator-aligned structure as a candidate, not an active
   replacement yet.
 - If the 3-tier structure is accepted later, update `rules/draft/`,
   `rules/review/`, `schemas/`, and examples together.
+
+That later promotion happened on 2026-05-20 using the SEO_v2 shape:
+
+```text
+BL-[PORT]:[AREA]-[DEV]-[SUBDEV]:[SignalName]
+```
 
 ## Open Questions For Review
 
@@ -122,4 +128,3 @@ For now:
 - Should single devices always carry a subdevice such as `BODY`, `CTRL`, or
   `STG`?
 - Should final signal names use CamelCase or lowercase/underscore?
-

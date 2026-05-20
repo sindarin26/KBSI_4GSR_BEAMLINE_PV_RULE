@@ -1,13 +1,13 @@
 # 4GSR Beamline PV Naming Standard Candidate
 
 Date: 2026-05-12
-Status: candidate standard, not an active rulebook
+Status: historical candidate, superseded by `standards/4GSR_Beamline_PV_Naming_Standard_v1.0.md`
 
-This candidate is a human-facing PV naming standard based on an
+This candidate is a historical human-facing PV naming standard based on an
 accelerator-aligned three-tier PV shape.
 
-It is intended for discussion and distribution. It does not replace the active
-agent rulebooks until it is explicitly promoted.
+It was intended for discussion and distribution. It is not the active standard;
+the active promoted standard is `standards/4GSR_Beamline_PV_Naming_Standard_v1.0.md`.
 
 ## Purpose
 
@@ -158,9 +158,9 @@ BLE-10A:CCD-BODY:Stat
 BLE-10A:ATT-STG:Pos
 ```
 
-## Relationship To Current V0 Rulebook
+## Relationship To Historical V0 Rulebook
 
-The current active v0 rulebook uses:
+The historical v0 rulebook used:
 
 ```text
 ID10:{Area}:{Device}:{AxisOrFunction}
@@ -172,6 +172,5 @@ This candidate uses:
 [SEC/SYS]-[SUBSYS]:[DEV]-[SUBDEV]:[SignalName]
 ```
 
-Do not mix the two as active rules. Use this document for human discussion until
-the project owner promotes one structure into the active rulebooks and schemas.
-
+Do not mix historical candidate shapes with the active SEO_v2 rulebook. This
+document remains only as discussion history.

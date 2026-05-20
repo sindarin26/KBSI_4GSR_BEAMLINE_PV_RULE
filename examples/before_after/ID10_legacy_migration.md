@@ -1,27 +1,30 @@
-# ID10 Legacy Migration Example
+# Legacy Migration Example
 
 Source-style legacy PVs:
 
 ```text
-BL10:IVU:Gap
-BL10:IVU:TaperGap
 BL10:IVU:GirderY
+BL10:IVU:EncUS
 BL10:WBS:Hgap
 BL10:WBS:Top
+BL10:DCM:Theta
 ```
 
-Preferred v0 output:
+Preferred SEO_v2 output when the port and component mapping are confirmed:
 
 ```text
-ID10:PTL:IVU:gap
-ID10:PTL:IVU:taper_gap
-ID10:PTL:IVU:girder_y
-ID10:OH:WBSLT01:hgap
-ID10:OH:WBSLT01:top
+BL-10C:FE-IVU-GIRD:Y
+BL-10C:FE-IVU-ENC:US
+BL-10C:OH-WBSLT-SLIT:Hgap
+BL-10C:OH-WBSLT-SLIT:Top
+BL-10C:OH-MONO-CRYS:Theta
 ```
 
 Notes:
 
-- IVU remains the main device tier.
-- IVU submechanisms move into `axis_or_function`.
-- White Beam Slit uses the approved `WBSLT` token.
+- The old `ID10:{Area}:{Device}:{AxisOrFunction}` shape is no longer active for
+  new output.
+- IVU submechanisms move into `SUBDEV` when the source supports the split.
+- Signal text uses upper-initial CamelCase/PascalCase, not lowercase
+  underscore suffixes.
+- `WBSLT` remains the approved White Beam Slit device token.

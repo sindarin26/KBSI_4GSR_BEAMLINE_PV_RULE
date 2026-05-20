@@ -7,10 +7,11 @@ and link it here.
 
 ## Current Open Items
 
-- Final coordinate convention.
-- Status/readback/alarm/diagnostic PV naming beyond the v0 exception policy.
+- Instance policy for duplicate SEO_v2 rendered PV names in the DB corpus.
+- Whether `10C` should be added to the human-facing Markdown port table.
+- Whether DB-backed operational codes (`SYS`, `CTRL`, `MOTOR`, `LOGIC`, `UTIL`,
+  etc.) should be promoted into the published human-facing standard tables.
+- Final coordinate convention for source axes and physical motion semantics.
+- Status/readback/alarm/diagnostic PV naming beyond basic SEO_v2 signal naming.
 - Canonical table columns for `PV_REFERENCE.md`.
-- No-hyphen rendering comparison examples.
-- Formal schema under `schemas/` for `pv_registry.yaml`.
-- Final PV string structure: accelerator-aligned 3-tier vs beamline-local
-  4-tier.
+- Formal schema under `schemas/` for strict validation of `pv_registry.yaml`.

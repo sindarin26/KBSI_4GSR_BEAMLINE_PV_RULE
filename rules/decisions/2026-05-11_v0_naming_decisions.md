@@ -1,11 +1,11 @@
 # V0 PV Naming Decisions
 
 Date: 2026-05-11
-Status: active decision context for v0 rulebook drafting
+Status: historical v0 decision context, superseded as active policy
 
-This document records the current v0 decisions and the reasoning behind them.
-The active rulebooks should later promote these decisions into concise generation
-and review rules.
+This document records the historical v0 decisions and the reasoning behind them.
+Those decisions were superseded as active policy on 2026-05-20 when the project
+owner requested the repository be overhauled from `temp/SEO_v2`.
 
 If this decision record conflicts with an active rulebook, the active rulebook
 wins. This document is rationale and history, not the canonical rule source.

@@ -57,6 +57,7 @@ proposals/
   rule_changes/
 
 notes/
+scripts/
 ```
 
 ## Directory Responsibilities
@@ -110,8 +111,10 @@ Contains examples used to stabilize generation and review behavior.
 `schemas/`
 
 Contains machine-readable schema definitions for canonical data formats.
-`schemas/pv_registry.v0.yaml` currently defines an informal v0 registry
-contract. A stricter validation schema may replace or extend it later.
+`schemas/pv_registry.seo_v2.yaml` currently defines the informal active
+SEO_v2 registry contract. `schemas/pv_registry.v0.yaml` is retained as a legacy
+contract for historical outputs and migration reference. A stricter validation
+schema may replace or extend the informal contracts later.
 
 `outputs/`
 
@@ -139,6 +142,12 @@ records. Proposals are not active rules until promoted into `rules/`.
 Contains private or temporary working notes. Notes preserve context during
 development but are not distribution artifacts and do not define binding rules.
 Decision records that should be distributed belong in `rules/decisions/`.
+
+`scripts/`
+
+Contains lightweight repository validation or maintenance scripts. Scripts may
+check rulebook/schema/example consistency, but they do not define naming policy.
+Active policy still belongs in `rules/`.
 
 ## Workflow
 
@@ -180,18 +189,24 @@ and discuss. The long-term direction should be a dual output:
 - Human-readable Markdown for review and collaboration.
 - Machine-readable JSON or YAML for validation, indexing, and reuse.
 
-The v0 schema is informal. Stricter validation can be added later without
+The SEO_v2 schema is informal. Stricter validation can be added later without
 changing the user-facing workflow.
 
 ## Rulebook Direction
 
-The active v0 rulebooks are intentionally small and explicit:
+The active rulebooks are SEO_v2 / 4GSR standard v1.0 aligned:
 
 - `rules/draft/PV_NAMING_RULEBOOK.md`
 - `rules/review/PV_REVIEW_RULEBOOK.md`
 
-Rules should be promoted gradually from observed decisions. Do not encode a
-preference as a mandatory rule until the project owner confirms it.
+The active PV shape is:
+
+```text
+BL-[PORT]:[AREA]-[DEV]-[SUBDEV]:[SignalName]
+```
+
+Rules should still be promoted carefully from source-backed decisions. Do not
+encode a preference as a mandatory rule until the project owner confirms it.
 
 ## Future RAG Direction
 

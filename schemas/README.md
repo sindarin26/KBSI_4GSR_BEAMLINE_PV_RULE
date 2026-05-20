@@ -4,5 +4,7 @@ Machine-readable schemas live here.
 
 Current file:
 
-- `pv_registry.v0.yaml`: informal v0 registry contract used by the active
-  rulebooks until a stricter validation schema is introduced.
+- `pv_registry.seo_v2.yaml`: informal active registry contract for the SEO_v2
+  4GSR standard.
+- `pv_registry.v0.yaml`: legacy informal v0 registry contract retained for
+  historical outputs and migration reference.

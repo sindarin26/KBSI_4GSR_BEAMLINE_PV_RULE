@@ -127,17 +127,29 @@ Architecture agents must:
 - Keep validation reports under `reviews/`.
 - Keep unsupported cases under `exceptions/`.
 - Keep proposed rule changes under `proposals/`.
+- Keep validation and maintenance scripts under `scripts/`; scripts may verify
+  rules but must not define active naming policy.
 - Update this file and `ARCHITECTURE.md` together when workflow behavior changes.
 
 ## Rulebook Status
 
-The active v0 rulebooks are:
+The active SEO_v2 / 4GSR standard v1.0 rulebooks are:
 
 - `rules/draft/PV_NAMING_RULEBOOK.md`
 - `rules/review/PV_REVIEW_RULEBOOK.md`
 
 Documents under `standards/` are for human discussion and distribution. They are
 not active agent rules until promoted into the active rulebooks.
+
+The current active PV shape is:
+
+```text
+BL-[PORT]:[AREA]-[DEV]-[SUBDEV]:[SignalName]
+```
+
+Historical v0 material using `ID10:{Area}:{Device}:{AxisOrFunction}` may remain
+in decisions, reviews, or legacy outputs, but it is not the active generation
+target for new work.
 
 When an active rulebook does not cover a case, agents must state that limitation
 and use the exception/proposal workflow instead of pretending a full rule exists.

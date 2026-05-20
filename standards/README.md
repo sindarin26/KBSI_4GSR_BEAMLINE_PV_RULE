@@ -20,6 +20,13 @@ rules/decisions/
 
 ## Status
 
+Promoted standard documents may live directly under `standards/`. The current
+promoted human-facing standard is:
+
+```text
+standards/4GSR_Beamline_PV_Naming_Standard_v1.0.md
+```
+
 Documents under `standards/candidates/` are not active rules until the project
 owner promotes them into the active rulebooks and schemas.
 
@@ -29,4 +36,3 @@ When a candidate standard is accepted:
 2. Update examples and schemas.
 3. Add or update a decision record under `rules/decisions/`.
 4. Regenerate affected outputs and review reports.
-

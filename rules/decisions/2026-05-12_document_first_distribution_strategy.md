@@ -1,10 +1,10 @@
 # Document-First Distribution Strategy
 
 Date: 2026-05-12
-Status: decision context, not an active rulebook
+Status: superseded decision context, not an active rulebook
 
-This record documents the current plan for distributing beamline PV naming work
-while the final PV string structure is still under discussion.
+This record documents the previous plan for distributing beamline PV naming work
+while the final PV string structure was still under discussion.
 
 If this decision record conflicts with an active rulebook, the active rulebook
 wins.
@@ -60,16 +60,21 @@ rules while the human-facing naming standard is still being reviewed.
 - `temp/` remains local scratch and must not be treated as a distributed rule
   source.
 
-## Current Active State
+## Historical Active State
 
-The current active v0 rulebooks still use:
+At the time of this record, the active v0 rulebooks used:
 
 ```text
 ID10:{Area}:{Device}:{AxisOrFunction}
 ```
 
-This remains active until the project owner explicitly promotes a different
-structure.
+That state was superseded on 2026-05-20 when the project owner requested the
+repository be overhauled from `temp/SEO_v2`. The active rulebooks now use the
+SEO_v2 shape:
+
+```text
+BL-[PORT]:[AREA]-[DEV]-[SUBDEV]:[SignalName]
+```
 
 ## Related Document
 
@@ -78,4 +83,3 @@ See:
 ```text
 standards/candidates/2026-05-12_tier_structure_options.md
 ```
-

@@ -24,3 +24,9 @@ Use one subdirectory per beamline, for example:
 ```text
 reviews/ID10/
 ```
+
+Source-package promotion reviews may use a named source directory, such as:
+
+```text
+reviews/SEO_v2/
+```
