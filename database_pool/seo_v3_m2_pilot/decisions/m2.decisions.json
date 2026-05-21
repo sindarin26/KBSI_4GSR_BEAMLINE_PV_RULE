@@ -1,0 +1,30 @@
+{
+  "poolId": "seo_v3_m2_pilot",
+  "decisions": [
+    {
+      "uid": "pvrow_674d8d3484f13917",
+      "reviewStatus": "approved",
+      "reviewNote": "Overlay should update the matching source row.",
+      "updatedAt": "2026-05-21T00:00:00.000Z"
+    },
+    {
+      "uid": "pvrow_fd77a41a13cd0dfc",
+      "reviewStatus": "accepted",
+      "reviewNote": "Accepted duplicate fixture A.",
+      "updatedAt": "2026-05-21T00:00:00.000Z"
+    },
+    {
+      "uid": "pvrow_40e55cf4df71e77b",
+      "reviewStatus": "approved",
+      "reviewNote": "Approved duplicate fixture B.",
+      "updatedAt": "2026-05-21T00:00:00.000Z"
+    },
+    {
+      "uid": "pvrow_orphan_m2_decision_001",
+      "reviewStatus": "approved",
+      "standardPv": "BL10A-EH:ION-BODY:Curr",
+      "reviewNote": "Decision-only fixture should become orphan.",
+      "updatedAt": "2026-05-21T00:00:00.000Z"
+    }
+  ]
+}
