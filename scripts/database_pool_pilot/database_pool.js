@@ -138,10 +138,32 @@ function validatePoolSourceRows(sourceRows) {
     for (const field of ["uid", "rowId", "poolId", "sourceId", "sourceAnchor", "reviewStatus"]) {
       if (!row[field]) errors.push(`sourceRows[${index}].${field} is required`);
     }
+    errors.push(...validateSourceTrace(row, `sourceRows[${index}]`));
     if (!DURABLE_REVIEW_STATUSES.has(row.reviewStatus)) {
       errors.push(`sourceRows[${index}] invalid reviewStatus: ${row.reviewStatus}`);
     }
     errors.push(...validateSourceRow(row, `sourceRows[${index}]`));
+  }
+  return errors;
+}
+
+function validateSourceTrace(row, label) {
+  const errors = [];
+  const trace = row.sourceTrace;
+  if (!trace || typeof trace !== "object") {
+    return [`${label}.sourceTrace is required`];
+  }
+  for (const field of ["sourceId", "sourceAnchor", "sourceKind", "sourceLabel"]) {
+    if (!trace[field]) errors.push(`${label}.sourceTrace.${field} is required`);
+  }
+  if (!Number.isInteger(trace.sourceLine)) {
+    errors.push(`${label}.sourceTrace.sourceLine must be an integer`);
+  }
+  if (trace.sourceId !== row.sourceId) {
+    errors.push(`${label}.sourceTrace.sourceId must match sourceId`);
+  }
+  if (trace.sourceAnchor !== row.sourceAnchor) {
+    errors.push(`${label}.sourceTrace.sourceAnchor must match sourceAnchor`);
   }
   return errors;
 }

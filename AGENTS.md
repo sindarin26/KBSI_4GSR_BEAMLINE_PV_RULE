@@ -36,7 +36,11 @@ Draft agents may:
 - Read `rules/decisions/` only when active draft rules do not resolve an
   ambiguity.
 - Read `examples/good/` and `examples/before_after/` when useful.
-- Produce generated material under `outputs/<beamline>/`.
+- Produce reviewable SEO_V3 database-pool rows under `database_pool/<pool_id>/`
+  when the request is about the database-pool workflow or PV name
+  standardization.
+- Produce legacy generated material under `outputs/<beamline>/` when the
+  request explicitly targets the legacy SEO_v2 output workflow.
 - Create a self-review report at `reviews/<beamline>/SELF_REVIEW.md` for their
   own draft.
 - Create or recommend exception records under `exceptions/<beamline>/` when
@@ -51,9 +55,12 @@ Draft agents must:
 - Prefer structured, repeatable output over prose-only summaries.
 - Run a self-review pass using `rules/review/` before finalizing.
 - Report unresolved issues rather than silently inventing missing technical facts.
-- Keep the normal user path simple: source material in `inputs/`, generated
-  registry/reference in `outputs/`, findings in `reviews/`, and rule gaps in
+- Keep the normal database-pool path simple: source material in `inputs/`,
+  reviewable rows in `database_pool/`, findings in `reviews/`, and rule gaps in
   `exceptions/`.
+- Keep the legacy output path simple when explicitly requested: source material
+  in `inputs/`, generated registry/reference in `outputs/`, findings in
+  `reviews/`, and rule gaps in `exceptions/`.
 
 Draft agents must not:
 
@@ -75,15 +82,15 @@ Review agents may:
 
 - Read generated outputs, source inputs, examples, schemas, and rulebooks.
 - Read `database_pool/` source rows and decision overlays when explicitly
-  reviewing database-pool pilot material.
+  reviewing database-pool material.
 - Read `rules/decisions/` for rationale when active review rules are ambiguous.
 - Apply clear, rule-based fixes directly to generated outputs when the user asks
   for usable/corrected output or does not explicitly request read-only review.
 - Produce review logs at `reviews/<beamline>/REVIEW.md`.
 - Use `reviews/<beamline>/review_decisions.json` as structured human review
   input when it exists.
-- Use `fixtures/SEO_v2/review_decisions.json` as the SEO_v2 historical seed for
-  test or comparison data only, not as active naming policy.
+- Use `fixtures/SEO_v2/review_decisions.json` as historical SEO_v2 comparison
+  data only, not as active naming policy.
 - Recommend exception or proposal creation when a rule gap is found.
 - Recommend precise corrections.
 
@@ -107,8 +114,8 @@ Review agents must:
   `reviews/<beamline>/REVIEW.md`.
 - Treat browser review decision files as source-backed human decisions, not as
   active naming policy.
-- Keep the row `dataset` field intact so active beamline decisions and SEO_v2
-  seed decisions do not get merged accidentally.
+- For database-pool rows, preserve `poolId`, `sourceId`, `sourceAnchor`, and
+  `uid` so decision overlays remain attached to the correct source facts.
 - Distinguish rule violations, ambiguities, missing data, and suggestions.
 - Avoid expanding the PV list beyond what the reviewed source provides.
 
@@ -135,14 +142,14 @@ Architecture agents must:
 - Keep examples under `examples/`.
 - Keep distributable source material under `inputs/`; keep `temp/` as local
   scratch only.
-- Keep normalized database-pool pilot rows and decision overlays under
+- Keep normalized database-pool rows and decision overlays under
   `database_pool/`.
 - Keep generated outputs under `outputs/`.
 - Keep generated output status in `outputs/<beamline>/status.yaml` when an
   output directory is current enough to validate.
 - Keep validation reports under `reviews/`.
 - Keep human review decision files under `reviews/<beamline>/`.
-- Keep read-only comparison and test seed rows under `fixtures/`.
+- Keep read-only comparison and test fixtures under `fixtures/`.
 - Keep unsupported cases under `exceptions/`.
 - Keep proposed rule changes under `proposals/`.
 - Keep validation and maintenance scripts under `scripts/`; scripts may verify
@@ -151,7 +158,7 @@ Architecture agents must:
 
 ## Rulebook Status
 
-The active SEO_v2 / 4GSR standard v1.0 rulebooks are:
+The active generation/review rulebooks are still:
 
 - `rules/draft/PV_NAMING_RULEBOOK.md`
 - `rules/review/PV_REVIEW_RULEBOOK.md`
@@ -159,7 +166,26 @@ The active SEO_v2 / 4GSR standard v1.0 rulebooks are:
 Documents under `standards/` are for human discussion and distribution. They are
 not active agent rules until promoted into the active rulebooks.
 
-The current active PV shape is:
+The promoted database-pool SEO_V3 workflow uses this PV shape:
+
+```text
+[SEC/SYS][PORT]-[AREA]:[DEV]-[SUBDEV]:[SignalName]
+```
+
+Database-pool source row components are:
+
+```text
+section
+port
+area
+device
+subdevice
+signal
+standardPv
+```
+
+The older SEO_v2 generated-output path remains available for historical ID10
+outputs and compatibility scripts. Its PV shape is:
 
 ```text
 BL-[PORT]:[AREA]-[DEV]-[SUBDEV]:[SignalName]
@@ -169,7 +195,13 @@ Historical v0 material using `ID10:{Area}:{Device}:{AxisOrFunction}` may remain
 in decisions, reviews, or legacy outputs, but it is not the active generation
 target for new work.
 
-Current generated outputs should be machine-checkable with:
+Database-pool material should be machine-checkable with:
+
+```text
+node scripts/validate_database_pool.js
+```
+
+Legacy SEO_v2 generated outputs should remain machine-checkable with:
 
 ```text
 node scripts/validate_registry.js <beamline>

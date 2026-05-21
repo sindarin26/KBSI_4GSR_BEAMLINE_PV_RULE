@@ -67,17 +67,17 @@ const draft = readText("rules/draft/PV_NAMING_RULEBOOK.md");
 const review = readText("rules/review/PV_REVIEW_RULEBOOK.md");
 const schema = readText("schemas/pv_registry.seo_v2.yaml");
 const goodExample = readText("examples/good/ID10_minimal_registry.yaml");
-// Guard: old seed locations must not exist (would indicate stale files not yet relocated)
-for (const oldSeedPath of [
+// Guard: old comparison fixture locations must not exist.
+for (const oldFixturePath of [
   "reviews/SEO_v2/review_decisions.json",
   "reviews/SEO_v2/accepted_decisions.json",
   "reviews/SEO_v2/fixed_decisions.json",
 ]) {
-  if (fs.existsSync(rel(oldSeedPath))) {
-    fail(`${oldSeedPath} still exists — seed files must live under fixtures/SEO_v2/`);
+  if (fs.existsSync(rel(oldFixturePath))) {
+    fail(`${oldFixturePath} still exists — comparison fixture files must live under fixtures/SEO_v2/`);
   }
 }
-const seedDecisionRows = JSON.parse(readText("fixtures/SEO_v2/review_decisions.json"));
+const comparisonDecisionRows = JSON.parse(readText("fixtures/SEO_v2/review_decisions.json"));
 
 for (const [name, text] of [
   ["draft rulebook", draft],
@@ -179,40 +179,40 @@ if (duplicateGroups > 0) {
   }
 }
 
-if (!Array.isArray(seedDecisionRows)) {
+if (!Array.isArray(comparisonDecisionRows)) {
   fail("fixtures/SEO_v2/review_decisions.json must be a JSON array");
 } else {
-  pass(`SEO_v2 seed file loaded (${seedDecisionRows.length} rows)`);
+  pass(`SEO_v2 comparison fixture loaded (${comparisonDecisionRows.length} rows)`);
 }
 
 const constraints = schemaConstraints();
 
-function validateSeedFile(rows, label, requiredDataset, requiredStatus) {
+function validateComparisonFixture(rows, label, requiredDataset, requiredStatus) {
   if (!Array.isArray(rows) || rows.length === 0) {
     fail(`${label} is missing rows or not an array`);
     return;
   }
-  let seedFailures = 0;
+  let comparisonFailures = 0;
   for (const [index, row] of rows.entries()) {
     const loc = `${label}[${index}]`;
     if (row.dataset !== requiredDataset) {
       fail(`${loc} dataset must be ${requiredDataset}, found ${row.dataset}`);
-      seedFailures += 1;
+      comparisonFailures += 1;
     }
     if (requiredStatus && row.reviewStatus !== requiredStatus) {
       fail(`${loc} reviewStatus must be ${requiredStatus}, found ${row.reviewStatus}`);
-      seedFailures += 1;
+      comparisonFailures += 1;
     }
     const { errors } = validatePvRow(row, constraints, loc);
     for (const e of errors) {
       fail(e);
-      seedFailures += 1;
+      comparisonFailures += 1;
     }
   }
-  if (seedFailures === 0) pass(`${label} check passed (${rows.length})`);
+  if (comparisonFailures === 0) pass(`${label} check passed (${rows.length})`);
 }
 
-validateSeedFile(seedDecisionRows, "SEO_v2 seed", "SEO_v2", "fixed");
+validateComparisonFixture(comparisonDecisionRows, "SEO_v2 comparison fixture", "SEO_v2", "fixed");
 
 console.log(`areas: ${[...areas].sort().join(", ")}`);
 console.log(`devices: ${[...devices].sort().join(", ")}`);

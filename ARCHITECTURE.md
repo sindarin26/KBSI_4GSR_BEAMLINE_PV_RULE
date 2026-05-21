@@ -123,10 +123,18 @@ when the user explicitly points to it.
 
 `database_pool/`
 
-Contains normalized, reviewable PV candidate datasets for the database-pool
-pilot workflow. Use one subdirectory per pool. Each pool should keep a
+Contains normalized, reviewable PV candidate datasets for the SEO_V3
+database-pool workflow. Use one subdirectory per pool. Each pool should keep a
 `manifest.yaml`, source-row files under `sources/*.rows.json`, and human
 decision overlays under `decisions/*.decisions.json`.
+
+Canonical database-pool paths are:
+
+```text
+database_pool/<pool_id>/manifest.yaml
+database_pool/<pool_id>/sources/*.rows.json
+database_pool/<pool_id>/decisions/*.decisions.json
+```
 
 Rows in `database_pool/` are source facts, candidates, or human review
 decisions. They are not active naming policy until promoted into rulebooks,
@@ -144,10 +152,11 @@ Contains examples used to stabilize generation and review behavior.
 `schemas/`
 
 Contains machine-readable schema definitions for canonical data formats.
-`schemas/pv_registry.seo_v2.yaml` currently defines the informal active
-SEO_v2 registry contract. `schemas/pv_registry.v0.yaml` is retained as a legacy
-contract for historical outputs and migration reference. A stricter validation
-schema may replace or extend the informal contracts later.
+`schemas/database_pool.seo_v3.yaml` defines the informal promoted
+database-pool contract. `schemas/pv_registry.seo_v2.yaml` defines the legacy
+SEO_v2 generated-output registry contract. `schemas/pv_registry.v0.yaml` is
+retained as a legacy contract for historical outputs and migration reference. A
+stricter validation schema may replace or extend the informal contracts later.
 
 `outputs/`
 
@@ -167,13 +176,14 @@ Contains review reports and human review decision files. Use one subdirectory
 per beamline. Browser review decisions should be stored as machine-readable
 JSON rows under `reviews/<beamline>/`, not embedded only in HTML. Source-package
 promotion review reports may live under a named source directory such as
-`reviews/SEO_v2/`, but historical seed rows must not be stored there.
+`reviews/SEO_v2/`, but historical comparison fixture rows must not be stored
+there.
 
 `fixtures/`
 
-Contains read-only test and comparison fixtures. Historical SEO_v2 DB seed rows
-live under `fixtures/SEO_v2/review_decisions.json`; review tooling may display
-them for comparison, but ordinary beamline saves must not rewrite fixtures.
+Contains read-only test and comparison fixtures. Historical SEO_v2 DB rows live
+under `fixtures/SEO_v2/review_decisions.json`; review tooling may display them
+for comparison, but ordinary beamline saves must not rewrite fixtures.
 
 `exceptions/`
 
@@ -197,7 +207,14 @@ Contains lightweight repository validation or maintenance scripts. Scripts may
 check rulebook/schema/example consistency, but they do not define naming policy.
 Active policy still belongs in `rules/`.
 
-Current workbench entry points:
+Current database-pool entry points:
+
+```text
+node scripts/validate_database_pool.js
+node scripts/database_pool_pilot/review_workbench.js --port 8775
+```
+
+Legacy SEO_v2 output entry points:
 
 ```text
 node scripts/validate_seo_v2_rules.js
@@ -236,13 +253,14 @@ node scripts/import_seo_review_decisions.js
     row-array decision files under `reviews/<beamline>/`. The server reads
     `outputs/<beamline>/_work/review_queue.json` when present and falls back to
     `_work/raw_extracted_pvs.yaml` while the queue migration is in progress.
-12. Historical SEO_v2 DB rows may be imported into `fixtures/SEO_v2/` as a
-    read-only decision seed for UI and pipeline tests. Imported seed rows remain
+12. Historical SEO_v2 DB rows may be imported into `fixtures/SEO_v2/` as
+    read-only comparison data for UI and pipeline tests. Imported rows remain
     examples of prior accepted rows, not active policy.
-13. During the database-pool pilot, normalized source rows and decision overlays
-    may be written under `database_pool/<pool_id>/`. These files support
-    review, merge, validation, and UI experiments; they do not replace active
-    `outputs/` or active rulebooks until a later promotion step.
+13. For SEO_V3 database-pool work, normalized source rows and decision overlays
+    are written under `database_pool/<pool_id>/`. These files support review,
+    merge, validation, and UI experiments. They become rule authority only when
+    a reviewed decision is promoted into rulebooks, schemas, examples, or
+    generated outputs through the proposal/review process.
 
 ## Proposal Promotion
 
@@ -263,17 +281,24 @@ and discuss. The long-term direction should be a dual output:
 - Human-readable Markdown for review and collaboration.
 - Machine-readable JSON or YAML for validation, indexing, and reuse.
 
-The SEO_v2 schema is informal. Stricter validation can be added later without
-changing the user-facing workflow.
+The SEO_V3 database-pool schema and SEO_v2 generated-output schema are
+informal. Stricter validation can be added later without changing the
+user-facing workflow.
 
 ## Rulebook Direction
 
-The active rulebooks are SEO_v2 / 4GSR standard v1.0 aligned:
+The active generation/review rulebooks remain:
 
 - `rules/draft/PV_NAMING_RULEBOOK.md`
 - `rules/review/PV_REVIEW_RULEBOOK.md`
 
-The active PV shape is:
+The promoted SEO_V3 database-pool shape is:
+
+```text
+[SEC/SYS][PORT]-[AREA]:[DEV]-[SUBDEV]:[SignalName]
+```
+
+The legacy SEO_v2 generated-output shape is:
 
 ```text
 BL-[PORT]:[AREA]-[DEV]-[SUBDEV]:[SignalName]
@@ -291,6 +316,7 @@ The likely retrieval sources are:
 - `examples/`
 - `rules/decisions/`
 - accepted outputs under `outputs/`
+- approved database-pool rows and abbreviation records
 - review reports under `reviews/`
 - exceptions and proposals when investigating rule gaps
 

@@ -1,14 +1,60 @@
 # KBSI 4GSR Beamline PV Rule Workbench
 
-빔라인 PV 원자료를 SEO_v2 기준 PV registry와 reference 문서로 정리하고
-검증하기 위한 내부 workbench입니다.
+빔라인 PV 원자료를 SEO_V3 database-pool workflow와 legacy SEO_v2 output
+workflow로 정리하고 검증하기 위한 내부 workbench입니다.
 
 이 저장소의 목적은 사람에게 공유할 표준 문서 하나를 보관하는 것이 아니라,
 원자료 추출, registry 생성/검토, Markdown 렌더링, coverage 검증, 예외 추적을
 반복 가능하게 만드는 것입니다. 사람에게 공유할 문서는 `standards/`나
 `outputs/<beamline>/PV_REFERENCE.md`만 골라서 사용합니다.
 
-## Workbench Commands
+## Database-Pool Commands
+
+현재 새 작업의 기본 경로는 SEO_V3 database-pool입니다. 전체 database-pool
+pilot 검증을 실행합니다.
+
+```text
+node scripts/validate_database_pool.js
+```
+
+HTTP endpoint smoke까지 포함하려면 로컬 포트 바인딩이 가능한 환경에서 다음을
+실행합니다.
+
+```text
+node scripts/validate_database_pool.js --with-http
+```
+
+브라우저 review workbench를 실행합니다.
+
+```text
+node scripts/database_pool_pilot/review_workbench.js --port 8775
+```
+
+주요 파일 위치:
+
+```text
+database_pool/<pool_id>/manifest.yaml
+database_pool/<pool_id>/sources/*.rows.json
+database_pool/<pool_id>/decisions/*.decisions.json
+fixtures/seo_v3_pilot/abbreviation_registry.json
+schemas/database_pool.seo_v3.yaml
+```
+
+SEO_V3 PV shape:
+
+```text
+[SEC/SYS][PORT]-[AREA]:[DEV]-[SUBDEV]:[SignalName]
+```
+
+예시:
+
+```text
+BL10A-FE:IVU-GIRD:Y
+BL10A-OH:MONO-CRYS:Theta
+BL10A-EH:SMPL-STG:X
+```
+
+## Legacy SEO_v2 Commands
 
 SEO_v2 rule/source 자체를 확인합니다.
 
@@ -47,8 +93,8 @@ node scripts/validate_review_queue.js ID10
 node scripts/review_server.js ID10 --port 8765
 ```
 
-SEO_v2 DB JSON에 들어 있는 기존 표준 row를 리뷰 테스트용 read-only decision
-seed로 가져옵니다.
+SEO_v2 DB JSON에 들어 있는 기존 표준 row를 리뷰 테스트용 read-only
+comparison fixture로 가져옵니다.
 
 ```text
 node scripts/import_seo_review_decisions.js
@@ -67,21 +113,40 @@ git diff --check
 
 ## Quick Start
 
+### Database-Pool Path
+
 1. 빔라인별 원자료를 넣습니다.
 
 ```text
-inputs/ID10/
+inputs/<pool_id>/
 ```
 
 2. agent에게 요청합니다.
 
 ```text
-inputs/ID10 자료를 보고 PV 리스트를 정리해줘.
+inputs/<pool_id> 자료를 보고 database_pool/<pool_id>에 reviewable SEO_V3 row를 만들어줘.
 ```
 
 3. 결과를 확인합니다.
 
 ```text
+database_pool/<pool_id>/manifest.yaml
+database_pool/<pool_id>/sources/*.rows.json
+database_pool/<pool_id>/decisions/*.decisions.json
+```
+
+4. 브라우저에서 검토합니다.
+
+```text
+node scripts/database_pool_pilot/review_workbench.js --port 8775
+```
+
+### Legacy SEO_v2 Output Path
+
+legacy `outputs/<beamline>/` 산출물이 필요할 때만 이 경로를 씁니다.
+
+```text
+inputs/ID10/
 outputs/ID10/pv_registry.yaml
 outputs/ID10/PV_REFERENCE.md
 outputs/ID10/_work/raw_extracted_pvs.yaml
@@ -89,7 +154,17 @@ outputs/ID10/status.yaml
 reviews/ID10/SELF_REVIEW.md
 ```
 
-## Output
+## Database-Pool Output
+
+`database_pool/<pool_id>/sources/*.rows.json`은 source-backed candidate row입니다.
+`database_pool/<pool_id>/decisions/*.decisions.json`은 human decision overlay입니다.
+`pending`, `conflict`, `needsInput` 같은 bucket은 durable status가 아니라
+workbench에서 계산됩니다.
+
+`candidate`는 abbreviation/code status입니다. row `reviewStatus`로 쓰지
+않습니다. `fixed`도 row status가 아니라 approved row metadata로 다룹니다.
+
+## Legacy SEO_v2 Output
 
 `pv_registry.yaml`이 canonical source입니다.
 
@@ -118,7 +193,7 @@ reviews/<beamline>/
 exceptions/<beamline>/
 ```
 
-사람 리뷰 UI는 다음 JSON 파일을 씁니다. 포맷은 SEO DB JSON처럼 top-level
+Legacy 사람 리뷰 UI는 다음 JSON 파일을 씁니다. 포맷은 SEO DB JSON처럼 top-level
 row array이며 `seq`, `port`, `area`, `dev`, `subdev`, `signal`, `standardPv`,
 `note`, `source` 필드를 중심으로 둡니다.
 
@@ -129,36 +204,46 @@ reviews/<beamline>/fixed_decisions.json
 ```
 
 `review_decisions.json`은 전체 판단 이력, `accepted_decisions.json`은 이후
-dataset update에 쓸 수 있는 행, `fixed_decisions.json`은 리뷰어가 stable/fixed로
-표시한 행입니다. GUI는 이 파일들을 쓰는 입력기이며, active naming policy는
+dataset update에 쓸 수 있는 행입니다. `fixed_decisions.json`은 legacy
+compatibility 파일이며, 새 database-pool workflow에서는 fixed를 row status로
+쓰지 않습니다. GUI는 이 파일들을 쓰는 입력기이며, active naming policy는
 여전히 `rules/`와 schema에 있습니다.
 
 `fixtures/SEO_v2/review_decisions.json`은 historical SEO_v2 DB row를 동일한
-SEO_v2 형식으로 보존한 테스트 seed입니다. `dataset` 필드로 beamline row와 seed
-row를 구분합니다. Review UI는 이 seed를 비교용으로 표시하지만 저장하지
-않습니다. `scripts/import_seo_review_decisions.js`로 재생성합니다.
+SEO_v2 형식으로 보존한 comparison fixture입니다. legacy Review UI는 이 rows를
+비교용으로 표시하지만 저장하지 않습니다.
+`scripts/import_seo_review_decisions.js`로 재생성합니다.
 
 ## Current Rule Summary
 
-현재 SEO_v2 / 4GSR standard v1.0 기준 요약입니다. 자세한 active rule은
-`rules/draft/PV_NAMING_RULEBOOK.md`와 `rules/review/PV_REVIEW_RULEBOOK.md`를
-봅니다. 결정 이유와 배경은 `rules/decisions/`에 있습니다.
+현재 새 database-pool workflow는 SEO_V3 shape를 사용합니다. legacy
+`outputs/<beamline>/` 생성/검증 경로는 SEO_v2 compatibility로 남아 있습니다.
+자세한 active rule은 `rules/draft/PV_NAMING_RULEBOOK.md`와
+`rules/review/PV_REVIEW_RULEBOOK.md`를 봅니다. 결정 이유와 배경은
+`rules/decisions/`에 있습니다.
 
 사람에게 배포하거나 회의에서 비교할 표준 문서 후보는 `standards/`에 둡니다.
 `standards/`의 문서는 active rulebook이 아니며, 최종 결정 후 룰북과 schema에
 반영해야 실제 생성 규칙이 됩니다.
 
 ```text
-Structure: BL-[PORT]:[AREA]-[DEV]-[SUBDEV]:[SignalName]
-Section: BL
-Port example: 10C
-Area: FE, PTL, OH, EH, SYS
-Device examples: IVU, MONO, HHLM, WBSLT, ION, CTRL, MOTOR
-Subdevice examples: GIRD, ENC, CRYS, MIRR, SLIT, DIAG, LOGIC, STG
-SignalName: upper-initial CamelCase/PascalCase
+SEO_V3 structure: [SEC/SYS][PORT]-[AREA]:[DEV]-[SUBDEV]:[SignalName]
+Legacy SEO_v2 structure: BL-[PORT]:[AREA]-[DEV]-[SUBDEV]:[SignalName]
+Section example: BL
+Port example: 10A
+Approved Markdown area examples: FE, PTL, OH, EH
+Candidate follow-up area examples: SYS
+Candidate device examples: IVU, MONO, HHLM, WBSLT, ION
+Candidate HTML/DB-only device examples: CTRL, MOTOR
+Candidate subdevice examples: GIRD, ENC, CRYS, MIRR, SLIT, STG
+Candidate HTML/DB-only subdevice examples: DIAG, LOGIC
+SignalName: upper-initial form matching [A-Z][A-Za-z0-9]*; stricter CamelCase validation is deferred
 White beam slit token: WBSLT
-Canonical schema: schemas/pv_registry.seo_v2.yaml
-Canonical output: outputs/<beamline>/pv_registry.yaml
+Database-pool schema: schemas/database_pool.seo_v3.yaml
+Legacy registry schema: schemas/pv_registry.seo_v2.yaml
+Database-pool rows: database_pool/<pool_id>/sources/*.rows.json
+Database-pool decisions: database_pool/<pool_id>/decisions/*.decisions.json
+Legacy output: outputs/<beamline>/pv_registry.yaml
 Rendered document: outputs/<beamline>/PV_REFERENCE.md
 Raw extraction: outputs/<beamline>/_work/raw_extracted_pvs.yaml
 Draft self-review: reviews/<beamline>/SELF_REVIEW.md
@@ -168,15 +253,16 @@ Review/fix log: reviews/<beamline>/REVIEW.md
 예시:
 
 ```text
-BL-10C:FE-IVU-GIRD:Y
-BL-10C:FE-IVU-ENC:US
-BL-10C:OH-MONO-CRYS:Theta
-BL-10C:OH-WBSLT-SLIT:Hgap
-BL-10C:SYS-CTRL-LOGIC:UserAve1
+BL10A-FE:IVU-GIRD:Y
+BL10A-FE:IVU-ENC:US
+BL10A-OH:MONO-CRYS:Theta
+BL10A-OH:WBSLT-SLIT:Vgap
+BL10A-EH:SMPL-STG:X
 ```
 
-과거 `ID10:{Area}:{Device}:{AxisOrFunction}` v0 자료는 migration/reference
-용도로만 남겨둡니다. 새 산출물은 active SEO_v2 구조로 작성해야 합니다.
+과거 `ID10:{Area}:{Device}:{AxisOrFunction}` v0 자료와 legacy SEO_v2 output은
+migration/reference 용도로 남겨둡니다. 새 reviewable dataset은
+database-pool SEO_V3 구조로 작성합니다.
 
 ## Repository Map
 
@@ -187,13 +273,14 @@ BL-10C:SYS-CTRL-LOGIC:UserAve1
 - `rules/decisions/`: 룰의 의사결정 기록과 판단 근거
 - `standards/`: 사람용 표준 문서와 후보안
 - `inputs/`: 빔라인별 원자료
+- `database_pool/`: SEO_V3 reviewable source rows and decision overlays
 - `outputs/`: 생성된 canonical registry와 reference 문서
 - `reviews/`: 검토 리포트
 - `exceptions/`: 현재 룰로 처리하기 어려운 실제 케이스
 - `proposals/`: exception을 공식 룰로 편입하기 위한 변경 제안
 - `examples/`: good/bad/before-after 예제
-- `fixtures/`: 테스트/비교용 fixture 데이터 (SEO_v2 historical seed)
-- `schemas/`: SEO_v2 registry/raw/status schema contract
+- `fixtures/`: 테스트/비교용 fixture 데이터
+- `schemas/`: database-pool SEO_V3 and legacy SEO_v2 schema contracts
 - `scripts/`: 검증/유지보수 스크립트
 
 `temp/`와 `notes/`는 작업용 디렉토리이며 배포 대상에서 제외합니다.

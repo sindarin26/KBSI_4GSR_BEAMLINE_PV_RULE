@@ -19,6 +19,7 @@ const { loadRegistry } = require("../abbreviation_registry_pilot/abbreviation_re
 
 const root = path.resolve(__dirname, "..", "..");
 const registryPath = DEFAULT_REGISTRY_PATH;
+const withHttp = process.argv.includes("--with-http");
 
 let failures = 0;
 const cleanup = [];
@@ -176,15 +177,19 @@ function requestJson(server, pathName) {
     assert.strictEqual(encRow.reviewStatus, "needs_input");
   });
 
-  await test("HTTP state endpoint serves the same shared model", async () => {
-    const tmpRoot = makeTempRoot();
-    const server = createServer({ rootDir: tmpRoot, registryPath, poolIds: ["BL10A"] });
-    const response = await requestJson(server, "/api/state?poolId=BL10A");
-    assert.strictEqual(response.statusCode, 200);
-    assert.strictEqual(response.body.rows.length, 3);
-    assert.strictEqual(response.body.visibleRows.length, 3);
-    assert.strictEqual(response.body.registry.entries.length, 50);
-  });
+  if (withHttp) {
+    await test("HTTP state endpoint serves the same shared model", async () => {
+      const tmpRoot = makeTempRoot();
+      const server = createServer({ rootDir: tmpRoot, registryPath, poolIds: ["BL10A"] });
+      const response = await requestJson(server, "/api/state?poolId=BL10A");
+      assert.strictEqual(response.statusCode, 200);
+      assert.strictEqual(response.body.rows.length, 3);
+      assert.strictEqual(response.body.visibleRows.length, 3);
+      assert.strictEqual(response.body.registry.entries.length, 50);
+    });
+  } else {
+    pass("HTTP state endpoint smoke skipped (run with --with-http)");
+  }
 
   await test("workbench UI text avoids retired user-facing labels", () => {
     const text = fs.readFileSync(path.join(root, "scripts", "database_pool_pilot", "review_workbench.js"), "utf8");

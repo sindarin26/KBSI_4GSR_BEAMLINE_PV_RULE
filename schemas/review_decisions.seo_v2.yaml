@@ -10,7 +10,7 @@ review_decisions:
     path: reviews/<beamline>/accepted_decisions.json
   beamline_fixed_decisions:
     path: reviews/<beamline>/fixed_decisions.json
-  seo_v2_seed_decisions:
+  seo_v2_comparison_decisions:
     path: fixtures/SEO_v2/review_decisions.json
     read_only: true
   row:

@@ -1,0 +1,173 @@
+# Informal SEO_V3 database-pool contract.
+# This is a documentation schema for the reviewed database_pool pilot workflow.
+
+database_pool:
+  path: database_pool/<pool_id>/
+  required:
+    manifest: manifest.yaml
+    sources: sources/*.rows.json
+    decisions: decisions/*.decisions.json
+  status: promoted_pilot
+  policy:
+    source_rows_are: source_facts_or_reviewable_candidates
+    decision_rows_are: human_review_overlays
+    active_policy_requires: explicit_promotion_to_rules_schemas_or_examples
+
+manifest:
+  required:
+    pool_id: string
+    title: string
+    status: string
+    schema_version: string
+  optional:
+    source_note: string
+  status_values:
+    - pilot
+    - active
+    - archived
+
+source_rows_file:
+  required:
+    poolId: string
+    sourceId: string
+    rows: list
+  row:
+    required:
+      uid: string
+      rowId: string
+      poolId: string
+      sourceId: string
+      sourceAnchor: string
+      section: string
+      port: string
+      area: string
+      device: string
+      subdevice: string
+      signal: string
+      standardPv: string
+      reviewStatus: string
+      sourceTrace: object
+    optional:
+      sourcePv: string
+      legacyRawId: string
+      note: string
+      metadata: object
+    identity:
+      uid: deterministic SHA1 prefix over poolId + sourceId + sourceAnchor
+      rowId: should equal standardPv for current SEO_V3 rows
+    seo_v3_components:
+      section_regex: "[A-Z]+"
+      port_regex: "[0-9]{2}[A-Z]"
+      area_regex: "[A-Z0-9]+"
+      device_regex: "[A-Z0-9]+"
+      subdevice_regex: "[A-Z0-9]+"
+      signal_regex: "[A-Z][A-Za-z0-9]*"
+      standardPv_format: section + port + "-" + area + ":" + device + "-" + subdevice + ":" + signal
+      standardPv_regex: "[A-Z]+[0-9]{2}[A-Z]-[A-Z0-9]+:[A-Z0-9]+-[A-Z0-9]+:[A-Z][A-Za-z0-9]*"
+    review_status_values:
+      - draft
+      - needs_input
+      - accepted
+      - approved
+      - rejected
+      - deprecated
+      - exception
+      - proposal
+      - skipped
+      - orphan
+    non_durable_buckets:
+      - pending
+      - conflict
+    non_durable_notes:
+      candidate: abbreviation/code status only
+      fixed: approved-row metadata only, not reviewStatus
+    sourceTrace:
+      required:
+        sourceId: string
+        sourceAnchor: string
+        sourceLine: integer
+        sourceKind: string
+        sourceLabel: string
+      optional:
+        legacyRawId: string
+      rule: sourceTrace.sourceId and sourceTrace.sourceAnchor must match row sourceId and sourceAnchor
+
+decision_rows_file:
+  required:
+    poolId: string
+    decisions: list
+  decision:
+    required:
+      uid: string
+      reviewStatus: string
+    optional:
+      standardPv: string
+      reviewNote: string
+      updatedAt: iso_datetime
+      locked: boolean
+      useAsExample: boolean
+      exampleRole: string
+    rule: decision uid overlays a source row uid; missing source rows merge as orphan
+
+abbreviation_registry:
+  path: fixtures/seo_v3_pilot/abbreviation_registry.json
+  status: promoted_pilot_fixture
+  required:
+    entries: list
+  entry:
+    required:
+      code: string
+      kind: string
+      meaning: string
+      status: string
+      scope: string
+      source: string
+    kind_values:
+      - section
+      - port
+      - area
+      - device
+      - subdevice
+    status_values:
+      - candidate
+      - approved
+      - deprecated
+      - rejected
+    first_scope: global
+    initial_status_policy:
+      section.BL: approved
+      future_sections: candidate
+      markdown_ports: approved
+      markdown_areas: approved
+      markdown_devices: candidate
+      markdown_subdevices: candidate
+      html_db_only_codes: candidate
+
+workbench:
+  entrypoint: scripts/database_pool_pilot/review_workbench.js
+  validation: scripts/database_pool_pilot/validate_review_workbench.js
+  tabs:
+    - All Rows
+    - Review
+    - Needs Input
+    - Conflicts
+    - Approved
+    - Abbreviations
+  filters:
+    - poolId
+    - sourceId
+    - reviewStatus
+    - section
+    - port
+    - area
+    - device
+    - subdevice
+    - prefix
+    - search
+  save_targets:
+    row_decisions: database_pool/<pool_id>/decisions/*.decisions.json
+    abbreviation_decisions: fixtures/seo_v3_pilot/abbreviation_registry.json
+  behavior:
+    pending: computed_only
+    conflict: computed_only
+    bulk_approval: visible_computed_pending_rows_only

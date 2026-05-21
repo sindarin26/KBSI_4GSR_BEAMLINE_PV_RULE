@@ -16,6 +16,13 @@
       "signal": "Theta",
       "standardPv": "BL10A-OH:MONO-CRYS:Theta",
       "reviewStatus": "draft",
+      "sourceTrace": {
+        "sourceId": "fixtures/seo_v3_pilot/source_rows.json#m2",
+        "sourceAnchor": "m2-source-001",
+        "sourceLine": 1,
+        "sourceKind": "m2_fixture",
+        "sourceLabel": "BL10A-OH:MONO-CRYS:Theta"
+      },
       "note": "M2 overlay match fixture"
     },
     {
@@ -32,6 +39,13 @@
       "signal": "Pitch",
       "standardPv": "BL10A-OH:HHLM-MIRR:Pitch",
       "reviewStatus": "needs_input",
+      "sourceTrace": {
+        "sourceId": "fixtures/seo_v3_pilot/source_rows.json#m2",
+        "sourceAnchor": "m2-source-002",
+        "sourceLine": 2,
+        "sourceKind": "m2_fixture",
+        "sourceLabel": "BL10A-OH:HHLM-MIRR:Pitch"
+      },
       "note": "M2 source-only fixture"
     },
     {
@@ -48,6 +62,13 @@
       "signal": "X",
       "standardPv": "BL10A-EH:SMPL-STG:X",
       "reviewStatus": "draft",
+      "sourceTrace": {
+        "sourceId": "fixtures/seo_v3_pilot/source_rows.json#m2",
+        "sourceAnchor": "m2-source-003",
+        "sourceLine": 3,
+        "sourceKind": "m2_fixture",
+        "sourceLabel": "BL10A-EH:SMPL-STG:X"
+      },
       "note": "M2 duplicate standardPv fixture A"
     },
     {
@@ -64,6 +85,13 @@
       "signal": "X",
       "standardPv": "BL10A-EH:SMPL-STG:X",
       "reviewStatus": "draft",
+      "sourceTrace": {
+        "sourceId": "fixtures/seo_v3_pilot/source_rows.json#m2",
+        "sourceAnchor": "m2-source-004",
+        "sourceLine": 4,
+        "sourceKind": "m2_fixture",
+        "sourceLabel": "BL10A-EH:SMPL-STG:X"
+      },
       "note": "M2 duplicate standardPv fixture B"
     },
     {
@@ -80,6 +108,13 @@
       "signal": "Y",
       "standardPv": "BL10A-FE:IVU-GIRD:Y",
       "reviewStatus": "draft",
+      "sourceTrace": {
+        "sourceId": "fixtures/seo_v3_pilot/source_rows.json#m2",
+        "sourceAnchor": "m2-source-005",
+        "sourceLine": 5,
+        "sourceKind": "m2_fixture",
+        "sourceLabel": "BL10A-FE:IVU-GIRD:Y"
+      },
       "note": "M2 stable re-ingest fixture"
     }
   ]

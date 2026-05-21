@@ -11,7 +11,7 @@ review_queue:
   row:
     ref: schemas/pv_review_row.seo_v2.yaml pv_review_row
   constraints:
-    no_seed_rows: dataset must equal the beamline identifier (e.g. ID10), not SEO_v2
+    no_comparison_fixture_rows: dataset must equal the beamline identifier (e.g. ID10), not SEO_v2
     unique_raw_id: each rawId must appear exactly once
     unique_source_anchor: each (sourceId, sourceAnchor) pair must appear exactly once
     source_id_resolves: sourceId must point to an existing file under inputs/<beamline>/

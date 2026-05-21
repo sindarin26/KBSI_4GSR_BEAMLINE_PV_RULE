@@ -59,5 +59,5 @@ pv_review_row:
     - SEO-[0-9]{5}
   dataset_rule:
     beamline_rows: use the requested beamline id, for example ID10
-    seed_rows: SEO_v2
+    comparison_fixture_rows: SEO_v2
   orphan_note: orphan=true marks a saved decision whose rawId no longer appears in raw_extracted_pvs.yaml; PV shape checks are skipped for orphan rows
