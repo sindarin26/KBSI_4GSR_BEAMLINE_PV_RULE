@@ -3,7 +3,7 @@ id: EXC-0001
 beamline: ID10
 status: open
 created: 2026-05-12
-updated: 2026-05-21
+updated: 2026-05-20
 source: inputs/ID10/status and xbpm.txt
 raw_ids:
   - RAW-0078
@@ -38,7 +38,7 @@ related_proposals: []
 
 # Status, Readback, Diagnostic, And Scan PVs
 
-These raw PVs are real source items, but the active SEO_V3 review did not normalize them because their device/subdevice classification still requires an owner decision.
+These raw PVs are real source items, but the active SEO_v2 review did not normalize them because their device/subdevice classification still requires an owner decision.
 
 Temporary handling: keep them out of `pv_registry.yaml` and account for them through this exception record.
 

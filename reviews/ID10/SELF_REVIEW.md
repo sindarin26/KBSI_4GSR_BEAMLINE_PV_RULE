@@ -1,7 +1,8 @@
 # ID10 Draft Self-Review
 
-Current status: legacy v0 self-review. The active rulebooks now use SEO_V3; use
-`reviews/ID10/REVIEW.md` for the current reviewed output state.
+Current status: legacy v0 self-review. The active rulebooks now use SEO_v2 /
+4GSR standard v1.0; regenerate `outputs/ID10/` before treating it as current
+output.
 
 ## Coverage
 

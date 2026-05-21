@@ -11,7 +11,7 @@ outputs/ID10/
 Generated outputs intended to be current must declare:
 
 ```yaml
-rulebook_version: SEO_V3
+rulebook_version: SEO_v2
 ```
 
 Each output directory should include:

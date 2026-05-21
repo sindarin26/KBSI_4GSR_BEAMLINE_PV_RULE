@@ -50,6 +50,13 @@ outputs/
 
 reviews/
   <beamline>/
+    review_decisions.json
+    accepted_decisions.json
+    fixed_decisions.json
+  SEO_v2/
+    review_decisions.json
+    accepted_decisions.json
+    fixed_decisions.json
 
 exceptions/
   <beamline>/
@@ -112,11 +119,10 @@ Contains examples used to stabilize generation and review behavior.
 `schemas/`
 
 Contains machine-readable schema definitions for canonical data formats.
-`schemas/pv_registry.seo_v3.yaml` currently defines the informal active SEO_V3
-registry contract. `schemas/pv_registry.seo_v2.yaml` and
-`schemas/pv_registry.v0.yaml` are retained as legacy contracts for historical
-outputs and migration reference. A stricter validation schema may replace or
-extend the informal contracts later.
+`schemas/pv_registry.seo_v2.yaml` currently defines the informal active
+SEO_v2 registry contract. `schemas/pv_registry.v0.yaml` is retained as a legacy
+contract for historical outputs and migration reference. A stricter validation
+schema may replace or extend the informal contracts later.
 
 `outputs/`
 
@@ -130,7 +136,11 @@ with the output so registry entries remain traceable to source material.
 
 `reviews/`
 
-Contains review reports. Use one subdirectory per beamline.
+Contains review reports and human review decision files. Use one subdirectory
+per beamline. Browser review decisions should be stored as machine-readable
+JSON rows under `reviews/<beamline>/`, not embedded only in HTML. Historical
+SEO_v2 DB seed rows may live under `reviews/SEO_v2/` for comparison and UI
+testing; they are data rows, not active policy.
 
 `exceptions/`
 
@@ -157,10 +167,12 @@ Active policy still belongs in `rules/`.
 Current workbench entry points:
 
 ```text
-node scripts/validate_seo_v3_rules.js
+node scripts/validate_seo_v2_rules.js
 node scripts/validate_registry.js <beamline>
 node scripts/render_reference.js <beamline> --check
 node scripts/render_reference.js <beamline> --write
+node scripts/review_server.js <beamline> --port 8765
+node scripts/import_seo_review_decisions.js
 ```
 
 ## Workflow
@@ -183,8 +195,14 @@ node scripts/render_reference.js <beamline> --write
 9. Exceptions are recorded under `exceptions/<beamline>/` when current rules are
    insufficient.
 10. Review mode reads existing output, applies clear rule-based fixes unless the
-   user requested read-only review, and writes a review log to
-   `reviews/<beamline>/REVIEW.md`.
+    user requested read-only review, and writes a review log to
+    `reviews/<beamline>/REVIEW.md`.
+11. Human review may use `scripts/review_server.js <beamline>` to save
+    row-array decision files under `reviews/<beamline>/`. The server keeps the
+    loaded row set in memory and refreshes from disk only on an explicit reload.
+12. Historical SEO_v2 DB rows may be imported into `reviews/SEO_v2/` as fixed or
+    accepted decision seeds for UI and pipeline tests. Imported seed files remain
+    examples of prior accepted rows, not active policy.
 
 ## Proposal Promotion
 
@@ -205,12 +223,12 @@ and discuss. The long-term direction should be a dual output:
 - Human-readable Markdown for review and collaboration.
 - Machine-readable JSON or YAML for validation, indexing, and reuse.
 
-The SEO_V3 schema is informal. Stricter validation can be added later without
+The SEO_v2 schema is informal. Stricter validation can be added later without
 changing the user-facing workflow.
 
 ## Rulebook Direction
 
-The active rulebooks are SEO_V3 aligned:
+The active rulebooks are SEO_v2 / 4GSR standard v1.0 aligned:
 
 - `rules/draft/PV_NAMING_RULEBOOK.md`
 - `rules/review/PV_REVIEW_RULEBOOK.md`
@@ -218,19 +236,11 @@ The active rulebooks are SEO_V3 aligned:
 The active PV shape is:
 
 ```text
-[SEC/SYS][PORT]-[AREA]:[DEV]-[SUBDEV]:[SignalName]
+BL-[PORT]:[AREA]-[DEV]-[SUBDEV]:[SignalName]
 ```
 
-Example:
-
-```text
-BL01A-OH:HHLM-MIRR:Pitch
-```
-
-`DEV` and `SUBDEV` abbreviations are source-backed working tokens, not fixed
-active enumerations. Rules should still be promoted carefully from source-backed
-decisions. Do not encode a preference as a mandatory rule until the project
-owner confirms it.
+Rules should still be promoted carefully from source-backed decisions. Do not
+encode a preference as a mandatory rule until the project owner confirms it.
 
 ## Future RAG Direction
 

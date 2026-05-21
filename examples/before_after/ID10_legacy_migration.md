@@ -10,14 +10,14 @@ BL10:WBS:Top
 BL10:DCM:Theta
 ```
 
-Preferred SEO_V3 output when the port and component mapping are confirmed:
+Preferred SEO_v2 output when the port and component mapping are confirmed:
 
 ```text
-BL10C-FE:IVU-GIRD:Y
-BL10C-FE:IVU-ENC:US
-BL10C-OH:WBSLT-SLIT:Hgap
-BL10C-OH:WBSLT-SLIT:Top
-BL10C-OH:MONO-CRYS:Theta
+BL-10C:FE-IVU-GIRD:Y
+BL-10C:FE-IVU-ENC:US
+BL-10C:OH-WBSLT-SLIT:Hgap
+BL-10C:OH-WBSLT-SLIT:Top
+BL-10C:OH-MONO-CRYS:Theta
 ```
 
 Notes:

@@ -1,0 +1,52 @@
+# Informal SEO_v2 review decision row contract.
+# Review decision files are JSON arrays written by scripts/review_server.js.
+
+review_decisions:
+  beamline_decisions:
+    path: reviews/<beamline>/review_decisions.json
+  beamline_accepted_decisions:
+    path: reviews/<beamline>/accepted_decisions.json
+  beamline_fixed_decisions:
+    path: reviews/<beamline>/fixed_decisions.json
+  seo_v2_seed_decisions:
+    path: reviews/SEO_v2/review_decisions.json
+  row:
+    required:
+      seq: number
+      rawId: string
+      dataset: string
+      reviewStatus: string
+      section: string
+      port: string
+      area: string
+      dev: string
+      subdev: string
+      signal: string
+      standardPv: string
+      source: string
+      note: string
+    optional:
+      sourceId: string
+      sourceLine: number_or_null
+      sourceAnchor: string
+      sourceLabel: string_or_null
+      reviewNote: string
+      exceptionIds: list
+      legacyStandardPv: string
+      egu: string
+      ioc: string
+      updatedAt: iso_datetime
+    review_status_values:
+      - needs_input
+      - accepted
+      - approved
+      - edited
+      - exception
+      - skipped
+      - proposal
+      - fixed
+    dataset_rule:
+      beamline_rows: use the requested beamline id, for example ID10
+      seed_rows: SEO_v2
+    pv_format: section + "-" + port + ":" + area + "-" + dev + "-" + subdev + ":" + signal
+    pv_regex: "BL-[0-9]{2}[A-Z]:[A-Z0-9]+-[A-Z0-9]+-[A-Z0-9]+:[A-Z][A-Za-z0-9]*"

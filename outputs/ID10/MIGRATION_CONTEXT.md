@@ -7,10 +7,10 @@ ID10:{Area}:{Device}:{AxisOrFunction}
 ```
 
 The current `pv_registry.yaml`, `PV_REFERENCE.md`, and `status.yaml` represent a
-reviewed SEO_V3 output:
+reviewed SEO_v2 / 4GSR standard v1.0 output:
 
 ```text
-[SEC/SYS][PORT]-[AREA]:[DEV]-[SUBDEV]:[SignalName]
+BL-[PORT]:[AREA]-[DEV]-[SUBDEV]:[SignalName]
 ```
 
 Legacy source PVs remain preserved in `source_pv`, `source_trace.source_label`,

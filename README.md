@@ -1,6 +1,6 @@
 # KBSI 4GSR Beamline PV Rule Workbench
 
-빔라인 PV 원자료를 SEO_V3 기준 PV registry와 reference 문서로 정리하고
+빔라인 PV 원자료를 SEO_v2 기준 PV registry와 reference 문서로 정리하고
 검증하기 위한 내부 workbench입니다.
 
 이 저장소의 목적은 사람에게 공유할 표준 문서 하나를 보관하는 것이 아니라,
@@ -10,10 +10,10 @@
 
 ## Workbench Commands
 
-SEO_V3 rule/source 자체를 확인합니다.
+SEO_v2 rule/source 자체를 확인합니다.
 
 ```text
-node scripts/validate_seo_v3_rules.js
+node scripts/validate_seo_v2_rules.js
 ```
 
 특정 beamline output을 검증합니다.
@@ -30,10 +30,26 @@ node scripts/render_reference.js ID10 --check
 node scripts/render_reference.js ID10 --write
 ```
 
+사람이 브라우저에서 raw item을 검토하고 decision JSON을 저장합니다. UI는
+요청한 beamline review queue와 `reviews/SEO_v2/`의 fixed/approved seed row를
+처음 로드한 뒤 브라우저 메모리에서 필터링합니다. `Reload`를 누를 때만 서버에서
+파일 상태를 다시 읽습니다.
+
+```text
+node scripts/review_server.js ID10 --port 8765
+```
+
+SEO_v2 DB JSON에 들어 있는 기존 표준 row를 리뷰 테스트용 fixed/accepted
+decision seed로 가져옵니다.
+
+```text
+node scripts/import_seo_review_decisions.js
+```
+
 커밋 전 기본 확인:
 
 ```text
-node scripts/validate_seo_v3_rules.js
+node scripts/validate_seo_v2_rules.js
 node scripts/validate_registry.js ID10
 node scripts/render_reference.js ID10 --check
 git diff --check
@@ -92,9 +108,30 @@ reviews/<beamline>/
 exceptions/<beamline>/
 ```
 
+사람 리뷰 UI는 다음 JSON 파일을 씁니다. 포맷은 SEO DB JSON처럼 top-level
+row array이며 `seq`, `port`, `area`, `dev`, `subdev`, `signal`, `standardPv`,
+`note`, `source` 필드를 중심으로 둡니다.
+
+```text
+reviews/<beamline>/review_decisions.json
+reviews/<beamline>/accepted_decisions.json
+reviews/<beamline>/fixed_decisions.json
+```
+
+`review_decisions.json`은 전체 판단 이력, `accepted_decisions.json`은 이후
+dataset update에 쓸 수 있는 행, `fixed_decisions.json`은 리뷰어가 stable/fixed로
+표시한 행입니다. GUI는 이 파일들을 쓰는 입력기이며, active naming policy는
+여전히 `rules/`와 schema에 있습니다.
+
+`reviews/SEO_v2/fixed_decisions.json`,
+`reviews/SEO_v2/accepted_decisions.json`,
+`reviews/SEO_v2/review_decisions.json`은 historical SEO_v2 DB row를 동일한
+SEO_v2 형식으로 보존한 테스트 seed입니다. `dataset` 필드로 beamline row와 seed
+row를 구분합니다.
+
 ## Current Rule Summary
 
-현재 SEO_V3 기준 요약입니다. 자세한 active rule은
+현재 SEO_v2 / 4GSR standard v1.0 기준 요약입니다. 자세한 active rule은
 `rules/draft/PV_NAMING_RULEBOOK.md`와 `rules/review/PV_REVIEW_RULEBOOK.md`를
 봅니다. 결정 이유와 배경은 `rules/decisions/`에 있습니다.
 
@@ -103,16 +140,15 @@ exceptions/<beamline>/
 반영해야 실제 생성 규칙이 됩니다.
 
 ```text
-Structure: [SEC/SYS][PORT]-[AREA]:[DEV]-[SUBDEV]:[SignalName]
-Section example: BL
-Port examples: 01A, 10C
+Structure: BL-[PORT]:[AREA]-[DEV]-[SUBDEV]:[SignalName]
+Section: BL
+Port example: 10C
 Area: FE, PTL, OH, EH, SYS
 Device examples: IVU, MONO, HHLM, WBSLT, ION, CTRL, MOTOR
 Subdevice examples: GIRD, ENC, CRYS, MIRR, SLIT, DIAG, LOGIC, STG
-Device/subdevice vocabulary: source-backed, not fixed active enumerations
 SignalName: upper-initial CamelCase/PascalCase
 White beam slit token: WBSLT
-Canonical schema: schemas/pv_registry.seo_v3.yaml
+Canonical schema: schemas/pv_registry.seo_v2.yaml
 Canonical output: outputs/<beamline>/pv_registry.yaml
 Rendered document: outputs/<beamline>/PV_REFERENCE.md
 Raw extraction: outputs/<beamline>/_work/raw_extracted_pvs.yaml
@@ -123,17 +159,15 @@ Review/fix log: reviews/<beamline>/REVIEW.md
 예시:
 
 ```text
-BL01A-OH:HHLM-MIRR:Pitch
-BL10C-FE:IVU-GIRD:Y
-BL10C-FE:IVU-ENC:US
-BL10C-OH:MONO-CRYS:Theta
-BL10C-OH:WBSLT-SLIT:Hgap
-BL10C-SYS:CTRL-LOGIC:UserAve1
+BL-10C:FE-IVU-GIRD:Y
+BL-10C:FE-IVU-ENC:US
+BL-10C:OH-MONO-CRYS:Theta
+BL-10C:OH-WBSLT-SLIT:Hgap
+BL-10C:SYS-CTRL-LOGIC:UserAve1
 ```
 
 과거 `ID10:{Area}:{Device}:{AxisOrFunction}` v0 자료는 migration/reference
-용도로만 남겨둡니다. 과거 SEO_v2 형태도 source/migration context로만
-남깁니다. 새 산출물은 active SEO_V3 구조로 작성해야 합니다.
+용도로만 남겨둡니다. 새 산출물은 active SEO_v2 구조로 작성해야 합니다.
 
 ## Repository Map
 
@@ -149,7 +183,7 @@ BL10C-SYS:CTRL-LOGIC:UserAve1
 - `exceptions/`: 현재 룰로 처리하기 어려운 실제 케이스
 - `proposals/`: exception을 공식 룰로 편입하기 위한 변경 제안
 - `examples/`: good/bad/before-after 예제
-- `schemas/`: SEO_V3 registry/raw/status schema contract
+- `schemas/`: SEO_v2 registry/raw/status schema contract
 - `scripts/`: 검증/유지보수 스크립트
 
 `temp/`와 `notes/`는 작업용 디렉토리이며 배포 대상에서 제외합니다.

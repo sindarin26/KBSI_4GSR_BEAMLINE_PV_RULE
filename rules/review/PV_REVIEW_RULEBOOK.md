@@ -1,13 +1,13 @@
 # PV Naming Review Rulebook
 
-Version: SEO_V3
+Version: SEO_v2 / 4GSR standard v1.0
 Status: active review rulebook
-Last updated: 2026-05-21
+Last updated: 2026-05-20
 
 ## Purpose
 
 This rulebook defines how to review generated PV registries and reference
-documents under the active SEO_V3 naming standard.
+documents under the active SEO_v2 4GSR naming standard.
 
 Review mode is review-and-fix by default. If a violation has a clear correction
 under the active rules, apply the correction to `outputs/<beamline>/` and log it
@@ -109,9 +109,9 @@ and require re-extraction or a clearly logged regeneration.
 Ask the user or mark `decision_required` when the issue involves:
 
 - uncertain area, device, or subdevice assignment;
-- a code token that is syntactically valid but not source-backed;
+- a code token not covered by active rules;
 - duplicate rendered PV names that require instance or signal policy;
-- conflict between source evidence and the active SEO_V3 shape;
+- conflict between the SEO_v2 Markdown standard and SEO_v2 DB data;
 - a source conflict.
 
 ## Required Checks
@@ -123,7 +123,7 @@ Check that `pv_registry.yaml` exists when an output is claimed to be generated.
 Check that the registry declares:
 
 ```yaml
-rulebook_version: SEO_V3
+rulebook_version: SEO_v2
 ```
 
 Check that `PV_REFERENCE.md` explicitly states that `pv_registry.yaml` is the
@@ -179,13 +179,13 @@ Report an error when the coverage equation is missing or does not balance.
 Each active PV must follow:
 
 ```text
-[SEC/SYS][PORT]-[AREA]:[DEV]-[SUBDEV]:[SignalName]
+BL-[PORT]:[AREA]-[DEV]-[SUBDEV]:[SignalName]
 ```
 
 Regex:
 
 ```text
-^[A-Z]+[0-9]{2}[A-Z]-[A-Z0-9]+:[A-Z][A-Z0-9]*-[A-Z][A-Z0-9]*:[A-Z][A-Za-z0-9]*$
+^BL-[0-9]{2}[A-Z]:[A-Z0-9]+-[A-Z0-9]+-[A-Z0-9]+:[A-Z][A-Za-z0-9]*$
 ```
 
 Report an error for missing tiers, extra unapproved tiers, lowercase
@@ -201,7 +201,7 @@ ID10:{Area}:{Device}:{AxisOrFunction}
 If structured fields are present, verify:
 
 ```text
-pv == section + port + "-" + area + ":" + device + "-" + subdevice + ":" + signal
+pv == section + "-" + port + ":" + area + "-" + device + "-" + subdevice + ":" + signal
 ```
 
 Report an error for mismatches.
@@ -210,18 +210,17 @@ Minimum expected fields:
 
 ```yaml
 section: BL
-port: 01A
+port: 10C
 area: OH
-device: HHLM
-subdevice: MIRR
-signal: Pitch
-pv: BL01A-OH:HHLM-MIRR:Pitch
+device: MONO
+subdevice: CRYS
+signal: Theta
+pv: BL-10C:OH-MONO-CRYS:Theta
 ```
 
 ### Beamline Level
 
-`section` must match `[A-Z]+`. `BL` is the current beamline prefix in active
-examples.
+`section` must be `BL`.
 
 `port` must match:
 
@@ -229,9 +228,9 @@ examples.
 [0-9]{2}[A-Z]
 ```
 
-Do not reject `10C` solely because it came from older SEO_v2 DB-backed material.
-Report an info or warning note when legacy source context affects the reviewed
-scope.
+Do not reject `10C` solely because it is absent from the SEO_v2 Markdown port
+table. Report an info or warning note that the Markdown and DB sources disagree
+when that conflict affects the reviewed scope.
 
 ### Area
 
@@ -248,28 +247,65 @@ SYS
 Report an error for unknown area values unless the entry is explicitly marked
 `decision_required` or `exception`.
 
-Report an error when an unknown area is silently defaulted to `PTL`. SEO_V3 does
+Report an error when an unknown area is silently defaulted to `PTL`. SEO_v2 does
 not allow the old v0 unknown-area default.
 
 ### Device
 
-`DEV` values are no longer a closed active enumeration in SEO_V3. Report an
-error when a device token does not match `^[A-Z][A-Z0-9]*$`.
+Accepted device values:
 
-Report `decision_required` when a syntactically valid device token is not
-source-backed, is a guessed abbreviation, or hides a known physical device
-without metadata or notes.
+```text
+ATT
+CCD
+CTRL
+FRMASK
+HHLM
+ION
+IVU
+KBHM
+KBSLT
+KBVM
+MONO
+MOTOR
+MVMASK
+SH
+SMPL
+WBSLT
+```
+
+Report an error for unknown device codes unless the entry is explicitly marked
+`decision_required` or `exception`.
 
 Warn when `MOTOR` hides a known physical device and the entry has no source
 metadata or note explaining the generic mapping.
 
 ### Subdevice
 
-`SUBDEV` values are no longer a closed active enumeration in SEO_V3. Report an
-error when a subdevice token does not match `^[A-Z][A-Z0-9]*$`.
+Accepted subdevice values:
 
-Report `decision_required` when a syntactically valid subdevice token is not
-source-backed, is a guessed abbreviation, or needs owner confirmation.
+```text
+BODY
+CRYS
+CTRL
+DIAG
+ENC
+GIRD
+INFO
+LOGIC
+MIRR
+QUEUE
+RES
+SAVE
+SCAN
+SLIT
+STG
+TIME
+UTIL
+VALV
+```
+
+Report an error for missing subdevice or unknown subdevice codes unless the
+entry is explicitly marked `decision_required` or `exception`.
 
 ### SignalName
 
@@ -294,7 +330,7 @@ source label.
 
 Report an error for duplicate `pv` values in a canonical registry.
 
-If reviewing historical SEO_v2 DB-derived source material, duplicate `standardPv` values
+If reviewing SEO_v2 DB-derived source material, duplicate `standardPv` values
 must not be fixed by dropping rows or silently appending guessed instance
 numbers. Mark them `decision_required` or create/recommend an exception or
 proposal.
