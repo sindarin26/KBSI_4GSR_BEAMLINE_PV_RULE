@@ -1,0 +1,84 @@
+{
+  "poolId": "BL10A",
+  "sourceId": "inputs/ID10",
+  "rows": [
+    {
+      "uid": "pvrow_76609c9dee41209b",
+      "rowId": "BL10A-OH:MONO-CRYS:Theta",
+      "poolId": "BL10A",
+      "sourceId": "inputs/ID10/optics motors.json",
+      "sourceAnchor": "/items/8/pv",
+      "section": "BL",
+      "port": "10A",
+      "area": "OH",
+      "device": "MONO",
+      "subdevice": "CRYS",
+      "signal": "Theta",
+      "standardPv": "BL10A-OH:MONO-CRYS:Theta",
+      "reviewStatus": "draft",
+      "sourcePv": "BL10:DCM:Theta",
+      "legacyRawId": "RAW-0019",
+      "sourceTrace": {
+        "sourceId": "inputs/ID10/optics motors.json",
+        "sourceAnchor": "/items/8/pv",
+        "sourceLine": 13,
+        "sourceKind": "id10_input",
+        "sourceLabel": "BL10:DCM:Theta",
+        "legacyRawId": "RAW-0019"
+      },
+      "note": "Controlled BL10A pilot row from ID10 optics source. DCM-to-MONO mapping remains reviewable in this migration pilot."
+    },
+    {
+      "uid": "pvrow_45daadc208035748",
+      "rowId": "BL10A-FE:IVU-GIRD:Y",
+      "poolId": "BL10A",
+      "sourceId": "inputs/ID10/undulator.md",
+      "sourceAnchor": "line:9",
+      "section": "BL",
+      "port": "10A",
+      "area": "FE",
+      "device": "IVU",
+      "subdevice": "GIRD",
+      "signal": "Y",
+      "standardPv": "BL10A-FE:IVU-GIRD:Y",
+      "reviewStatus": "draft",
+      "sourcePv": "BL10:IVU:GirderY",
+      "legacyRawId": "RAW-0109",
+      "sourceTrace": {
+        "sourceId": "inputs/ID10/undulator.md",
+        "sourceAnchor": "line:9",
+        "sourceLine": 9,
+        "sourceKind": "id10_input",
+        "sourceLabel": "BL10:IVU:GirderY",
+        "legacyRawId": "RAW-0109"
+      },
+      "note": "Controlled BL10A pilot row from ID10 undulator source. IVU girder mapping follows the reviewed migration evidence."
+    },
+    {
+      "uid": "pvrow_41b43ec5ed7db5b4",
+      "rowId": "BL10A-FE:IVU-ENC:US",
+      "poolId": "BL10A",
+      "sourceId": "inputs/ID10/undulator.md",
+      "sourceAnchor": "line:12",
+      "section": "BL",
+      "port": "10A",
+      "area": "FE",
+      "device": "IVU",
+      "subdevice": "ENC",
+      "signal": "US",
+      "standardPv": "BL10A-FE:IVU-ENC:US",
+      "reviewStatus": "needs_input",
+      "sourcePv": "BL10:IVU:EncUS",
+      "legacyRawId": "RAW-0112",
+      "sourceTrace": {
+        "sourceId": "inputs/ID10/undulator.md",
+        "sourceAnchor": "line:12",
+        "sourceLine": 12,
+        "sourceKind": "id10_input",
+        "sourceLabel": "BL10:IVU:EncUS",
+        "legacyRawId": "RAW-0112"
+      },
+      "note": "Controlled BL10A pilot row from ID10 undulator source. Encoder classification remains decision-required."
+    }
+  ]
+}

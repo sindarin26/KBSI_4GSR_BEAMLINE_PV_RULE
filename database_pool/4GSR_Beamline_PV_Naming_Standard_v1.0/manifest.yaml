@@ -1,0 +1,5 @@
+pool_id: 4GSR_Beamline_PV_Naming_Standard_v1.0
+title: 4GSR Beamline PV Naming Standard v1.0 Pilot Pool
+status: pilot
+schema_version: database_pool_m4_pilot
+source_note: Controlled M4 subset from tracked SEO_V3 Markdown and legacy DB source material

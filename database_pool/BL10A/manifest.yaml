@@ -1,0 +1,5 @@
+pool_id: BL10A
+title: BL10A Small Migration Pilot Pool
+status: pilot
+schema_version: database_pool_m4_pilot
+source_note: Controlled M4 subset from ID10 source material using the owner-confirmed BL10A pilot port
