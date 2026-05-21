@@ -5,7 +5,7 @@ const path = require("path");
 const { rel, posixRel } = require("./lib/pv_workbench");
 
 const DEFAULT_SOURCE = "inputs/SEO_v2/4GSR_Beamline_PV_Naming_Standard_v1.0_DB.json";
-const DEFAULT_OUT_DIR = "reviews/SEO_v2";
+const DEFAULT_OUT_DIR = "fixtures/SEO_v2";
 
 const sourcePath = process.argv[2] || DEFAULT_SOURCE;
 const outDir = process.argv[3] || DEFAULT_OUT_DIR;
@@ -28,11 +28,9 @@ try {
   const fixedRows = rows.map((row, index) => toDecisionRow(row, index, sourcePath));
   fs.mkdirSync(outAbs, { recursive: true });
   writeJson(path.join(outAbs, "review_decisions.json"), fixedRows);
-  writeJson(path.join(outAbs, "fixed_decisions.json"), fixedRows);
-  writeJson(path.join(outAbs, "accepted_decisions.json"), fixedRows);
 
   console.log(
-    `Imported ${fixedRows.length} fixed SEO decision rows to ${posixRel(outAbs)}`,
+    `Imported ${fixedRows.length} fixed SEO decision rows to ${posixRel(path.join(outAbs, "review_decisions.json"))}`,
   );
 } catch (err) {
   console.error(`FAIL: ${err.message}`);

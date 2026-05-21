@@ -24,13 +24,12 @@ const reviewDir = rel("reviews", beamline);
 const decisionsPath = path.join(reviewDir, "review_decisions.json");
 const acceptedPath = path.join(reviewDir, "accepted_decisions.json");
 const fixedPath = path.join(reviewDir, "fixed_decisions.json");
+const queuePath = rel("outputs", beamline, "_work", "review_queue.json");
 const activeRulebookVersion = "SEO_v2";
 const activeRulebookLabel = "SEO_V2";
 const seedDataset = "SEO_v2";
-const seedReviewDir = rel("reviews", seedDataset);
-const seedDecisionsPath = path.join(seedReviewDir, "review_decisions.json");
-const seedAcceptedPath = path.join(seedReviewDir, "accepted_decisions.json");
-const seedFixedPath = path.join(seedReviewDir, "fixed_decisions.json");
+const seedFixturesDir = rel("fixtures", seedDataset);
+const seedDecisionsPath = path.join(seedFixturesDir, "review_decisions.json");
 let cachedRows = [];
 let cachedLoadedAt = "";
 
@@ -52,7 +51,7 @@ const server = http.createServer((req, res) => {
   const url = new URL(req.url, `http://${req.headers.host || `${host}:${port}`}`);
   if (req.method === "GET" && url.pathname === "/") return sendHtml(res);
   if (req.method === "GET" && url.pathname === "/api/state") {
-    return sendState(res, url.searchParams.get("refresh") === "1");
+    return sendState(res);
   }
   if (req.method === "POST" && url.pathname === "/api/decisions") {
     return readJsonBody(req, res, (body) => saveDecisionRows(res, body));
@@ -62,6 +61,8 @@ const server = http.createServer((req, res) => {
 
 server.listen(port, host, () => {
   console.log(`Review server for ${beamline}: http://${host}:${port}/`);
+  const queueExists = fs.existsSync(queuePath);
+  console.log(`Reading queue from: ${posixRel(queueExists ? queuePath : rel("outputs", beamline, "_work", "raw_extracted_pvs.yaml"))}${queueExists ? "" : " (fallback — run build_review_queue.js to generate review_queue.json)"}`);
   console.log(`Saving decisions to ${posixRel(decisionsPath)}`);
 });
 
@@ -95,22 +96,21 @@ function reloadStateCache() {
   cachedLoadedAt = new Date().toISOString();
 }
 
-function sendState(res, refresh = false) {
+function sendState(res) {
   try {
-    if (refresh) reloadStateCache();
+    reloadStateCache();
     sendJson(res, 200, {
       beamline,
       activeRulebookVersion,
       activeRulebookLabel,
       seedDataset,
+      queueSource: fs.existsSync(queuePath) ? posixRel(queuePath) : posixRel(rel("outputs", beamline, "_work", "raw_extracted_pvs.yaml")),
       loadedAt: cachedLoadedAt,
       paths: {
         reviewDecisions: posixRel(decisionsPath),
         acceptedDecisions: posixRel(acceptedPath),
         fixedDecisions: posixRel(fixedPath),
-        seedReviewDecisions: posixRel(seedDecisionsPath),
-        seedAcceptedDecisions: posixRel(seedAcceptedPath),
-        seedFixedDecisions: posixRel(seedFixedPath),
+        seedDecisions: posixRel(seedDecisionsPath),
       },
       reviewStatuses: REVIEW_STATUSES,
       rows: cachedRows,
@@ -125,39 +125,41 @@ function saveDecisionRows(res, body) {
     const rows = normalizeRows(Array.isArray(body.rows) ? body.rows : body);
     const beamlineRows = rows.filter((row) => row.dataset !== seedDataset);
     const seedRows = rows.filter((row) => row.dataset === seedDataset);
+    if (rows.length > 0 && beamlineRows.length === 0) {
+      sendJson(res, 400, {
+        error: "seed_only_write_rejected",
+        message: "seed fixture rows are read-only; POST must contain beamline decision rows",
+      });
+      return;
+    }
+    if (beamlineRows.length === 0 && fs.existsSync(decisionsPath)) {
+      sendJson(res, 400, {
+        error: "empty_write_rejected",
+        message: `POST contains 0 beamline rows but ${posixRel(decisionsPath)} already exists — send at least one row or delete the file first`,
+      });
+      return;
+    }
     const acceptedRows = beamlineRows.filter((row) => ACCEPTED_STATUSES.has(row.reviewStatus));
     const fixedRows = beamlineRows.filter((row) => row.reviewStatus === "fixed");
-    const seedAcceptedRows = seedRows.filter((row) => ACCEPTED_STATUSES.has(row.reviewStatus));
-    const seedFixedRows = seedRows.filter((row) => row.reviewStatus === "fixed");
     fs.mkdirSync(reviewDir, { recursive: true });
     writeJson(decisionsPath, beamlineRows);
     writeJson(acceptedPath, acceptedRows);
     writeJson(fixedPath, fixedRows);
-    if (seedRows.length > 0) {
-      fs.mkdirSync(seedReviewDir, { recursive: true });
-      writeJson(seedDecisionsPath, seedRows);
-      writeJson(seedAcceptedPath, seedAcceptedRows);
-      writeJson(seedFixedPath, seedFixedRows);
-    }
-    cachedRows = rows.map((row, index) => normalizeRow(row, index));
+    reloadStateCache();
     cachedLoadedAt = new Date().toISOString();
     sendJson(res, 200, {
       ok: true,
       rowCount: beamlineRows.length,
       acceptedRows: acceptedRows.length,
       fixedRows: fixedRows.length,
-      seedRows: seedRows.length,
-      seedAcceptedRows: seedAcceptedRows.length,
-      seedFixedRows: seedFixedRows.length,
+      seedRowsIgnored: seedRows.length,
       stateRows: cachedRows,
       loadedAt: cachedLoadedAt,
       paths: {
         reviewDecisions: posixRel(decisionsPath),
         acceptedDecisions: posixRel(acceptedPath),
         fixedDecisions: posixRel(fixedPath),
-        seedReviewDecisions: posixRel(seedDecisionsPath),
-        seedAcceptedDecisions: posixRel(seedAcceptedPath),
-        seedFixedDecisions: posixRel(seedFixedPath),
+        seedDecisions: posixRel(seedDecisionsPath),
       },
     });
   } catch (err) {
@@ -166,6 +168,33 @@ function saveDecisionRows(res, body) {
 }
 
 function buildDecisionRows() {
+  const existingByRaw = new Map();
+  for (const row of readJsonArray(decisionsPath)) {
+    if (row.rawId) existingByRaw.set(row.rawId, row);
+  }
+
+  const rows = fs.existsSync(queuePath)
+    ? buildFromQueue(existingByRaw)
+    : buildFromRawExtraction(existingByRaw);
+
+  for (const [rawId, existing] of existingByRaw.entries()) {
+    if (!rows.some((row) => row.rawId === rawId)) {
+      rows.push(normalizeRow({ ...existing, orphan: true }, rows.length));
+    }
+  }
+  return [...rows, ...loadSeedRows(rows.length)];
+}
+
+function buildFromQueue(existingByRaw) {
+  return readJsonArray(queuePath).map((queueRow, index) => {
+    const existing = existingByRaw.get(queueRow.rawId);
+    return existing
+      ? normalizeRow({ ...queueRow, ...existing, orphan: false }, index)
+      : normalizeRow({ ...queueRow, orphan: false }, index);
+  });
+}
+
+function buildFromRawExtraction(existingByRaw) {
   const registry = loadRegistry(beamline).data;
   const raw = loadRawExtraction(beamline).data;
   if (!raw || !Array.isArray(raw.entries)) {
@@ -187,25 +216,15 @@ function buildDecisionRows() {
     }
   }
 
-  const existingByRaw = new Map();
-  for (const row of readJsonArray(decisionsPath)) {
-    if (row.rawId) existingByRaw.set(row.rawId, row);
-  }
-
-  const rows = raw.entries.map((rawEntry, index) => {
+  return raw.entries.map((rawEntry, index) => {
     const registryEntry = registryByRaw.get(rawEntry.raw_id);
     const exceptionIds = exceptionIdsByRaw.get(rawEntry.raw_id) || [];
     const base = defaultRow(index + 1, rawEntry, registryEntry, exceptionIds);
     const existing = existingByRaw.get(rawEntry.raw_id);
-    return existing ? normalizeRow({ ...base, ...existing }, index) : normalizeRow(base, index);
+    return existing
+      ? normalizeRow({ ...base, ...existing, orphan: false }, index)
+      : normalizeRow({ ...base, orphan: false }, index);
   });
-
-  for (const [rawId, existing] of existingByRaw.entries()) {
-    if (!rows.some((row) => row.rawId === rawId)) {
-      rows.push(normalizeRow(existing, rows.length));
-    }
-  }
-  return [...rows, ...loadSeedRows(rows.length)];
 }
 
 function defaultRow(seq, rawEntry, registryEntry, exceptionIds) {
@@ -254,14 +273,7 @@ function defaultRow(seq, rawEntry, registryEntry, exceptionIds) {
 }
 
 function loadSeedRows(offset) {
-  const decisionRows = readJsonArray(seedDecisionsPath);
-  const fixedRows = readJsonArray(seedFixedPath);
-  const rows =
-    decisionRows.length > 0
-      ? decisionRows
-      : fixedRows.length > 0
-        ? fixedRows
-        : readJsonArray(seedAcceptedPath);
+  const rows = readJsonArray(seedDecisionsPath);
   return rows.map((row, index) =>
     normalizeRow(
       {
@@ -309,6 +321,7 @@ function normalizeRow(row, index) {
     sourceLabel: row.sourceLabel === undefined ? null : row.sourceLabel,
     reviewNote: stringValue(row.reviewNote),
     exceptionIds: Array.isArray(row.exceptionIds) ? row.exceptionIds.map(String) : [],
+    orphan: Boolean(row.orphan),
     legacyStandardPv: stringValue(row.legacyStandardPv),
     egu: stringValue(row.egu),
     ioc: stringValue(row.ioc),
@@ -630,6 +643,8 @@ const HTML = `<!doctype html>
     .row-fixed td { background: #f0fff4; }
     .row-approved td, .row-accepted td { background: #f8fffb; }
     .row-needs_input td { background: #fff; }
+    .row-orphan td { background: #fff0f0; outline: 1px solid #fca5a5; }
+    .pill.orphan { background: #fff0f0; color: var(--danger); border-color: #fca5a5; }
     @media (max-width: 1200px) {
       .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .toolbar { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -655,7 +670,8 @@ const HTML = `<!doctype html>
         <div class="meta">
           <div><strong>Dataset</strong>: <span class="code" id="beamlineName">loading</span></div>
           <div><strong>Rule</strong>: <span class="code">BL-[PORT]:[AREA]-[DEV]-[SUBDEV]:[SignalName]</span></div>
-          <div><strong>Seed</strong>: <span class="code">reviews/SEO_v2</span></div>
+          <div><strong>Queue</strong>: <span class="code" id="queueSource">loading</span></div>
+          <div><strong>Seed</strong>: <span class="code">fixtures/SEO_v2</span></div>
         </div>
       </div>
     </header>
@@ -752,6 +768,7 @@ const HTML = `<!doctype html>
     let rows = [];
     let activeView = "all";
     let pageIndex = 0;
+    let hasLoadedState = false;
     const pageSize = 250;
     let renderQueued = false;
     const editableFields = ["section", "port", "area", "dev", "subdev", "signal", "standardPv", "source", "note", "reviewNote"];
@@ -763,7 +780,7 @@ const HTML = `<!doctype html>
       activeRulebookLabel: ${JSON.stringify(activeRulebookLabel)}
     };
 
-    document.getElementById("reload").addEventListener("click", function() { loadState(true); });
+    document.getElementById("reload").addEventListener("click", function() { loadState(); });
     document.getElementById("reset").addEventListener("click", resetFilters);
     document.getElementById("save").addEventListener("click", saveRows);
     document.getElementById("prevPage").addEventListener("click", function() {
@@ -794,20 +811,24 @@ const HTML = `<!doctype html>
 
     loadState();
 
-    async function loadState(refresh) {
+    async function loadState() {
       setStatus("Loading review state...");
       try {
-        const response = await fetch("/api/state" + (refresh ? "?refresh=1" : ""));
+        const response = await fetch("/api/state");
         const data = await response.json();
         if (!response.ok) {
           setStatus(data.message || "Failed to load state", true);
           return;
         }
+        const firstLoad = !hasLoadedState;
         state = data;
         rows = data.rows || [];
         pageIndex = 0;
         document.getElementById("beamlineName").textContent = state.beamline || "";
+        document.getElementById("queueSource").textContent = state.queueSource || "unknown";
         setupFilters();
+        if (firstLoad) resetFilterControls();
+        hasLoadedState = true;
         renderPaths();
         renderRows();
         setStatus(
@@ -850,8 +871,7 @@ const HTML = `<!doctype html>
       document.getElementById("paths").innerHTML =
         "<div><strong>Beamline writes</strong>: <code>" + escapeHtml(paths.reviewDecisions || "") + "</code> | <code>" +
         escapeHtml(paths.acceptedDecisions || "") + "</code> | <code>" + escapeHtml(paths.fixedDecisions || "") + "</code></div>" +
-        "<div><strong>Seed writes</strong>: <code>" + escapeHtml(paths.seedReviewDecisions || "") + "</code> | <code>" +
-        escapeHtml(paths.seedAcceptedDecisions || "") + "</code> | <code>" + escapeHtml(paths.seedFixedDecisions || "") + "</code></div>";
+        "<div><strong>Seed</strong>: <code>" + escapeHtml(paths.seedDecisions || "") + "</code></div>";
     }
 
     function currentFilters() {
@@ -870,7 +890,7 @@ const HTML = `<!doctype html>
       return rows.filter(function(row) {
         if (activeView === "beamline" && row.dataset !== state.beamline) return false;
         if (activeView === "seed" && row.dataset !== appConfig.seedDataset) return false;
-        if (activeView === "attention" && !["needs_input", "exception", "proposal"].includes(row.reviewStatus)) return false;
+        if (activeView === "attention" && !["needs_input", "exception", "proposal"].includes(row.reviewStatus) && !row.orphan) return false;
         if (activeView === "fixed" && !acceptedStatuses.includes(row.reviewStatus)) return false;
         if (filters.dataset !== "All" && row.dataset !== filters.dataset) return false;
         if (filters.status !== "All" && row.reviewStatus !== filters.status) return false;
@@ -957,7 +977,7 @@ const HTML = `<!doctype html>
 
     function renderRow(row) {
       const tr = document.createElement("tr");
-      tr.className = "row-" + (row.reviewStatus || "").replace(/[^a-z0-9_]/gi, "");
+      tr.className = "row-" + (row.reviewStatus || "").replace(/[^a-z0-9_]/gi, "") + (row.orphan ? " row-orphan" : "");
       tr.appendChild(seqCell(row));
       tr.appendChild(datasetCell(row));
       tr.appendChild(rawCell(row));
@@ -994,7 +1014,8 @@ const HTML = `<!doctype html>
         escapeHtml(row.sourceAnchor || "") +
         (row.sourceLabel ? "<br>" + escapeHtml(row.sourceLabel) : "") +
         (row.legacyStandardPv ? "<br><span class=\\"pill warn\\">legacy</span> " + escapeHtml(row.legacyStandardPv) : "") +
-        (exceptions ? "<br><span class=\\"pill warn\\">" + escapeHtml(exceptions) + "</span>" : "");
+        (exceptions ? "<br><span class=\\"pill warn\\">" + escapeHtml(exceptions) + "</span>" : "") +
+        (row.orphan ? "<br><span class=\\"pill orphan\\">orphan</span>" : "");
       return td;
     }
 
@@ -1009,6 +1030,7 @@ const HTML = `<!doctype html>
         select.appendChild(option);
       });
       select.value = row.reviewStatus;
+      select.disabled = row.dataset === appConfig.seedDataset;
       select.addEventListener("change", function() {
         row.reviewStatus = select.value;
         row.updatedAt = new Date().toISOString();
@@ -1024,6 +1046,7 @@ const HTML = `<!doctype html>
       const input = document.createElement("input");
       input.type = "checkbox";
       input.checked = row.reviewStatus === value;
+      input.disabled = row.dataset === appConfig.seedDataset;
       input.addEventListener("change", function() {
         if (input.checked) row.reviewStatus = value;
         else if (row.reviewStatus === value) row.reviewStatus = "needs_input";
@@ -1044,7 +1067,7 @@ const HTML = `<!doctype html>
       const input = ["note", "reviewNote"].includes(field) ? document.createElement("textarea") : document.createElement("input");
       input.dataset.field = field;
       input.value = row[field] || "";
-      input.readOnly = field === "standardPv";
+      input.readOnly = field === "standardPv" || row.dataset === appConfig.seedDataset;
       input.addEventListener("input", function() {
         row[field] = input.value;
         row.updatedAt = new Date().toISOString();
@@ -1065,7 +1088,7 @@ const HTML = `<!doctype html>
       return row.section + "-" + row.port + ":" + row.area + "-" + row.dev + "-" + row.subdev + ":" + row.signal;
     }
 
-    function resetFilters() {
+    function resetFilterControls() {
       ["datasetFilter", "statusFilter", "portFilter", "areaFilter", "devFilter"].forEach(function(id) {
         document.getElementById(id).value = "All";
       });
@@ -1075,16 +1098,23 @@ const HTML = `<!doctype html>
       document.querySelectorAll(".tab-btn").forEach(function(el) {
         el.classList.toggle("active", el.dataset.view === "all");
       });
+    }
+
+    function resetFilters() {
+      resetFilterControls();
       renderRows();
     }
 
     async function saveRows() {
       setStatus("Saving decisions...");
       try {
+        const rowsToSave = rows.filter(function(row) {
+          return row.dataset !== appConfig.seedDataset;
+        });
         const response = await fetch("/api/decisions", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ rows: rows })
+          body: JSON.stringify({ rows: rowsToSave })
         });
         const data = await response.json();
         if (!response.ok) {
@@ -1092,9 +1122,8 @@ const HTML = `<!doctype html>
           return;
         }
         setStatus(
-          "Saved " + formatNumber(data.rowCount) + " beamline rows and " +
-          formatNumber(data.seedRows || 0) + " SEO seed rows. Fixed: " +
-          formatNumber((data.fixedRows || 0) + (data.seedFixedRows || 0)) + ".",
+          "Saved " + formatNumber(data.rowCount) + " beamline rows. Fixed: " +
+          formatNumber(data.fixedRows || 0) + ". Seed fixture rows are read-only.",
           false,
           true
         );

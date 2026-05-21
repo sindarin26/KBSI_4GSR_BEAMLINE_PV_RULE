@@ -80,8 +80,8 @@ Review agents may:
 - Produce review logs at `reviews/<beamline>/REVIEW.md`.
 - Use `reviews/<beamline>/review_decisions.json` as structured human review
   input when it exists.
-- Use `reviews/SEO_v2/` fixed/accepted decision seed files as test or comparison
-  data only, not as active naming policy.
+- Use `fixtures/SEO_v2/review_decisions.json` as the SEO_v2 historical seed for
+  test or comparison data only, not as active naming policy.
 - Recommend exception or proposal creation when a rule gap is found.
 - Recommend precise corrections.
 
@@ -136,6 +136,7 @@ Architecture agents must:
   output directory is current enough to validate.
 - Keep validation reports under `reviews/`.
 - Keep human review decision files under `reviews/<beamline>/`.
+- Keep read-only comparison and test seed rows under `fixtures/`.
 - Keep unsupported cases under `exceptions/`.
 - Keep proposed rule changes under `proposals/`.
 - Keep validation and maintenance scripts under `scripts/`; scripts may verify

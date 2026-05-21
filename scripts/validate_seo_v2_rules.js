@@ -2,6 +2,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const { schemaConstraints, validatePvRow } = require("./lib/pv_workbench");
 
 const root = path.resolve(__dirname, "..");
 const rel = (p) => path.join(root, p);
@@ -37,13 +38,15 @@ const requiredFiles = [
   "rules/review/PV_REVIEW_RULEBOOK.md",
   "schemas/pv_registry.seo_v2.yaml",
   "schemas/review_decisions.seo_v2.yaml",
-  "reviews/SEO_v2/review_decisions.json",
-  "reviews/SEO_v2/fixed_decisions.json",
-  "reviews/SEO_v2/accepted_decisions.json",
+  "schemas/pv_review_row.seo_v2.yaml",
+  "fixtures/SEO_v2/review_decisions.json",
   "examples/good/ID10_minimal_registry.yaml",
   "reviews/SEO_v2/REVIEW.md",
   "exceptions/SEO_v2/EXC-0001-duplicate-standardpv-instance-policy.md",
   "scripts/validate_registry.js",
+  "scripts/validate_review_queue.js",
+  "scripts/build_review_queue.js",
+  "scripts/apply_decisions.js",
   "scripts/render_reference.js",
   "scripts/review_server.js",
   "scripts/import_seo_review_decisions.js",
@@ -64,9 +67,17 @@ const draft = readText("rules/draft/PV_NAMING_RULEBOOK.md");
 const review = readText("rules/review/PV_REVIEW_RULEBOOK.md");
 const schema = readText("schemas/pv_registry.seo_v2.yaml");
 const goodExample = readText("examples/good/ID10_minimal_registry.yaml");
-const reviewDecisionRows = JSON.parse(readText("reviews/SEO_v2/review_decisions.json"));
-const fixedDecisionRows = JSON.parse(readText("reviews/SEO_v2/fixed_decisions.json"));
-const acceptedDecisionRows = JSON.parse(readText("reviews/SEO_v2/accepted_decisions.json"));
+// Guard: old seed locations must not exist (would indicate stale files not yet relocated)
+for (const oldSeedPath of [
+  "reviews/SEO_v2/review_decisions.json",
+  "reviews/SEO_v2/accepted_decisions.json",
+  "reviews/SEO_v2/fixed_decisions.json",
+]) {
+  if (fs.existsSync(rel(oldSeedPath))) {
+    fail(`${oldSeedPath} still exists — seed files must live under fixtures/SEO_v2/`);
+  }
+}
+const seedDecisionRows = JSON.parse(readText("fixtures/SEO_v2/review_decisions.json"));
 
 for (const [name, text] of [
   ["draft rulebook", draft],
@@ -168,44 +179,40 @@ if (duplicateGroups > 0) {
   }
 }
 
-if (
-  !Array.isArray(reviewDecisionRows) ||
-  !Array.isArray(fixedDecisionRows) ||
-  !Array.isArray(acceptedDecisionRows)
-) {
-  fail("SEO_v2 decision seed files must be JSON arrays");
-} else if (
-  reviewDecisionRows.length !== fixedDecisionRows.length ||
-  fixedDecisionRows.length !== acceptedDecisionRows.length
-) {
-  fail(
-    `SEO_v2 decision seed files length mismatch: review=${reviewDecisionRows.length}, fixed=${fixedDecisionRows.length}, accepted=${acceptedDecisionRows.length}`,
-  );
+if (!Array.isArray(seedDecisionRows)) {
+  fail("fixtures/SEO_v2/review_decisions.json must be a JSON array");
 } else {
-  pass(`SEO_v2 decision seed files align (${fixedDecisionRows.length})`);
+  pass(`SEO_v2 seed file loaded (${seedDecisionRows.length} rows)`);
 }
 
-if (!Array.isArray(fixedDecisionRows) || fixedDecisionRows.length === 0) {
-  fail("SEO_v2 fixed decision seed is missing rows");
-} else {
-  for (const [index, row] of fixedDecisionRows.entries()) {
-    const loc = `fixed decision seed[${index}]`;
-    if (row.dataset !== "SEO_v2") fail(`${loc} dataset must be SEO_v2`);
-    if (row.reviewStatus !== "fixed") fail(`${loc} reviewStatus must be fixed`);
-    const expectedPv = `${row.section}-${row.port}:${row.area}-${row.dev}-${row.subdev}:${row.signal}`;
-    if (row.standardPv !== expectedPv) {
-      fail(
-        `${loc} standardPv reconstruction mismatch: expected ${expectedPv}, found ${row.standardPv}`,
-      );
+const constraints = schemaConstraints();
+
+function validateSeedFile(rows, label, requiredDataset, requiredStatus) {
+  if (!Array.isArray(rows) || rows.length === 0) {
+    fail(`${label} is missing rows or not an array`);
+    return;
+  }
+  let seedFailures = 0;
+  for (const [index, row] of rows.entries()) {
+    const loc = `${label}[${index}]`;
+    if (row.dataset !== requiredDataset) {
+      fail(`${loc} dataset must be ${requiredDataset}, found ${row.dataset}`);
+      seedFailures += 1;
     }
-    if (!pvRegex.test(row.standardPv)) {
-      fail(`${loc} standardPv does not match SEO_v2 regex: ${row.standardPv}`);
+    if (requiredStatus && row.reviewStatus !== requiredStatus) {
+      fail(`${loc} reviewStatus must be ${requiredStatus}, found ${row.reviewStatus}`);
+      seedFailures += 1;
+    }
+    const { errors } = validatePvRow(row, constraints, loc);
+    for (const e of errors) {
+      fail(e);
+      seedFailures += 1;
     }
   }
-  if (failures === 0) {
-    pass(`SEO_v2 fixed decision seed check passed (${fixedDecisionRows.length})`);
-  }
+  if (seedFailures === 0) pass(`${label} check passed (${rows.length})`);
 }
+
+validateSeedFile(seedDecisionRows, "SEO_v2 seed", "SEO_v2", "fixed");
 
 console.log(`areas: ${[...areas].sort().join(", ")}`);
 console.log(`devices: ${[...devices].sort().join(", ")}`);

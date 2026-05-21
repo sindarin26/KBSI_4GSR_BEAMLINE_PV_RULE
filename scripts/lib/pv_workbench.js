@@ -108,6 +108,96 @@ function parseReferencePvs(markdown) {
   return pvs;
 }
 
+const REVIEW_STATUS_ALL = new Set([
+  "needs_input",
+  "accepted",
+  "approved",
+  "edited",
+  "exception",
+  "skipped",
+  "proposal",
+  "fixed",
+]);
+const REVIEW_STATUS_COMPLETE = new Set(["accepted", "approved", "edited", "fixed"]);
+
+function validateRawIdFormat(rawId, loc) {
+  const errors = [];
+  const warnings = [];
+  if (rawId === undefined || rawId === null || rawId === "") {
+    errors.push(`${loc} missing rawId`);
+  } else if (!/^(RAW-[0-9]{4}|SEO-[0-9]{5})$/.test(String(rawId))) {
+    warnings.push(`${loc} rawId has unexpected format: ${rawId}`);
+  }
+  return { errors, warnings };
+}
+
+function validateSourceTrace(trace, loc) {
+  const errors = [];
+  const warnings = [];
+  if (!trace || typeof trace !== "object") {
+    errors.push(`${loc} source_trace must be an object`);
+    return { errors, warnings };
+  }
+  if (!trace.source_id) errors.push(`${loc} source_trace missing source_id`);
+  if (!trace.source_anchor) errors.push(`${loc} source_trace missing source_anchor`);
+  return { errors, warnings };
+}
+
+function validatePvRow(row, constraints, loc) {
+  const errors = [];
+  const warnings = [];
+
+  for (const field of ["seq", "rawId", "dataset", "reviewStatus", "section", "standardPv", "note"]) {
+    if (row[field] === undefined || row[field] === null) {
+      errors.push(`${loc} missing required field: ${field}`);
+    }
+  }
+
+  if (row.section !== undefined && row.section !== "BL") {
+    errors.push(`${loc} section must be BL, found ${row.section}`);
+  }
+
+  if (row.reviewStatus !== undefined && row.reviewStatus !== null && !REVIEW_STATUS_ALL.has(row.reviewStatus)) {
+    errors.push(`${loc} unknown reviewStatus: ${row.reviewStatus}`);
+  }
+
+  const rawResult = validateRawIdFormat(row.rawId, loc);
+  errors.push(...rawResult.errors);
+  warnings.push(...rawResult.warnings);
+
+  if (REVIEW_STATUS_COMPLETE.has(row.reviewStatus) && !row.orphan) {
+    for (const field of ["port", "area", "dev", "subdev", "signal"]) {
+      if (!row[field]) errors.push(`${loc} ${field} is empty for ${row.reviewStatus} row`);
+    }
+    if (row.port && constraints.portRegex && !constraints.portRegex.test(String(row.port))) {
+      errors.push(`${loc} port does not match schema regex: ${row.port}`);
+    }
+    if (row.area && constraints.areaValues && !constraints.areaValues.has(row.area)) {
+      errors.push(`${loc} unknown area: ${row.area}`);
+    }
+    if (row.dev && constraints.deviceValues && !constraints.deviceValues.has(row.dev)) {
+      errors.push(`${loc} unknown device: ${row.dev}`);
+    }
+    if (row.subdev && constraints.subdeviceValues && !constraints.subdeviceValues.has(row.subdev)) {
+      errors.push(`${loc} unknown subdevice: ${row.subdev}`);
+    }
+    if (row.signal && constraints.signalRegex && !constraints.signalRegex.test(String(row.signal))) {
+      errors.push(`${loc} invalid signal: ${row.signal}`);
+    }
+    if (row.section && row.port && row.area && row.dev && row.subdev && row.signal) {
+      const expectedPv = `${row.section}-${row.port}:${row.area}-${row.dev}-${row.subdev}:${row.signal}`;
+      if (row.standardPv !== undefined && row.standardPv !== "" && row.standardPv !== expectedPv) {
+        errors.push(`${loc} standardPv mismatch: expected ${expectedPv}, found ${row.standardPv}`);
+      }
+    }
+    if (row.standardPv && constraints.pvRegex && !constraints.pvRegex.test(String(row.standardPv))) {
+      errors.push(`${loc} standardPv does not match SEO_v2 regex: ${row.standardPv}`);
+    }
+  }
+
+  return { errors, warnings };
+}
+
 module.exports = {
   root,
   rel,
@@ -121,4 +211,7 @@ module.exports = {
   loadExceptionFrontmatters,
   renderReference,
   parseReferencePvs,
+  validateRawIdFormat,
+  validateSourceTrace,
+  validatePvRow,
 };

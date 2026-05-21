@@ -30,3 +30,9 @@ Source-package promotion reviews may use a named source directory, such as:
 ```text
 reviews/SEO_v2/
 ```
+
+Historical SEO_v2 seed rows are fixtures, not review outputs. Keep them under:
+
+```text
+fixtures/SEO_v2/review_decisions.json
+```

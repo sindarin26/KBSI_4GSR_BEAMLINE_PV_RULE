@@ -12,6 +12,7 @@ const {
   loadExceptionFrontmatters,
   parseReferencePvs,
   schemaConstraints,
+  validateSourceTrace,
 } = require("./lib/pv_workbench");
 
 const beamline = process.argv[2];
@@ -80,11 +81,19 @@ try {
   error(`cannot parse outputs/${beamline}/status.yaml: ${err.message}`);
 }
 
+let exceptions = [];
+try {
+  exceptions = loadExceptionFrontmatters(beamline);
+} catch (err) {
+  warn(`cannot load exceptions for ${beamline}: ${err.message}`);
+}
+
 if (registry) validateRegistry(registry);
 if (raw) validateRawExtraction(raw);
-if (registry && raw) validateCoverage(registry, raw);
+validateExceptionFrontmatters(exceptions);
+if (registry && raw) validateCoverage(registry, raw, exceptions);
 if (registry && referenceExists) validateReference(registry);
-if (registry) validateOutputStatus(registry, status);
+if (registry) validateOutputStatus(registry, status, exceptions);
 
 for (const warning of warnings) console.warn(`WARN: ${warning}`);
 for (const failure of errors) console.error(`FAIL: ${failure}`);
@@ -168,8 +177,8 @@ function validateRegistry(data) {
     const trace = entry.source_trace || {};
     if (!trace.raw_id) error(`${loc} missing source_trace.raw_id`);
     else rawCounts.set(trace.raw_id, (rawCounts.get(trace.raw_id) || 0) + 1);
-    if (!trace.source_id) error(`${loc} missing source_trace.source_id`);
-    if (!trace.source_anchor) error(`${loc} missing source_trace.source_anchor`);
+    const { errors: traceErrors } = validateSourceTrace(trace, loc);
+    for (const e of traceErrors) error(e);
   });
 
   for (const [pv, count] of pvCounts.entries()) {
@@ -193,9 +202,10 @@ function validateRawExtraction(data) {
     return;
   }
 
+  let sourceFiles = null;
   const inputDir = rel("inputs", beamline);
   if (fs.existsSync(inputDir)) {
-    const sourceFiles = new Set(listFiles(inputDir).map(posixRel));
+    sourceFiles = new Set(listFiles(inputDir).map(posixRel));
     const extractedSources = new Set((data.extracted_from || []).map((entry) => entry.source_id));
     for (const source of sourceFiles) {
       if (!extractedSources.has(source)) {
@@ -216,6 +226,9 @@ function validateRawExtraction(data) {
     if (source.source_state === "excluded" && !source.exclude_reason) {
       error(`${source.source_id} excluded source missing exclude_reason`);
     }
+    if (source.source_id && sourceFiles && !sourceFiles.has(source.source_id)) {
+      error(`extracted_from source_id not found in inputs/${beamline}/: ${source.source_id}`);
+    }
   }
 
   const rawIds = new Set();
@@ -232,13 +245,48 @@ function validateRawExtraction(data) {
     if (entry.status === "skipped" && !entry.skip_reason) {
       error(`${loc} skipped entry missing skip_reason`);
     }
-    const trace = entry.source_trace || {};
-    if (!trace.source_id) error(`${loc} missing source_trace.source_id`);
-    if (!trace.source_anchor) error(`${loc} missing source_trace.source_anchor`);
+    const { errors: traceErrors } = validateSourceTrace(entry.source_trace, loc);
+    for (const e of traceErrors) error(e);
   });
 }
 
-function validateCoverage(registryData, rawData) {
+function validateExceptionFrontmatters(exceptionFiles) {
+  for (const exception of exceptionFiles) {
+    const loc = posixRel(exception.path);
+    if (!exception.data) {
+      warn(`exception has no YAML frontmatter: ${loc}`);
+      continue;
+    }
+    const data = exception.data;
+    const filename = path.basename(exception.path, ".md");
+    for (const field of ["id", "beamline", "status", "source", "raw_ids"]) {
+      if (data[field] === undefined || data[field] === null) {
+        error(`exception ${loc} missing required field: ${field}`);
+      }
+    }
+    if (data.id && !filename.startsWith(data.id)) {
+      error(`exception ${loc} id "${data.id}" does not match filename prefix`);
+    }
+    if (data.beamline && data.beamline !== beamline) {
+      error(`exception ${loc} beamline "${data.beamline}" does not match validated beamline "${beamline}"`);
+    }
+    if (data.status && !["open", "closed", "promoted"].includes(data.status)) {
+      error(`exception ${loc} invalid status: ${data.status}`);
+    }
+    if (data.raw_ids !== undefined && data.raw_ids !== null && !Array.isArray(data.raw_ids)) {
+      error(`exception ${loc} raw_ids must be a list`);
+    }
+    if (Array.isArray(data.raw_ids)) {
+      for (const rawId of data.raw_ids) {
+        if (!/^RAW-[0-9]{4}$/.test(String(rawId || ""))) {
+          warn(`exception ${loc} raw_id has unexpected format: ${rawId}`);
+        }
+      }
+    }
+  }
+}
+
+function validateCoverage(registryData, rawData, exceptionFiles) {
   const rawIds = new Set(rawData.entries.map((entry) => entry.raw_id));
   const registryRawIds = new Set();
   const registryStatuses = new Map();
@@ -251,11 +299,8 @@ function validateCoverage(registryData, rawData) {
   }
 
   const exceptionRawIds = new Set();
-  for (const exception of loadExceptionFrontmatters(beamline)) {
-    if (!exception.data) {
-      warn(`exception has no YAML frontmatter: ${posixRel(exception.path)}`);
-      continue;
-    }
+  for (const exception of exceptionFiles) {
+    if (!exception.data) continue;
     for (const rawId of exception.data.raw_ids || []) {
       exceptionRawIds.add(rawId);
       if (!rawIds.has(rawId)) {
@@ -311,7 +356,7 @@ function validateReference(registryData) {
   }
 }
 
-function validateOutputStatus(registryData, statusData) {
+function validateOutputStatus(registryData, statusData, exceptionFiles) {
   if (!statusData) {
     warn(`outputs/${beamline}/status.yaml missing; add one to make active/legacy state machine-readable`);
     return;
@@ -334,7 +379,32 @@ function validateOutputStatus(registryData, statusData) {
   if (statusData.raw_extraction !== `outputs/${beamline}/_work/raw_extracted_pvs.yaml`) {
     error("status.yaml raw_extraction does not point to this raw extraction");
   }
-  if (statusData.open_exceptions && !Array.isArray(statusData.open_exceptions)) {
-    error("status.yaml open_exceptions must be a list when present");
+  const openOnDisk = new Set(
+    exceptionFiles
+      .filter((ef) => ef.data && ef.data.status === "open")
+      .map((ef) => posixRel(ef.path)),
+  );
+  if (statusData.open_exceptions) {
+    if (!Array.isArray(statusData.open_exceptions)) {
+      error("status.yaml open_exceptions must be a list when present");
+    } else {
+      const openInStatus = new Set(statusData.open_exceptions);
+      for (const p of openInStatus) {
+        if (!openOnDisk.has(p)) {
+          if (!fs.existsSync(rel(...p.split("/")))) {
+            error(`status.yaml open_exceptions references missing file: ${p}`);
+          } else {
+            warn(`status.yaml open_exceptions lists ${p} but exception frontmatter status is not "open"`);
+          }
+        }
+      }
+      for (const p of openOnDisk) {
+        if (!openInStatus.has(p)) {
+          error(`exception ${p} has status "open" but is missing from status.yaml open_exceptions`);
+        }
+      }
+    }
+  } else if (openOnDisk.size > 0) {
+    warn(`status.yaml has no open_exceptions list but ${openOnDisk.size} exception file(s) have status "open"`);
   }
 }

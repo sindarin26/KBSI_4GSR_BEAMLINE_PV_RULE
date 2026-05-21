@@ -46,6 +46,9 @@ schemas/
 outputs/
   <beamline>/
     _work/
+      source_lists/
+      review_queue.json
+      raw_extracted_pvs.yaml
     status.yaml
 
 reviews/
@@ -54,9 +57,11 @@ reviews/
     accepted_decisions.json
     fixed_decisions.json
   SEO_v2/
+    REVIEW.md
+
+fixtures/
+  SEO_v2/
     review_decisions.json
-    accepted_decisions.json
-    fixed_decisions.json
 
 exceptions/
   <beamline>/
@@ -128,6 +133,8 @@ schema may replace or extend the informal contracts later.
 
 Contains generated PV draft outputs. Use one subdirectory per beamline.
 Intermediate extraction artifacts live under `outputs/<beamline>/_work/`.
+The browser review path should use `_work/review_queue.json`, built from
+per-source `_work/source_lists/*.rows.json` rows, when present.
 Each active generated output directory should include `status.yaml` so scripts
 and agents can tell whether the output is `draft`, `reviewed`, `approved`, or
 `legacy`.
@@ -138,9 +145,15 @@ with the output so registry entries remain traceable to source material.
 
 Contains review reports and human review decision files. Use one subdirectory
 per beamline. Browser review decisions should be stored as machine-readable
-JSON rows under `reviews/<beamline>/`, not embedded only in HTML. Historical
-SEO_v2 DB seed rows may live under `reviews/SEO_v2/` for comparison and UI
-testing; they are data rows, not active policy.
+JSON rows under `reviews/<beamline>/`, not embedded only in HTML. Source-package
+promotion review reports may live under a named source directory such as
+`reviews/SEO_v2/`, but historical seed rows must not be stored there.
+
+`fixtures/`
+
+Contains read-only test and comparison fixtures. Historical SEO_v2 DB seed rows
+live under `fixtures/SEO_v2/review_decisions.json`; review tooling may display
+them for comparison, but ordinary beamline saves must not rewrite fixtures.
 
 `exceptions/`
 
@@ -186,8 +199,10 @@ node scripts/import_seo_review_decisions.js
 5. Draft mode consults `rules/decisions/` only when active rules are ambiguous.
 6. Draft mode first writes raw extraction artifacts under
    `outputs/<beamline>/_work/` for directory, mixed-format, structured, or
-   multi-entry source material, then writes generated results under
-   `outputs/<beamline>/`.
+   multi-entry source material. Review queue generation then writes per-source
+   SEO_v2-style lists under `_work/source_lists/` and a merged
+   `_work/review_queue.json`, then generated registry/reference results live
+   under `outputs/<beamline>/`.
 7. Generated output directories should declare their status in
    `outputs/<beamline>/status.yaml`.
 8. Draft mode performs a self-review using `rules/review/` and writes
@@ -198,10 +213,11 @@ node scripts/import_seo_review_decisions.js
     user requested read-only review, and writes a review log to
     `reviews/<beamline>/REVIEW.md`.
 11. Human review may use `scripts/review_server.js <beamline>` to save
-    row-array decision files under `reviews/<beamline>/`. The server keeps the
-    loaded row set in memory and refreshes from disk only on an explicit reload.
-12. Historical SEO_v2 DB rows may be imported into `reviews/SEO_v2/` as fixed or
-    accepted decision seeds for UI and pipeline tests. Imported seed files remain
+    row-array decision files under `reviews/<beamline>/`. The server reads
+    `outputs/<beamline>/_work/review_queue.json` when present and falls back to
+    `_work/raw_extracted_pvs.yaml` while the queue migration is in progress.
+12. Historical SEO_v2 DB rows may be imported into `fixtures/SEO_v2/` as a
+    read-only decision seed for UI and pipeline tests. Imported seed rows remain
     examples of prior accepted rows, not active policy.
 
 ## Proposal Promotion

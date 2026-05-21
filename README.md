@@ -30,17 +30,25 @@ node scripts/render_reference.js ID10 --check
 node scripts/render_reference.js ID10 --write
 ```
 
-사람이 브라우저에서 raw item을 검토하고 decision JSON을 저장합니다. UI는
-요청한 beamline review queue와 `reviews/SEO_v2/`의 fixed/approved seed row를
-처음 로드한 뒤 브라우저 메모리에서 필터링합니다. `Reload`를 누를 때만 서버에서
-파일 상태를 다시 읽습니다.
+review_queue를 빌드하고 검증합니다. 서버를 시작하기 전이나 headless CI에서
+실행합니다.
+
+```text
+node scripts/build_review_queue.js ID10
+node scripts/validate_review_queue.js ID10
+```
+
+사람이 브라우저에서 raw item을 검토하고 decision JSON을 저장합니다. `/api/state`
+요청마다 서버가 디스크에서 파일 상태를 다시 읽습니다. `Reload` 버튼을 누르면
+최신 상태를 가져옵니다. UI는 `outputs/ID10/_work/review_queue.json`이 있으면
+그것을 사용하고, 없으면 `raw_extracted_pvs.yaml`로 폴백합니다.
 
 ```text
 node scripts/review_server.js ID10 --port 8765
 ```
 
-SEO_v2 DB JSON에 들어 있는 기존 표준 row를 리뷰 테스트용 fixed/accepted
-decision seed로 가져옵니다.
+SEO_v2 DB JSON에 들어 있는 기존 표준 row를 리뷰 테스트용 read-only decision
+seed로 가져옵니다.
 
 ```text
 node scripts/import_seo_review_decisions.js
@@ -51,6 +59,8 @@ node scripts/import_seo_review_decisions.js
 ```text
 node scripts/validate_seo_v2_rules.js
 node scripts/validate_registry.js ID10
+node scripts/build_review_queue.js ID10
+node scripts/validate_review_queue.js ID10
 node scripts/render_reference.js ID10 --check
 git diff --check
 ```
@@ -123,11 +133,10 @@ dataset update에 쓸 수 있는 행, `fixed_decisions.json`은 리뷰어가 sta
 표시한 행입니다. GUI는 이 파일들을 쓰는 입력기이며, active naming policy는
 여전히 `rules/`와 schema에 있습니다.
 
-`reviews/SEO_v2/fixed_decisions.json`,
-`reviews/SEO_v2/accepted_decisions.json`,
-`reviews/SEO_v2/review_decisions.json`은 historical SEO_v2 DB row를 동일한
+`fixtures/SEO_v2/review_decisions.json`은 historical SEO_v2 DB row를 동일한
 SEO_v2 형식으로 보존한 테스트 seed입니다. `dataset` 필드로 beamline row와 seed
-row를 구분합니다.
+row를 구분합니다. Review UI는 이 seed를 비교용으로 표시하지만 저장하지
+않습니다. `scripts/import_seo_review_decisions.js`로 재생성합니다.
 
 ## Current Rule Summary
 
@@ -183,6 +192,7 @@ BL-10C:SYS-CTRL-LOGIC:UserAve1
 - `exceptions/`: 현재 룰로 처리하기 어려운 실제 케이스
 - `proposals/`: exception을 공식 룰로 편입하기 위한 변경 제안
 - `examples/`: good/bad/before-after 예제
+- `fixtures/`: 테스트/비교용 fixture 데이터 (SEO_v2 historical seed)
 - `schemas/`: SEO_v2 registry/raw/status schema contract
 - `scripts/`: 검증/유지보수 스크립트
 

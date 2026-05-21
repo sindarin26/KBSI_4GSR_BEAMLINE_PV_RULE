@@ -101,7 +101,7 @@ Review mode: active SEO_v2 review-and-fix pass. Source trace identifiers (`sourc
 - `reviews/ID10/SELF_REVIEW.md` is historical v0 draft context; use this `REVIEW.md` for the active SEO_v2 review state.
 - `outputs/ID10/_work/raw_extracted_pvs.yaml` intentionally preserves legacy `raw_pv` and `raw_axis_or_function` values as source facts; normalized active fields are in `pv_registry.yaml`.
 - `10C` is used as the active port following the SEO_v2 DB-backed examples; this remains a known Markdown-vs-DB source conflict documented by the active rulebooks.
-- `validate_registry.js` currently enforces one registry entry per `source_trace.raw_id`, while the informal schema only requires the raw ID to exist when raw extraction exists. Current ID10 output follows that one-to-one pattern; document or relax the check if future extraction allows one raw item to normalize into multiple registry PVs.
+- ~~`validate_registry.js` currently enforces one registry entry per `source_trace.raw_id`, while the informal schema only requires the raw ID to exist when raw extraction exists.~~ **Resolved (Phase 0)**: 1:1 raw_id policy is now the documented contract. `schemas/pv_registry.seo_v2.yaml` has been updated with `raw_id_cardinality: one_per_pv_entry`. The validator already enforced this; the schema now matches.
 
 ## Exceptions Or Proposals Recommended
 
