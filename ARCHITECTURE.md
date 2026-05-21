@@ -36,6 +36,14 @@ inputs/
 temp/
   <beamline>/
 
+database_pool/
+  <pool_id>/
+    manifest.yaml
+    sources/
+      *.rows.json
+    decisions/
+      *.decisions.json
+
 examples/
   good/
   bad/
@@ -112,6 +120,18 @@ not active rule authority. Approved naming policy belongs in active rulebooks.
 Contains local temporary, external, or reference material. It is not part of the
 distributed workflow and is not an active rule source. Agents should read it only
 when the user explicitly points to it.
+
+`database_pool/`
+
+Contains normalized, reviewable PV candidate datasets for the database-pool
+pilot workflow. Use one subdirectory per pool. Each pool should keep a
+`manifest.yaml`, source-row files under `sources/*.rows.json`, and human
+decision overlays under `decisions/*.decisions.json`.
+
+Rows in `database_pool/` are source facts, candidates, or human review
+decisions. They are not active naming policy until promoted into rulebooks,
+schemas, examples, or generated outputs through an explicit review/proposal
+step.
 
 `examples/`
 
@@ -219,6 +239,10 @@ node scripts/import_seo_review_decisions.js
 12. Historical SEO_v2 DB rows may be imported into `fixtures/SEO_v2/` as a
     read-only decision seed for UI and pipeline tests. Imported seed rows remain
     examples of prior accepted rows, not active policy.
+13. During the database-pool pilot, normalized source rows and decision overlays
+    may be written under `database_pool/<pool_id>/`. These files support
+    review, merge, validation, and UI experiments; they do not replace active
+    `outputs/` or active rulebooks until a later promotion step.
 
 ## Proposal Promotion
 

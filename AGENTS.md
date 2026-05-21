@@ -74,6 +74,8 @@ Use Review mode when the task is to validate existing PV material.
 Review agents may:
 
 - Read generated outputs, source inputs, examples, schemas, and rulebooks.
+- Read `database_pool/` source rows and decision overlays when explicitly
+  reviewing database-pool pilot material.
 - Read `rules/decisions/` for rationale when active review rules are ambiguous.
 - Apply clear, rule-based fixes directly to generated outputs when the user asks
   for usable/corrected output or does not explicitly request read-only review.
@@ -96,6 +98,8 @@ Review agents must:
 - Treat active rulebooks as higher authority than examples or decision records.
 - Treat source inputs as evidence for traceability and source facts, not as rule
   authority.
+- Treat `database_pool/` rows as source facts, candidates, or human review
+  decisions, not as active naming policy.
 - Stay read-only when the user explicitly asks for "review only", "audit only",
   or "do not edit".
 - Ask the user before changing ambiguous policy decisions.
@@ -131,6 +135,8 @@ Architecture agents must:
 - Keep examples under `examples/`.
 - Keep distributable source material under `inputs/`; keep `temp/` as local
   scratch only.
+- Keep normalized database-pool pilot rows and decision overlays under
+  `database_pool/`.
 - Keep generated outputs under `outputs/`.
 - Keep generated output status in `outputs/<beamline>/status.yaml` when an
   output directory is current enough to validate.
