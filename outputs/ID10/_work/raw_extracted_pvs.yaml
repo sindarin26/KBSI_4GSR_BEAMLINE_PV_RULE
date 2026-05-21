@@ -1,5 +1,5 @@
-beamline: "BL-10C"
-rulebook_version: "SEO_v2"
+beamline: "BL10C"
+rulebook_version: "SEO_V3"
 extracted_from:
   - source_id: "inputs/ID10/front masks and attenuator.txt"
     source_type: "text"

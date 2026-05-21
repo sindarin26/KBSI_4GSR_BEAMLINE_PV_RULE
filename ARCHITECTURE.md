@@ -112,10 +112,11 @@ Contains examples used to stabilize generation and review behavior.
 `schemas/`
 
 Contains machine-readable schema definitions for canonical data formats.
-`schemas/pv_registry.seo_v2.yaml` currently defines the informal active
-SEO_v2 registry contract. `schemas/pv_registry.v0.yaml` is retained as a legacy
-contract for historical outputs and migration reference. A stricter validation
-schema may replace or extend the informal contracts later.
+`schemas/pv_registry.seo_v3.yaml` currently defines the informal active SEO_V3
+registry contract. `schemas/pv_registry.seo_v2.yaml` and
+`schemas/pv_registry.v0.yaml` are retained as legacy contracts for historical
+outputs and migration reference. A stricter validation schema may replace or
+extend the informal contracts later.
 
 `outputs/`
 
@@ -156,7 +157,7 @@ Active policy still belongs in `rules/`.
 Current workbench entry points:
 
 ```text
-node scripts/validate_seo_v2_rules.js
+node scripts/validate_seo_v3_rules.js
 node scripts/validate_registry.js <beamline>
 node scripts/render_reference.js <beamline> --check
 node scripts/render_reference.js <beamline> --write
@@ -204,12 +205,12 @@ and discuss. The long-term direction should be a dual output:
 - Human-readable Markdown for review and collaboration.
 - Machine-readable JSON or YAML for validation, indexing, and reuse.
 
-The SEO_v2 schema is informal. Stricter validation can be added later without
+The SEO_V3 schema is informal. Stricter validation can be added later without
 changing the user-facing workflow.
 
 ## Rulebook Direction
 
-The active rulebooks are SEO_v2 / 4GSR standard v1.0 aligned:
+The active rulebooks are SEO_V3 aligned:
 
 - `rules/draft/PV_NAMING_RULEBOOK.md`
 - `rules/review/PV_REVIEW_RULEBOOK.md`
@@ -217,11 +218,19 @@ The active rulebooks are SEO_v2 / 4GSR standard v1.0 aligned:
 The active PV shape is:
 
 ```text
-BL-[PORT]:[AREA]-[DEV]-[SUBDEV]:[SignalName]
+[SEC/SYS][PORT]-[AREA]:[DEV]-[SUBDEV]:[SignalName]
 ```
 
-Rules should still be promoted carefully from source-backed decisions. Do not
-encode a preference as a mandatory rule until the project owner confirms it.
+Example:
+
+```text
+BL01A-OH:HHLM-MIRR:Pitch
+```
+
+`DEV` and `SUBDEV` abbreviations are source-backed working tokens, not fixed
+active enumerations. Rules should still be promoted carefully from source-backed
+decisions. Do not encode a preference as a mandatory rule until the project
+owner confirms it.
 
 ## Future RAG Direction
 

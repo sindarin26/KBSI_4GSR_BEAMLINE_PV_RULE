@@ -3,6 +3,7 @@ id: EXC-0003
 beamline: ID10
 status: open
 created: 2026-05-20
+updated: 2026-05-21
 source: inputs/ID10/
 raw_ids:
   - RAW-0001
@@ -56,12 +57,12 @@ related_proposals: []
 
 # Unresolved Legacy Device And Area Mappings
 
-These raw PVs are real source items, but active SEO_v2 review could not normalize them without making policy choices that the rulebooks do not settle.
+These raw PVs are real source items, but active SEO_V3 review could not normalize them without making policy choices that the rulebooks do not settle.
 
 Temporary handling: keep them out of `pv_registry.yaml` and account for them through this exception record.
 
 Required decisions:
 
 - Confirm area assignments for front mask, movable mask, and attenuator rows before using `FRMASK`, `MVMASK`, or `ATT` in active output.
-- Decide whether legacy `M1`/`M2` mirrors map to an active SEO_v2 device such as `HHLM-MIRR` or require another approved device code.
-- Decide whether zone plate (`ZP`), sample-stage (`SAM`), detector (`DET`), and secondary source aperture (`SSA`) source rows have approved active device/subdevice mappings or require a rule proposal.
+- Decide whether legacy `M1`/`M2` mirrors map to `HHLM-MIRR` or require another owner-approved device/subdevice token.
+- Decide whether zone plate (`ZP`), sample-stage (`SAM`), detector (`DET`), and secondary source aperture (`SSA`) source rows have owner-approved active device/subdevice mappings or require a rule proposal.

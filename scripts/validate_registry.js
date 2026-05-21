@@ -24,7 +24,7 @@ let constraints;
 try {
   constraints = schemaConstraints();
 } catch (err) {
-  console.error(`FAIL: cannot load schemas/pv_registry.seo_v2.yaml: ${err.message}`);
+  console.error(`FAIL: cannot load schemas/pv_registry.seo_v3.yaml: ${err.message}`);
   process.exit(1);
 }
 const errors = [];
@@ -101,11 +101,11 @@ console.log(
 );
 
 function validateRegistry(data) {
-  if (data.rulebook_version !== "SEO_v2") {
-    error(`registry rulebook_version must be SEO_v2, found ${data.rulebook_version}`);
+  if (data.rulebook_version !== "SEO_V3") {
+    error(`registry rulebook_version must be SEO_V3, found ${data.rulebook_version}`);
   }
-  if (!/^BL-[0-9]{2}[A-Z]$/.test(String(data.beamline || ""))) {
-    error(`registry beamline must match BL-[0-9]{2}[A-Z], found ${data.beamline}`);
+  if (!/^[A-Z]+[0-9]{2}[A-Z]$/.test(String(data.beamline || ""))) {
+    error(`registry beamline must match [A-Z]+[0-9]{2}[A-Z], found ${data.beamline}`);
   }
   if (!Array.isArray(data.pvs)) {
     error("registry pvs must be a list");
@@ -133,19 +133,25 @@ function validateRegistry(data) {
         error(`${loc} missing required field ${field}`);
       }
     }
-    if (entry.rulebook_version !== "SEO_v2") {
-      error(`${loc} rulebook_version must be SEO_v2`);
+    if (entry.rulebook_version !== "SEO_V3") {
+      error(`${loc} rulebook_version must be SEO_V3`);
     }
-    if (entry.section !== "BL") error(`${loc} section must be BL`);
+    if (!constraints.sectionRegex.test(String(entry.section || ""))) {
+      error(`${loc} section does not match schema regex: ${entry.section}`);
+    }
     if (!constraints.portRegex.test(String(entry.port || ""))) {
       error(`${loc} port does not match schema regex: ${entry.port}`);
     }
-    if (!constraints.areaValues.has(entry.area)) error(`${loc} unknown area: ${entry.area}`);
-    if (!constraints.deviceValues.has(entry.device)) {
-      error(`${loc} unknown device: ${entry.device}`);
+    if (!constraints.areaValues.has(entry.area)) {
+      if (!["decision_required", "exception"].includes(entry.status)) {
+        error(`${loc} unknown area: ${entry.area}`);
+      }
     }
-    if (!constraints.subdeviceValues.has(entry.subdevice)) {
-      error(`${loc} unknown subdevice: ${entry.subdevice}`);
+    if (!constraints.deviceRegex.test(String(entry.device || ""))) {
+      error(`${loc} device does not match schema regex: ${entry.device}`);
+    }
+    if (!constraints.subdeviceRegex.test(String(entry.subdevice || ""))) {
+      error(`${loc} subdevice does not match schema regex: ${entry.subdevice}`);
     }
     if (!constraints.signalRegex.test(String(entry.signal || ""))) {
       error(`${loc} invalid signal: ${entry.signal}`);
@@ -155,12 +161,12 @@ function validateRegistry(data) {
     }
     if (!Array.isArray(entry.notes)) error(`${loc} notes must be a list`);
 
-    const expectedPv = `${entry.section}-${entry.port}:${entry.area}-${entry.device}-${entry.subdevice}:${entry.signal}`;
+    const expectedPv = `${entry.section}${entry.port}-${entry.area}:${entry.device}-${entry.subdevice}:${entry.signal}`;
     if (entry.pv !== expectedPv) {
       error(`${loc} pv reconstruction mismatch: expected ${expectedPv}, found ${entry.pv}`);
     }
     if (!constraints.pvRegex.test(String(entry.pv || ""))) {
-      error(`${loc} pv does not match SEO_v2 regex: ${entry.pv}`);
+      error(`${loc} pv does not match SEO_V3 regex: ${entry.pv}`);
     }
 
     pvCounts.set(entry.pv, (pvCounts.get(entry.pv) || 0) + 1);
@@ -181,8 +187,8 @@ function validateRegistry(data) {
 }
 
 function validateRawExtraction(data) {
-  if (data.rulebook_version !== "SEO_v2") {
-    error(`raw extraction rulebook_version must be SEO_v2, found ${data.rulebook_version}`);
+  if (data.rulebook_version !== "SEO_V3") {
+    error(`raw extraction rulebook_version must be SEO_V3, found ${data.rulebook_version}`);
   }
   if (registry && data.beamline !== registry.beamline) {
     error(`raw extraction beamline ${data.beamline} does not match registry ${registry.beamline}`);
@@ -316,8 +322,8 @@ function validateOutputStatus(registryData, statusData) {
     warn(`outputs/${beamline}/status.yaml missing; add one to make active/legacy state machine-readable`);
     return;
   }
-  if (statusData.rulebook_version !== "SEO_v2") {
-    error(`status.yaml rulebook_version must be SEO_v2, found ${statusData.rulebook_version}`);
+  if (statusData.rulebook_version !== "SEO_V3") {
+    error(`status.yaml rulebook_version must be SEO_V3, found ${statusData.rulebook_version}`);
   }
   if (statusData.beamline !== registryData.beamline) {
     error(`status.yaml beamline ${statusData.beamline} does not match registry ${registryData.beamline}`);

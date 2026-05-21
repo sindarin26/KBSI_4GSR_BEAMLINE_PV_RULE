@@ -11,7 +11,7 @@ Exception records should include:
 
 - source file or user-provided source;
 - `raw_id` and source trace when `raw_extracted_pvs.yaml` exists;
-- beamline and SEO_v2 `BL-[PORT]` context when available;
+- beamline and SEO_V3 `[SEC/SYS][PORT]` context when available;
 - unsupported case;
 - why current rules do not cover it;
 - proposed temporary output status, such as `decision_required` or `exception`;

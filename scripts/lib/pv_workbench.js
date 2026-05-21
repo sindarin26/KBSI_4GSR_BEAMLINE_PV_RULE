@@ -24,15 +24,18 @@ function listFiles(dir) {
 }
 
 function loadSchema() {
-  return parseYamlFile(rel("schemas", "pv_registry.seo_v2.yaml"));
+  return parseYamlFile(rel("schemas", "pv_registry.seo_v3.yaml"));
 }
 
 function schemaConstraints(schema = loadSchema()) {
   const constraints = schema.registry.pv_entry.field_constraints;
   return {
+    sectionRegex: new RegExp(`^${constraints.section_regex}$`),
     areaValues: new Set(constraints.area_values || []),
     deviceValues: new Set(constraints.device_values || []),
     subdeviceValues: new Set(constraints.subdevice_values || []),
+    deviceRegex: new RegExp(`^${constraints.device_regex}$`),
+    subdeviceRegex: new RegExp(`^${constraints.subdevice_regex}$`),
     statusValues: new Set(schema.registry.pv_entry.status_values || []),
     rawStatusValues: new Set(schema.raw_extracted_pvs.entry.status_values || []),
     outputStatusValues: new Set(schema.output_status.status_values || []),
@@ -80,12 +83,13 @@ function loadExceptionFrontmatters(beamline) {
 
 function renderReference(registry) {
   const pvs = registry.pvs || [];
+  const label = String(registry.beamline || "").replace(/^BL-?/, "");
   const lines = [
-    `# ${registry.beamline.replace(/^BL-/, "")} PV Reference`,
+    `# ${label} PV Reference`,
     "",
     "Generated from pv_registry.yaml. Do not hand-edit this file directly.",
     "",
-    "This reference reflects the active SEO_v2 / 4GSR standard v1.0 registry. Legacy source PVs are preserved in `source_pv` and source trace metadata in `pv_registry.yaml`.",
+    "This reference reflects the active SEO_V3 registry. Legacy source PVs are preserved in `source_pv` and source trace metadata in `pv_registry.yaml`.",
     "",
     "| PV Name | Port | Area | Device | Subdevice | Signal | Status | Notes |",
     "| --- | --- | --- | --- | --- | --- | --- | --- |",

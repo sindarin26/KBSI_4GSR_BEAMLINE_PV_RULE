@@ -135,7 +135,7 @@ Architecture agents must:
 
 ## Rulebook Status
 
-The active SEO_v2 / 4GSR standard v1.0 rulebooks are:
+The active SEO_V3 rulebooks are:
 
 - `rules/draft/PV_NAMING_RULEBOOK.md`
 - `rules/review/PV_REVIEW_RULEBOOK.md`
@@ -146,12 +146,23 @@ not active agent rules until promoted into the active rulebooks.
 The current active PV shape is:
 
 ```text
-BL-[PORT]:[AREA]-[DEV]-[SUBDEV]:[SignalName]
+[SEC/SYS][PORT]-[AREA]:[DEV]-[SUBDEV]:[SignalName]
 ```
 
-Historical v0 material using `ID10:{Area}:{Device}:{AxisOrFunction}` may remain
-in decisions, reviews, or legacy outputs, but it is not the active generation
-target for new work.
+Example:
+
+```text
+BL01A-OH:HHLM-MIRR:Pitch
+```
+
+`DEV` and `SUBDEV` abbreviations are not fixed active enumerations in SEO_V3.
+Agents should use source-backed uppercase tokens and route unclear choices
+through the exception/proposal workflow.
+
+Historical v0 material using `ID10:{Area}:{Device}:{AxisOrFunction}` and
+historical SEO_v2 material using `BL-[PORT]:[AREA]-[DEV]-[SUBDEV]:[SignalName]`
+may remain in decisions, reviews, sources, or legacy outputs, but they are not
+the active generation target for new work.
 
 Current generated outputs should be machine-checkable with:
 

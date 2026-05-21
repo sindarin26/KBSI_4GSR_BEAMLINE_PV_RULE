@@ -1,7 +1,7 @@
-beamline: "BL-10C"
-rulebook_version: "SEO_v2"
+beamline: "BL10C"
+rulebook_version: "SEO_V3"
 pvs:
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0019"
       source_id: "inputs/ID10/optics motors.json"
@@ -14,12 +14,12 @@ pvs:
     device: "MONO"
     subdevice: "CRYS"
     signal: "Theta"
-    pv: "BL-10C:OH-MONO-CRYS:Theta"
+    pv: "BL10C-OH:MONO-CRYS:Theta"
     source_pv: "BL10:DCM:Theta"
     status: "reviewed"
     notes:
       - "normalized from legacy source PV BL10:DCM:Theta"
-      - "legacy DCM token mapped to active MONO-CRYS per SEO_v2 migration example"
+      - "legacy DCM token mapped to active MONO-CRYS from historical SEO_v2 migration example"
       - "source IOC: sim"
     metadata:
       raw_group: "DCM"
@@ -31,7 +31,7 @@ pvs:
       high: "20"
       velocity: "0.05"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0020"
       source_id: "inputs/ID10/optics motors.json"
@@ -44,12 +44,12 @@ pvs:
     device: "MONO"
     subdevice: "CRYS"
     signal: "Y1"
-    pv: "BL-10C:OH-MONO-CRYS:Y1"
+    pv: "BL10C-OH:MONO-CRYS:Y1"
     source_pv: "BL10:DCM:Y1"
     status: "reviewed"
     notes:
       - "normalized from legacy source PV BL10:DCM:Y1"
-      - "legacy DCM token mapped to active MONO-CRYS per SEO_v2 migration example"
+      - "legacy DCM token mapped to active MONO-CRYS from historical SEO_v2 migration example"
       - "source IOC: sim"
     metadata:
       raw_group: "DCM"
@@ -61,7 +61,7 @@ pvs:
       high: "2.5"
       velocity: "0.5"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0021"
       source_id: "inputs/ID10/optics motors.json"
@@ -74,12 +74,12 @@ pvs:
     device: "MONO"
     subdevice: "CRYS"
     signal: "Chi1"
-    pv: "BL-10C:OH-MONO-CRYS:Chi1"
+    pv: "BL10C-OH:MONO-CRYS:Chi1"
     source_pv: "BL10:DCM:Chi1"
     status: "reviewed"
     notes:
       - "normalized from legacy source PV BL10:DCM:Chi1"
-      - "legacy DCM token mapped to active MONO-CRYS per SEO_v2 migration example"
+      - "legacy DCM token mapped to active MONO-CRYS from historical SEO_v2 migration example"
       - "source IOC: sim"
     metadata:
       raw_group: "DCM"
@@ -91,7 +91,7 @@ pvs:
       high: "300"
       velocity: "1"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0022"
       source_id: "inputs/ID10/optics motors.json"
@@ -104,12 +104,12 @@ pvs:
     device: "MONO"
     subdevice: "CRYS"
     signal: "Tx"
-    pv: "BL-10C:OH-MONO-CRYS:Tx"
+    pv: "BL10C-OH:MONO-CRYS:Tx"
     source_pv: "BL10:DCM:TX"
     status: "reviewed"
     notes:
       - "normalized from legacy source PV BL10:DCM:TX"
-      - "legacy DCM token mapped to active MONO-CRYS per SEO_v2 migration example"
+      - "legacy DCM token mapped to active MONO-CRYS from historical SEO_v2 migration example"
       - "source IOC: sim"
     metadata:
       raw_group: "DCM"
@@ -121,7 +121,7 @@ pvs:
       high: "12.5"
       velocity: "0.5"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0023"
       source_id: "inputs/ID10/optics motors.json"
@@ -134,12 +134,12 @@ pvs:
     device: "MONO"
     subdevice: "CRYS"
     signal: "Y2"
-    pv: "BL-10C:OH-MONO-CRYS:Y2"
+    pv: "BL10C-OH:MONO-CRYS:Y2"
     source_pv: "BL10:DCM:Y2"
     status: "reviewed"
     notes:
       - "normalized from legacy source PV BL10:DCM:Y2"
-      - "legacy DCM token mapped to active MONO-CRYS per SEO_v2 migration example"
+      - "legacy DCM token mapped to active MONO-CRYS from historical SEO_v2 migration example"
       - "source IOC: sim"
     metadata:
       raw_group: "DCM"
@@ -151,7 +151,7 @@ pvs:
       high: "25"
       velocity: "0.5"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0024"
       source_id: "inputs/ID10/optics motors.json"
@@ -164,12 +164,12 @@ pvs:
     device: "MONO"
     subdevice: "CRYS"
     signal: "Z2"
-    pv: "BL-10C:OH-MONO-CRYS:Z2"
+    pv: "BL10C-OH:MONO-CRYS:Z2"
     source_pv: "BL10:DCM:Z2"
     status: "reviewed"
     notes:
       - "normalized from legacy source PV BL10:DCM:Z2"
-      - "legacy DCM token mapped to active MONO-CRYS per SEO_v2 migration example"
+      - "legacy DCM token mapped to active MONO-CRYS from historical SEO_v2 migration example"
       - "source IOC: sim"
     metadata:
       raw_group: "DCM"
@@ -181,7 +181,7 @@ pvs:
       high: "25"
       velocity: "0.5"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0025"
       source_id: "inputs/ID10/optics motors.json"
@@ -194,12 +194,12 @@ pvs:
     device: "MONO"
     subdevice: "CRYS"
     signal: "DTheta2"
-    pv: "BL-10C:OH-MONO-CRYS:DTheta2"
+    pv: "BL10C-OH:MONO-CRYS:DTheta2"
     source_pv: "BL10:DCM:DTheta2"
     status: "reviewed"
     notes:
       - "normalized from legacy source PV BL10:DCM:DTheta2"
-      - "legacy DCM token mapped to active MONO-CRYS per SEO_v2 migration example"
+      - "legacy DCM token mapped to active MONO-CRYS from historical SEO_v2 migration example"
       - "source IOC: sim"
     metadata:
       raw_group: "DCM"
@@ -211,7 +211,7 @@ pvs:
       high: "2520"
       velocity: "10"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0026"
       source_id: "inputs/ID10/optics motors.json"
@@ -224,12 +224,12 @@ pvs:
     device: "MONO"
     subdevice: "CRYS"
     signal: "Roll2"
-    pv: "BL-10C:OH-MONO-CRYS:Roll2"
+    pv: "BL10C-OH:MONO-CRYS:Roll2"
     source_pv: "BL10:DCM:Roll2"
     status: "reviewed"
     notes:
       - "normalized from legacy source PV BL10:DCM:Roll2"
-      - "legacy DCM token mapped to active MONO-CRYS per SEO_v2 migration example"
+      - "legacy DCM token mapped to active MONO-CRYS from historical SEO_v2 migration example"
       - "source IOC: sim"
     metadata:
       raw_group: "DCM"
@@ -241,7 +241,7 @@ pvs:
       high: "2520"
       velocity: "10"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0027"
       source_id: "inputs/ID10/optics motors.json"
@@ -254,12 +254,12 @@ pvs:
     device: "MONO"
     subdevice: "CRYS"
     signal: "DTheta2F"
-    pv: "BL-10C:OH-MONO-CRYS:DTheta2F"
+    pv: "BL10C-OH:MONO-CRYS:DTheta2F"
     source_pv: "BL10:DCM:DTheta2F"
     status: "reviewed"
     notes:
       - "normalized from legacy source PV BL10:DCM:DTheta2F"
-      - "legacy DCM token mapped to active MONO-CRYS per SEO_v2 migration example"
+      - "legacy DCM token mapped to active MONO-CRYS from historical SEO_v2 migration example"
       - "source IOC: sim"
     metadata:
       raw_group: "DCM"
@@ -271,7 +271,7 @@ pvs:
       high: "10.3"
       velocity: "100"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0036"
       source_id: "inputs/ID10/optics motors.json"
@@ -284,7 +284,7 @@ pvs:
     device: "KBVM"
     subdevice: "MIRR"
     signal: "X"
-    pv: "BL-10C:OH-KBVM-MIRR:X"
+    pv: "BL10C-OH:KBVM-MIRR:X"
     source_pv: "BL10:KBV:X"
     status: "reviewed"
     notes:
@@ -301,7 +301,7 @@ pvs:
       high: "2"
       velocity: "0.5"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0037"
       source_id: "inputs/ID10/optics motors.json"
@@ -314,7 +314,7 @@ pvs:
     device: "KBVM"
     subdevice: "MIRR"
     signal: "Y"
-    pv: "BL-10C:OH-KBVM-MIRR:Y"
+    pv: "BL10C-OH:KBVM-MIRR:Y"
     source_pv: "BL10:KBV:Y"
     status: "reviewed"
     notes:
@@ -331,7 +331,7 @@ pvs:
       high: "15"
       velocity: "0.5"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0038"
       source_id: "inputs/ID10/optics motors.json"
@@ -344,7 +344,7 @@ pvs:
     device: "KBVM"
     subdevice: "MIRR"
     signal: "Z"
-    pv: "BL-10C:OH-KBVM-MIRR:Z"
+    pv: "BL10C-OH:KBVM-MIRR:Z"
     source_pv: "BL10:KBV:Z"
     status: "reviewed"
     notes:
@@ -361,7 +361,7 @@ pvs:
       high: "100"
       velocity: "0.5"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0039"
       source_id: "inputs/ID10/optics motors.json"
@@ -374,7 +374,7 @@ pvs:
     device: "KBVM"
     subdevice: "MIRR"
     signal: "Pitch"
-    pv: "BL-10C:OH-KBVM-MIRR:Pitch"
+    pv: "BL10C-OH:KBVM-MIRR:Pitch"
     source_pv: "BL10:KBV:Pitch"
     status: "reviewed"
     notes:
@@ -391,7 +391,7 @@ pvs:
       high: "5"
       velocity: "0.2"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0040"
       source_id: "inputs/ID10/optics motors.json"
@@ -404,7 +404,7 @@ pvs:
     device: "KBVM"
     subdevice: "MIRR"
     signal: "BendU"
-    pv: "BL-10C:OH-KBVM-MIRR:BendU"
+    pv: "BL10C-OH:KBVM-MIRR:BendU"
     source_pv: "BL10:KBV:BendU"
     status: "reviewed"
     notes:
@@ -421,7 +421,7 @@ pvs:
       high: "20"
       velocity: "1"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0041"
       source_id: "inputs/ID10/optics motors.json"
@@ -434,7 +434,7 @@ pvs:
     device: "KBVM"
     subdevice: "MIRR"
     signal: "BendD"
-    pv: "BL-10C:OH-KBVM-MIRR:BendD"
+    pv: "BL10C-OH:KBVM-MIRR:BendD"
     source_pv: "BL10:KBV:BendD"
     status: "reviewed"
     notes:
@@ -451,7 +451,7 @@ pvs:
       high: "20"
       velocity: "1"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0042"
       source_id: "inputs/ID10/optics motors.json"
@@ -464,7 +464,7 @@ pvs:
     device: "KBHM"
     subdevice: "MIRR"
     signal: "X"
-    pv: "BL-10C:OH-KBHM-MIRR:X"
+    pv: "BL10C-OH:KBHM-MIRR:X"
     source_pv: "BL10:KBH:X"
     status: "reviewed"
     notes:
@@ -481,7 +481,7 @@ pvs:
       high: "15"
       velocity: "0.5"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0043"
       source_id: "inputs/ID10/optics motors.json"
@@ -494,7 +494,7 @@ pvs:
     device: "KBHM"
     subdevice: "MIRR"
     signal: "Y"
-    pv: "BL-10C:OH-KBHM-MIRR:Y"
+    pv: "BL10C-OH:KBHM-MIRR:Y"
     source_pv: "BL10:KBH:Y"
     status: "reviewed"
     notes:
@@ -511,7 +511,7 @@ pvs:
       high: "2"
       velocity: "0.5"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0044"
       source_id: "inputs/ID10/optics motors.json"
@@ -524,7 +524,7 @@ pvs:
     device: "KBHM"
     subdevice: "MIRR"
     signal: "Z"
-    pv: "BL-10C:OH-KBHM-MIRR:Z"
+    pv: "BL10C-OH:KBHM-MIRR:Z"
     source_pv: "BL10:KBH:Z"
     status: "reviewed"
     notes:
@@ -541,7 +541,7 @@ pvs:
       high: "100"
       velocity: "0.5"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0045"
       source_id: "inputs/ID10/optics motors.json"
@@ -554,7 +554,7 @@ pvs:
     device: "KBHM"
     subdevice: "MIRR"
     signal: "Pitch"
-    pv: "BL-10C:OH-KBHM-MIRR:Pitch"
+    pv: "BL10C-OH:KBHM-MIRR:Pitch"
     source_pv: "BL10:KBH:Pitch"
     status: "reviewed"
     notes:
@@ -571,7 +571,7 @@ pvs:
       high: "5"
       velocity: "0.2"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0046"
       source_id: "inputs/ID10/optics motors.json"
@@ -584,7 +584,7 @@ pvs:
     device: "KBHM"
     subdevice: "MIRR"
     signal: "BendU"
-    pv: "BL-10C:OH-KBHM-MIRR:BendU"
+    pv: "BL10C-OH:KBHM-MIRR:BendU"
     source_pv: "BL10:KBH:BendU"
     status: "reviewed"
     notes:
@@ -601,7 +601,7 @@ pvs:
       high: "20"
       velocity: "1"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0047"
       source_id: "inputs/ID10/optics motors.json"
@@ -614,7 +614,7 @@ pvs:
     device: "KBHM"
     subdevice: "MIRR"
     signal: "BendD"
-    pv: "BL-10C:OH-KBHM-MIRR:BendD"
+    pv: "BL10C-OH:KBHM-MIRR:BendD"
     source_pv: "BL10:KBH:BendD"
     status: "reviewed"
     notes:
@@ -631,7 +631,7 @@ pvs:
       high: "20"
       velocity: "1"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0064"
       source_id: "inputs/ID10/slits etc.xml"
@@ -644,12 +644,12 @@ pvs:
     device: "WBSLT"
     subdevice: "SLIT"
     signal: "Top"
-    pv: "BL-10C:OH-WBSLT-SLIT:Top"
+    pv: "BL10C-OH:WBSLT-SLIT:Top"
     source_pv: "BL10:WBS:Top"
     status: "reviewed"
     notes:
       - "normalized from legacy source PV BL10:WBS:Top"
-      - "legacy WBS token mapped to active WBSLT-SLIT per SEO_v2 migration example"
+      - "legacy WBS token mapped to active WBSLT-SLIT from historical SEO_v2 migration example"
       - "source IOC: sim"
     metadata:
       raw_group: "WB slit"
@@ -661,7 +661,7 @@ pvs:
       high: "25"
       velocity: "1"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0065"
       source_id: "inputs/ID10/slits etc.xml"
@@ -674,12 +674,12 @@ pvs:
     device: "WBSLT"
     subdevice: "SLIT"
     signal: "Bot"
-    pv: "BL-10C:OH-WBSLT-SLIT:Bot"
+    pv: "BL10C-OH:WBSLT-SLIT:Bot"
     source_pv: "BL10:WBS:Bot"
     status: "reviewed"
     notes:
       - "normalized from legacy source PV BL10:WBS:Bot"
-      - "legacy WBS token mapped to active WBSLT-SLIT per SEO_v2 migration example"
+      - "legacy WBS token mapped to active WBSLT-SLIT from historical SEO_v2 migration example"
       - "source IOC: sim"
     metadata:
       raw_group: "WB slit"
@@ -691,7 +691,7 @@ pvs:
       high: "25"
       velocity: "1"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0066"
       source_id: "inputs/ID10/slits etc.xml"
@@ -704,12 +704,12 @@ pvs:
     device: "WBSLT"
     subdevice: "SLIT"
     signal: "Inb"
-    pv: "BL-10C:OH-WBSLT-SLIT:Inb"
+    pv: "BL10C-OH:WBSLT-SLIT:Inb"
     source_pv: "BL10:WBS:Inb"
     status: "reviewed"
     notes:
       - "normalized from legacy source PV BL10:WBS:Inb"
-      - "legacy WBS token mapped to active WBSLT-SLIT per SEO_v2 migration example"
+      - "legacy WBS token mapped to active WBSLT-SLIT from historical SEO_v2 migration example"
       - "source IOC: sim"
     metadata:
       raw_group: "WB slit"
@@ -721,7 +721,7 @@ pvs:
       high: "25"
       velocity: "1"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0067"
       source_id: "inputs/ID10/slits etc.xml"
@@ -734,12 +734,12 @@ pvs:
     device: "WBSLT"
     subdevice: "SLIT"
     signal: "Outb"
-    pv: "BL-10C:OH-WBSLT-SLIT:Outb"
+    pv: "BL10C-OH:WBSLT-SLIT:Outb"
     source_pv: "BL10:WBS:Outb"
     status: "reviewed"
     notes:
       - "normalized from legacy source PV BL10:WBS:Outb"
-      - "legacy WBS token mapped to active WBSLT-SLIT per SEO_v2 migration example"
+      - "legacy WBS token mapped to active WBSLT-SLIT from historical SEO_v2 migration example"
       - "source IOC: sim"
     metadata:
       raw_group: "WB slit"
@@ -751,7 +751,7 @@ pvs:
       high: "25"
       velocity: "1"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0068"
       source_id: "inputs/ID10/slits etc.xml"
@@ -764,12 +764,12 @@ pvs:
     device: "WBSLT"
     subdevice: "SLIT"
     signal: "Hgap"
-    pv: "BL-10C:OH-WBSLT-SLIT:Hgap"
+    pv: "BL10C-OH:WBSLT-SLIT:Hgap"
     source_pv: "BL10:WBS:Hgap"
     status: "reviewed"
     notes:
       - "normalized from legacy source PV BL10:WBS:Hgap"
-      - "legacy WBS token mapped to active WBSLT-SLIT per SEO_v2 migration example"
+      - "legacy WBS token mapped to active WBSLT-SLIT from historical SEO_v2 migration example"
       - "source IOC: sim"
     metadata:
       raw_group: "WB slit"
@@ -781,7 +781,7 @@ pvs:
       high: "48"
       velocity: "1"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0069"
       source_id: "inputs/ID10/slits etc.xml"
@@ -794,12 +794,12 @@ pvs:
     device: "WBSLT"
     subdevice: "SLIT"
     signal: "Vgap"
-    pv: "BL-10C:OH-WBSLT-SLIT:Vgap"
+    pv: "BL10C-OH:WBSLT-SLIT:Vgap"
     source_pv: "BL10:WBS:Vgap"
     status: "reviewed"
     notes:
       - "normalized from legacy source PV BL10:WBS:Vgap"
-      - "legacy WBS token mapped to active WBSLT-SLIT per SEO_v2 migration example"
+      - "legacy WBS token mapped to active WBSLT-SLIT from historical SEO_v2 migration example"
       - "source IOC: sim"
     metadata:
       raw_group: "WB slit"
@@ -811,7 +811,7 @@ pvs:
       high: "48"
       velocity: "1"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0074"
       source_id: "inputs/ID10/slits etc.xml"
@@ -824,7 +824,7 @@ pvs:
     device: "KBSLT"
     subdevice: "SLIT"
     signal: "Hgap"
-    pv: "BL-10C:OH-KBSLT-SLIT:Hgap"
+    pv: "BL10C-OH:KBSLT-SLIT:Hgap"
     source_pv: "BL10:KBS:Hgap"
     status: "reviewed"
     notes:
@@ -841,7 +841,7 @@ pvs:
       high: "10000"
       velocity: "50"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0075"
       source_id: "inputs/ID10/slits etc.xml"
@@ -854,7 +854,7 @@ pvs:
     device: "KBSLT"
     subdevice: "SLIT"
     signal: "Vgap"
-    pv: "BL-10C:OH-KBSLT-SLIT:Vgap"
+    pv: "BL10C-OH:KBSLT-SLIT:Vgap"
     source_pv: "BL10:KBS:Vgap"
     status: "reviewed"
     notes:
@@ -871,7 +871,7 @@ pvs:
       high: "10000"
       velocity: "50"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0076"
       source_id: "inputs/ID10/slits etc.xml"
@@ -884,7 +884,7 @@ pvs:
     device: "KBSLT"
     subdevice: "SLIT"
     signal: "Hcen"
-    pv: "BL-10C:OH-KBSLT-SLIT:Hcen"
+    pv: "BL10C-OH:KBSLT-SLIT:Hcen"
     source_pv: "BL10:KBS:Hcen"
     status: "reviewed"
     notes:
@@ -901,7 +901,7 @@ pvs:
       high: "5000"
       velocity: "1"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0077"
       source_id: "inputs/ID10/slits etc.xml"
@@ -914,7 +914,7 @@ pvs:
     device: "KBSLT"
     subdevice: "SLIT"
     signal: "Vcen"
-    pv: "BL-10C:OH-KBSLT-SLIT:Vcen"
+    pv: "BL10C-OH:KBSLT-SLIT:Vcen"
     source_pv: "BL10:KBS:Vcen"
     status: "reviewed"
     notes:
@@ -931,7 +931,7 @@ pvs:
       high: "5000"
       velocity: "1"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0105"
       source_id: "inputs/ID10/undulator.md"
@@ -944,7 +944,7 @@ pvs:
     device: "IVU"
     subdevice: "BODY"
     signal: "Gap"
-    pv: "BL-10C:FE-IVU-BODY:Gap"
+    pv: "BL10C-FE:IVU-BODY:Gap"
     source_pv: "BL10:IVU:Gap"
     status: "reviewed"
     notes:
@@ -961,7 +961,7 @@ pvs:
       high: "25"
       velocity: "0.5"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0106"
       source_id: "inputs/ID10/undulator.md"
@@ -974,7 +974,7 @@ pvs:
     device: "IVU"
     subdevice: "BODY"
     signal: "TaperGap"
-    pv: "BL-10C:FE-IVU-BODY:TaperGap"
+    pv: "BL10C-FE:IVU-BODY:TaperGap"
     source_pv: "BL10:IVU:TaperGap"
     status: "reviewed"
     notes:
@@ -991,7 +991,7 @@ pvs:
       high: "2"
       velocity: "0.5"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0107"
       source_id: "inputs/ID10/undulator.md"
@@ -1004,7 +1004,7 @@ pvs:
     device: "IVU"
     subdevice: "BODY"
     signal: "Harmonic"
-    pv: "BL-10C:FE-IVU-BODY:Harmonic"
+    pv: "BL10C-FE:IVU-BODY:Harmonic"
     source_pv: "BL10:IVU:Harmonic"
     status: "reviewed"
     notes:
@@ -1021,7 +1021,7 @@ pvs:
       high: "13"
       velocity: "1"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0108"
       source_id: "inputs/ID10/undulator.md"
@@ -1034,12 +1034,12 @@ pvs:
     device: "IVU"
     subdevice: "GIRD"
     signal: "X"
-    pv: "BL-10C:FE-IVU-GIRD:X"
+    pv: "BL10C-FE:IVU-GIRD:X"
     source_pv: "BL10:IVU:GirderX"
     status: "reviewed"
     notes:
       - "normalized from legacy source PV BL10:IVU:GirderX"
-      - "legacy IVU girder signal mapped to active IVU-GIRD per SEO_v2 migration example"
+      - "legacy IVU girder signal mapped to active IVU-GIRD from historical SEO_v2 migration example"
       - "source IOC: sim"
     metadata:
       raw_group: "IVU24"
@@ -1051,7 +1051,7 @@ pvs:
       high: "5"
       velocity: "1"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0109"
       source_id: "inputs/ID10/undulator.md"
@@ -1064,12 +1064,12 @@ pvs:
     device: "IVU"
     subdevice: "GIRD"
     signal: "Y"
-    pv: "BL-10C:FE-IVU-GIRD:Y"
+    pv: "BL10C-FE:IVU-GIRD:Y"
     source_pv: "BL10:IVU:GirderY"
     status: "reviewed"
     notes:
       - "normalized from legacy source PV BL10:IVU:GirderY"
-      - "legacy IVU girder signal mapped to active IVU-GIRD per SEO_v2 migration example"
+      - "legacy IVU girder signal mapped to active IVU-GIRD from historical SEO_v2 migration example"
       - "source IOC: sim"
     metadata:
       raw_group: "IVU24"
@@ -1081,7 +1081,7 @@ pvs:
       high: "5"
       velocity: "1"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0110"
       source_id: "inputs/ID10/undulator.md"
@@ -1094,12 +1094,12 @@ pvs:
     device: "IVU"
     subdevice: "GIRD"
     signal: "Pitch"
-    pv: "BL-10C:FE-IVU-GIRD:Pitch"
+    pv: "BL10C-FE:IVU-GIRD:Pitch"
     source_pv: "BL10:IVU:GirderPitch"
     status: "reviewed"
     notes:
       - "normalized from legacy source PV BL10:IVU:GirderPitch"
-      - "legacy IVU girder signal mapped to active IVU-GIRD per SEO_v2 migration example"
+      - "legacy IVU girder signal mapped to active IVU-GIRD from historical SEO_v2 migration example"
       - "source IOC: sim"
     metadata:
       raw_group: "IVU24"
@@ -1111,7 +1111,7 @@ pvs:
       high: "200"
       velocity: "50"
       ioc: "sim"
-  - rulebook_version: "SEO_v2"
+  - rulebook_version: "SEO_V3"
     source_trace:
       raw_id: "RAW-0111"
       source_id: "inputs/ID10/undulator.md"
@@ -1124,12 +1124,12 @@ pvs:
     device: "IVU"
     subdevice: "GIRD"
     signal: "Yaw"
-    pv: "BL-10C:FE-IVU-GIRD:Yaw"
+    pv: "BL10C-FE:IVU-GIRD:Yaw"
     source_pv: "BL10:IVU:GirderYaw"
     status: "reviewed"
     notes:
       - "normalized from legacy source PV BL10:IVU:GirderYaw"
-      - "legacy IVU girder signal mapped to active IVU-GIRD per SEO_v2 migration example"
+      - "legacy IVU girder signal mapped to active IVU-GIRD from historical SEO_v2 migration example"
       - "source IOC: sim"
     metadata:
       raw_group: "IVU24"

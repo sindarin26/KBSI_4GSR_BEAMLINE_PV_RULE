@@ -1,24 +1,24 @@
 # PV Naming Draft Rulebook
 
-Version: SEO_v2 / 4GSR standard v1.0
+Version: SEO_V3
 Status: active draft-generation rulebook
-Last updated: 2026-05-20
+Last updated: 2026-05-21
 
 ## Purpose
 
 This rulebook defines how agents create or normalize beamline PV identity data
-using the SEO_v2 4GSR beamline naming standard provided by the project owner.
+using the active SEO_V3 naming format provided by the project owner.
 
-The active PV name shape is now the SEO_v2 three-tier form:
+The active PV name shape is the SEO_V3 three-tier form:
 
 ```text
-BL-[PORT]:[AREA]-[DEV]-[SUBDEV]:[SignalName]
+[SEC/SYS][PORT]-[AREA]:[DEV]-[SUBDEV]:[SignalName]
 ```
 
 Example:
 
 ```text
-BL-10C:OH-MONO-CRYS:Theta
+BL01A-OH:HHLM-MIRR:Pitch
 ```
 
 Do not use the older v0 shape `ID10:{Area}:{Device}:{AxisOrFunction}` for new
@@ -27,38 +27,38 @@ material unless they are regenerated under this rulebook.
 
 ## Source Authority
 
-The SEO_v2 source package originally referenced by the project owner is:
+The active SEO_V3 change was requested by the project owner on 2026-05-21:
 
 ```text
-temp/SEO_v2/4GSR_Beamline_PV_Naming_Standard_v1.0.md
-temp/SEO_v2/4GSR_Beamline_PV_Naming_Standard_v1.0_DB.json
+[SEC/SYS][PORT]-[AREA]:[DEV]-[SUBDEV]:[SignalName]
+BL01A-OH:HHLM-MIRR:Pitch
 ```
 
-The promoted in-repository copies are:
+The `DEV` and `SUBDEV` abbreviations are not fixed active enumerations in
+SEO_V3. They should be source-backed, traceable, and refined through future
+database work instead of enforced from the old SEO_v2 token lists.
+
+The SEO_v2 source package remains in the repository as historical migration and
+review context:
 
 ```text
 standards/4GSR_Beamline_PV_Naming_Standard_v1.0.md
 inputs/SEO_v2/4GSR_Beamline_PV_Naming_Standard_v1.0_DB.json
 ```
 
-Because `temp/` is local scratch, it is not automatically an active rule source
-in ordinary work. It was valid for this promotion because the user explicitly
-requested the repository be overhauled from `temp/SEO_v2`; future work should
-prefer the promoted in-repository copies.
-
 Use this authority order while drafting:
 
 1. this active draft rulebook;
 2. `rules/review/PV_REVIEW_RULEBOOK.md`;
-3. the SEO_v2 Markdown standard for human-facing structure and core code tables;
-4. the SEO_v2 DB JSON for observed operational code values and exact examples;
+3. `rules/decisions/2026-05-21_seo_v3_format_update.md`;
+4. user-provided source material and explicit owner instructions;
 5. examples under `examples/`;
-6. `rules/decisions/` only when the active rulebooks do not resolve a case.
+6. older SEO_v2 material only as historical source evidence, not active policy;
+7. `rules/decisions/` only when the active rulebooks do not resolve a case.
 
-If the Markdown standard and DB JSON conflict, preserve the conflict in notes,
-self-review, exception, or proposal material instead of silently choosing a
-policy. Current known conflicts are documented in
-`rules/decisions/2026-05-20_seo_v2_promotion.md`.
+If source evidence conflicts with the active SEO_V3 shape, preserve the conflict
+in notes, self-review, exception, or proposal material instead of silently
+choosing a policy.
 
 ## Normal User Flow
 
@@ -104,49 +104,49 @@ beamline_level:device_level:signal_level
 Rendered form:
 
 ```text
-BL-[PORT]:[AREA]-[DEV]-[SUBDEV]:[SignalName]
+[SEC/SYS][PORT]-[AREA]:[DEV]-[SUBDEV]:[SignalName]
 ```
 
 Canonical registry fields should store the rendered PV and its components:
 
 ```yaml
 section: BL
-port: 10C
+port: 01A
 area: OH
-device: MONO
-subdevice: CRYS
-signal: Theta
-pv: BL-10C:OH-MONO-CRYS:Theta
+device: HHLM
+subdevice: MIRR
+signal: Pitch
+pv: BL01A-OH:HHLM-MIRR:Pitch
 ```
 
 `pv` must equal:
 
 ```text
-section + "-" + port + ":" + area + "-" + device + "-" + subdevice + ":" + signal
+section + port + "-" + area + ":" + device + "-" + subdevice + ":" + signal
 ```
 
 Do not drop `SUBDEV`. If the source does not provide a meaningful subdevice,
-use a rule-supported placeholder such as `BODY`, `CTRL`, or `STG`, and record
-the assumption.
+use a source-backed placeholder such as `BODY`, `CTRL`, or `STG` only when the
+source context supports it, and record the assumption. Otherwise mark the item
+`decision_required`.
 
 ## Beamline Level
 
 The active beamline level is:
 
 ```text
-BL-[PORT]
+[SEC/SYS][PORT]
 ```
 
 Rules:
 
-- `section` is `BL` for current 4GSR beamline PVs.
-- `port` should match `[0-9]{2}[A-Z]`, such as `10C`.
+- `section` is an uppercase alphabetic prefix such as `BL`.
+- `port` should match `[0-9]{2}[A-Z]`, such as `01A` or `10C`.
 - Use the port explicitly provided by source material or user instruction.
-- For the SEO_v2 DB reference set, the observed port is `10C`.
+- For current ID10 migration material, the observed port remains `10C`.
 
-The SEO_v2 Markdown port table lists `01A` through `10B`, while the SEO_v2 DB
-uses `10C` for every row. Do not reject `10C` solely because it is absent from
-the Markdown table; record the source conflict when it matters.
+Do not reject `10C` solely because it came from older SEO_v2 DB-backed material;
+record the source context when it matters.
 
 ## Area
 
@@ -161,7 +161,7 @@ OH
 EH
 ```
 
-SEO_v2 DB-backed operational extension:
+Historical SEO_v2 DB-backed operational extension:
 
 ```text
 SYS
@@ -174,7 +174,7 @@ FE  = Front End
 PTL = Photon Transport Line
 OH  = Optical Hutch
 EH  = Experimental Hutch
-SYS = beamline control/system utilities observed in the SEO_v2 DB
+SYS = beamline control/system utilities observed in historical SEO_v2 data
 ```
 
 Do not default unknown areas to `PTL`. If the source does not identify an area
@@ -184,9 +184,10 @@ or recommend an exception.
 ## Device
 
 `DEV` identifies the main device assembly or system family. Use uppercase
-tokens, preserving standard abbreviations.
+tokens, preserving source-backed abbreviations.
 
-Core Markdown standard device codes:
+SEO_V3 does not treat the following as a closed active list. They are observed
+or historical examples only:
 
 ```text
 IVU
@@ -205,7 +206,7 @@ SH
 CCD
 ```
 
-SEO_v2 DB-backed operational extensions:
+Historical SEO_v2 DB-backed operational extensions:
 
 ```text
 CTRL
@@ -213,13 +214,14 @@ MOTOR
 ```
 
 Use `CTRL` for beamline control/system utility channels when the source maps
-them to `SYS-CTRL-*` in SEO_v2. Use `MOTOR` only when the source or SEO_v2 DB
+them to control/system utilities. Use `MOTOR` only when the source
 represents a generic motor record family rather than a named physical assembly;
 preserve the source label and add metadata or notes when the physical device is
 hidden by the generic token.
 
-Do not invent new device codes silently. If source material requires a device
-outside the active list, mark it `decision_required` and use the
+New `DEV` tokens are allowed when they are traceable to source material or an
+explicit owner instruction and match `^[A-Z][A-Z0-9]*$`. If the source does not
+identify a stable device family, mark the item `decision_required` and use the
 exception/proposal workflow.
 
 ## Subdevice
@@ -227,7 +229,8 @@ exception/proposal workflow.
 `SUBDEV` identifies a physical component, sensor, controller, or logical unit
 inside the device. Use uppercase tokens.
 
-Core Markdown standard subdevice codes:
+SEO_V3 does not treat the following as a closed active list. They are observed
+or historical examples only:
 
 ```text
 GIRD
@@ -242,7 +245,7 @@ DIAG
 VALV
 ```
 
-SEO_v2 DB-backed operational extensions:
+Historical SEO_v2 DB-backed operational extensions:
 
 ```text
 INFO
@@ -255,7 +258,7 @@ TIME
 UTIL
 ```
 
-Use the smallest subdevice that preserves the SEO_v2 grouping. Examples:
+Use the smallest subdevice that preserves the source-backed grouping. Examples:
 
 ```text
 IVU-GIRD
@@ -264,8 +267,12 @@ MONO-CRYS
 HHLM-MIRR
 WBSLT-SLIT
 ION-DIAG
-SYS-CTRL-LOGIC
+CTRL-LOGIC
 ```
+
+New `SUBDEV` tokens are allowed when they are traceable to source material or an
+explicit owner instruction and match `^[A-Z][A-Z0-9]*$`. If the source does not
+identify a stable subdevice, mark the item `decision_required`.
 
 ## SignalName
 
@@ -312,9 +319,9 @@ Use two-digit instance numbers when multiple same-class devices or subdevices
 must be distinguished and the source standard provides or requires an instance.
 
 Do not add instance numbers just to make a duplicate disappear. If source
-material or SEO_v2 mappings produce duplicate rendered PV names, keep the source
-rows traceable and mark the conflict `decision_required` or `exception` until
-the owner decides whether the instance belongs in `DEV`, `SUBDEV`,
+material or migration mappings produce duplicate rendered PV names, keep the
+source rows traceable and mark the conflict `decision_required` or `exception`
+until the owner decides whether the instance belongs in `DEV`, `SUBDEV`,
 `SignalName`, metadata, or a separate source field.
 
 Canonical registries must not contain duplicate `pv` values unless the duplicate
@@ -340,10 +347,10 @@ notes
 Examples:
 
 ```text
-BL10:IVU:GirderY   -> BL-10C:FE-IVU-GIRD:Y
-BL10:IVU:EncUS     -> BL-10C:FE-IVU-ENC:US
-BL10:WBS:Hgap      -> BL-10C:OH-WBSLT-SLIT:Hgap
-BL10:DCM:Theta     -> BL-10C:OH-MONO-CRYS:Theta
+BL10:IVU:GirderY   -> BL10C-FE:IVU-GIRD:Y
+BL10:IVU:EncUS     -> BL10C-FE:IVU-ENC:US
+BL10:WBS:Hgap      -> BL10C-OH:WBSLT-SLIT:Hgap
+BL10:DCM:Theta     -> BL10C-OH:MONO-CRYS:Theta
 ```
 
 If the source does not identify the correct area, subdevice, or port, do not
@@ -373,8 +380,8 @@ A PV-like entry is any source item that is intended to become, describe, or map
 to a PV. Count:
 
 - tokens matching common legacy PV forms, such as `BL10:IVU:GirderY`;
-- tokens matching SEO_v2 rendered form,
-  `BL-[PORT]:[AREA]-[DEV]-[SUBDEV]:[SignalName]`;
+- tokens matching SEO_V3 rendered form,
+  `[SEC/SYS][PORT]-[AREA]:[DEV]-[SUBDEV]:[SignalName]`;
 - table rows, JSON objects, or XML elements with fields explicitly labeled as
   PV names, source PVs, devices, areas, subdevices, axes, signals, or controls;
 - source rows that name a device and signal/function even when a legacy PV
@@ -455,24 +462,24 @@ outputs/<beamline>/pv_registry.yaml
 ```
 
 The registry should store PV identity fields separately from rendered PV names.
-Use the SEO_v2 registry contract in:
+Use the SEO_V3 registry contract in:
 
 ```text
-schemas/pv_registry.seo_v2.yaml
+schemas/pv_registry.seo_v3.yaml
 ```
 
 Minimum registry-level fields:
 
 ```yaml
-beamline: BL-10C
-rulebook_version: SEO_v2
+beamline: BL10C
+rulebook_version: SEO_V3
 pvs: []
 ```
 
 Minimum fields for each PV entry:
 
 ```yaml
-rulebook_version: SEO_v2
+rulebook_version: SEO_V3
 source_trace:
   raw_id: RAW-0001
   source_id: inputs/SEO_v2/4GSR_Beamline_PV_Naming_Standard_v1.0_DB.json
@@ -485,7 +492,7 @@ area: OH
 device: MONO
 subdevice: CRYS
 signal: Theta
-pv: BL-10C:OH-MONO-CRYS:Theta
+pv: BL10C-OH:MONO-CRYS:Theta
 source_pv: "$(PREFIX):Mono:Theta"
 status: proposed
 notes: []
@@ -586,16 +593,18 @@ Use `decision_required` when a registry entry can be represented temporarily but
 needs human judgment. Use `exception` when the active rules cannot represent the
 item cleanly and an exception record has been created or is required. Use
 `legacy` only for preserved historical output that should not be treated as an
-active SEO_v2 result.
+active SEO_V3 result.
 
 ## Drafting Priorities
 
 When information is missing, classify it:
 
-- Blocking: cannot form a SEO_v2 PV identity.
+- Blocking: cannot form a SEO_V3 PV identity.
 - Assumable: can continue with a recorded assumption supported by source
   evidence.
 - Optional metadata: can be left null/TBD.
 
-For SEO_v2, `area`, `device`, `subdevice`, and `signal` are blocking unless the
-source or active rulebook provides a clear mapping.
+For SEO_V3, `area`, `device`, `subdevice`, and `signal` are blocking unless the
+source, user instruction, or active rulebook provides a clear mapping. `DEV` and
+`SUBDEV` token vocabulary is intentionally open, but the chosen tokens still
+need source-backed meaning and traceability.
