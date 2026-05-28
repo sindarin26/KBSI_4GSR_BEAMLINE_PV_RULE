@@ -17,6 +17,7 @@ const {
   updateRegistryEntry,
   validateRegistry,
 } = require("../abbreviation_registry_pilot/abbreviation_registry");
+const { importDatabasePool } = require("./importer");
 
 const DEFAULT_REGISTRY_PATH = path.join("fixtures", "seo_v3_pilot", "abbreviation_registry.json");
 
@@ -280,6 +281,48 @@ function bulkApproveVisible(options, visibleUids, approveCandidateAbbreviations 
   };
 }
 
+function previewImport(options, body = {}) {
+  return importDatabasePool(importOptions(options, body, false));
+}
+
+function saveImport(options, body = {}) {
+  const summary = importDatabasePool(importOptions(options, body, true));
+  if (summary.errors.length > 0) {
+    return {
+      summary,
+      state: null,
+    };
+  }
+  return {
+    summary,
+    state: stateWithVisible(optionsWithImportedPool(options, summary.poolId)),
+  };
+}
+
+function importOptions(options, body, write) {
+  const input = stringValue(body.inputDir || body.input || "").trim();
+  const pool = stringValue(body.poolId || body.pool || "").trim();
+  if (!input) throw new Error("inputDir is required");
+  if (!pool) throw new Error("poolId is required");
+  return {
+    rootDir: options.rootDir || process.cwd(),
+    input,
+    pool,
+    section: stringValue(body.section || "").trim() || undefined,
+    port: stringValue(body.port || "").trim() || undefined,
+    overwrite: Boolean(body.overwrite),
+    write,
+  };
+}
+
+function optionsWithImportedPool(options, poolId) {
+  if (!options.poolIds || options.poolIds.includes(poolId)) return options;
+  return {
+    ...options,
+    poolIds: [...options.poolIds, poolId].sort(),
+  };
+}
+
 function approveExistingCandidateEntries(options, uidSet) {
   const state = loadWorkbenchState(options);
   const rootDir = options.rootDir || process.cwd();
@@ -364,6 +407,17 @@ function createServer(options = {}) {
           200,
           bulkApproveVisible(runtimeOptions, body.uids || [], Boolean(body.approveCandidateAbbreviations)),
         );
+      });
+    }
+    if (req.method === "POST" && url.pathname === "/api/import-preview") {
+      return readJsonBody(req, res, (body) => {
+        sendJson(res, 200, previewImport(runtimeOptions, body));
+      });
+    }
+    if (req.method === "POST" && url.pathname === "/api/import-save") {
+      return readJsonBody(req, res, (body) => {
+        const result = saveImport(runtimeOptions, body);
+        sendJson(res, result.summary.errors.length > 0 ? 409 : 200, result);
       });
     }
     sendJson(res, 404, { error: "not_found" });
@@ -546,10 +600,32 @@ const HTML = `<!doctype html>
     .pill.bad { background: #ffe5e2; color: var(--red); }
     .pill.ok { background: #e0f4e9; color: var(--green); }
     .abbr-table { min-width: 920px; }
+    .import-panel {
+      display: grid;
+      grid-template-columns: minmax(180px, 2fr) minmax(120px, 1fr) auto auto auto;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 10px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px;
+    }
+    .import-panel input[type="text"] { width: 100%; min-width: 0; padding: 8px 9px; }
+    .import-panel label { color: var(--muted); white-space: nowrap; }
+    .import-summary {
+      margin-bottom: 10px;
+      padding: 9px 11px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--muted);
+    }
     .hide { display: none; }
     @media (max-width: 1100px) {
       .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .import-panel { grid-template-columns: 1fr; }
       header { align-items: flex-start; flex-direction: column; }
     }
   </style>
@@ -564,6 +640,15 @@ const HTML = `<!doctype html>
     <section class="stats" id="stats"></section>
 
     <nav class="tabs" id="tabs"></nav>
+
+    <section class="import-panel">
+      <label>Input directory <input id="importInput" type="text" value="inputs/BL10A"></label>
+      <label>Pool ID <input id="importPool" type="text" value="BL10A"></label>
+      <label><input type="checkbox" id="importOverwrite"> overwrite existing import files</label>
+      <button id="importPreview">Preview Import</button>
+      <button class="primary" id="importSave">Save Import</button>
+    </section>
+    <section class="import-summary hide" id="importSummary"></section>
 
     <section class="filters" id="filters"></section>
 
@@ -776,6 +861,56 @@ const HTML = `<!doctype html>
       setStatus("Approved " + result.approvedCount + " row(s); blocked " + result.blockedCount, "ok");
     }
 
+    function importPayload() {
+      return {
+        inputDir: el("importInput").value,
+        poolId: el("importPool").value,
+        overwrite: el("importOverwrite").checked
+      };
+    }
+
+    async function previewImport() {
+      const response = await fetch("/api/import-preview", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(importPayload())
+      });
+      const summary = await response.json();
+      renderImportSummary(summary);
+      setStatus(summary.errors.length ? "Import preview has errors" : "Import preview ready", summary.errors.length ? "err" : "ok");
+    }
+
+    async function saveImport() {
+      const response = await fetch("/api/import-save", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(importPayload())
+      });
+      const result = await response.json();
+      renderImportSummary(result.summary);
+      if (result.state) {
+        state = result.state;
+        render();
+        setStatus("Saved import and reloaded rows", "ok");
+      } else {
+        setStatus("Import save failed", "err");
+      }
+    }
+
+    function renderImportSummary(summary) {
+      const panel = el("importSummary");
+      panel.classList.remove("hide");
+      panel.innerHTML = [
+        "files " + summary.filesScanned,
+        "rows " + summary.rowsExtracted,
+        "targets " + summary.targetFiles.length,
+        "warnings " + summary.warnings.length,
+        "errors " + summary.errors.length
+      ].map(esc).join(" · ") +
+        (summary.errors.length ? "<br><b>Errors</b><br>" + summary.errors.map(esc).join("<br>") : "") +
+        (summary.warnings.length ? "<br><b>Warnings</b><br>" + summary.warnings.map(esc).join("<br>") : "");
+    }
+
     function esc(value) {
       return String(value == null ? "" : value).replace(/[&<>"']/g, (ch) => ({
         "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
@@ -784,6 +919,8 @@ const HTML = `<!doctype html>
 
     el("bulk").onclick = bulkApprove;
     el("reload").onclick = load;
+    el("importPreview").onclick = previewImport;
+    el("importSave").onclick = saveImport;
     load().catch((error) => setStatus(error.message, "err"));
   </script>
 </body>
@@ -814,7 +951,9 @@ module.exports = {
   filterRows,
   listPoolIds,
   loadWorkbenchState,
+  previewImport,
   saveAbbreviationDecision,
+  saveImport,
   saveRowDecision,
   stateWithVisible,
 };

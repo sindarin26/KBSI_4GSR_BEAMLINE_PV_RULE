@@ -195,6 +195,7 @@ function importDatabasePool(options) {
   if (summary.errors.length > 0) return summary;
 
   if (options.write) {
+    ensurePoolScaffold(rootDir, poolId, inputDir);
     for (const sourceFile of summary.sourceFiles) {
       const targetPath = path.resolve(rootDir, sourceFile.targetFile);
       fs.mkdirSync(path.dirname(targetPath), { recursive: true });
@@ -207,6 +208,23 @@ function importDatabasePool(options) {
   }
 
   return summary;
+}
+
+function ensurePoolScaffold(rootDir, poolId, inputDir) {
+  const poolDir = path.resolve(rootDir, "database_pool", poolId);
+  const manifestPath = path.join(poolDir, "manifest.yaml");
+  fs.mkdirSync(path.join(poolDir, "sources"), { recursive: true });
+  fs.mkdirSync(path.join(poolDir, "decisions"), { recursive: true });
+  if (!fs.existsSync(manifestPath)) {
+    fs.writeFileSync(manifestPath, [
+      `pool_id: ${poolId}`,
+      `title: ${poolId} Imported Database Pool`,
+      "status: pilot",
+      "schema_version: database_pool_import_mvp",
+      `source_note: Imported from ${inputDir} by scripts/import_database_pool.js`,
+      "",
+    ].join("\n"));
+  }
 }
 
 function extractRowsFromFile({ absFile, sourceId, sourceFormat, poolId, section, port }) {
@@ -442,5 +460,6 @@ module.exports = {
   SOURCE_PV_TOKEN_ANCHORED_REGEX,
   importDatabasePool,
   extractRowsFromFile,
+  ensurePoolScaffold,
   safeSourceBasename,
 };
