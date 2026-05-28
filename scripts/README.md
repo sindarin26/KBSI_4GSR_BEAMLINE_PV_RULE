@@ -6,6 +6,13 @@ from the active rulebooks and schemas, but they do not define naming policy.
 Use:
 
 ```text
+node scripts/import_database_pool.js --input inputs/BL10A --pool BL10A
+node scripts/import_database_pool.js --input inputs/BL10A --pool BL10A --write
+node scripts/database_pool_pilot/review_workbench.js --port 8775
+node scripts/validate_database_pool.js
+node scripts/validate_database_pool.js --with-http
+./run_database_pool_workbench.sh
+./check_database_pool.sh
 node scripts/validate_seo_v2_rules.js
 node scripts/validate_registry.js ID10
 node scripts/render_reference.js ID10 --check
@@ -17,6 +24,56 @@ node scripts/apply_decisions.js ID10
 node scripts/apply_decisions.js ID10 --write
 node scripts/import_seo_review_decisions.js
 ```
+
+## Database-Pool Workflow
+
+`import_database_pool.js` scans supported source files directly under an input
+directory and converts PV-like source tokens into review-required SEO_V3
+database-pool rows.
+
+Preview is the default and does not write files:
+
+```text
+node scripts/import_database_pool.js --input inputs/BL10A --pool BL10A
+```
+
+Use `--write` to create one source-row file per supported input file under
+`database_pool/<poolId>/sources/`. If a target file exists, the importer fails
+unless `--overwrite` is supplied.
+
+```text
+node scripts/import_database_pool.js --input inputs/BL10A --pool BL10A --write
+node scripts/import_database_pool.js --input inputs/BL10A --pool BL10A --write --overwrite
+```
+
+Imported rows always start as `reviewStatus: "needs_input"`. The importer must
+not approve rows, update abbreviation registry entries, or promote rules.
+
+`database_pool_pilot/review_workbench.js` starts the browser review workbench.
+The workbench can preview/save imports through the same importer module used by
+the CLI.
+
+```text
+node scripts/database_pool_pilot/review_workbench.js --port 8775
+```
+
+The repo-root wrappers provide the normal user-facing commands:
+
+```text
+./run_database_pool_workbench.sh
+./run_database_pool_workbench.sh 8775
+HOST=0.0.0.0 ./run_database_pool_workbench.sh 8775
+./check_database_pool.sh
+./check_database_pool.sh --with-http
+```
+
+`validate_database_pool.js` runs the full database-pool validation suite:
+
+```text
+node scripts/validate_database_pool.js
+```
+
+## Legacy SEO_v2 Workflow
 
 `validate_seo_v2_rules.js` checks the promoted SEO_v2 source package, active
 rulebook shape, schema presence, examples, and known DB duplicate tracking.
@@ -49,7 +106,7 @@ extraction-mode values.
 `outputs/<beamline>/_work/review_queue.json` first, falling back to
 `raw_extracted_pvs.yaml`, `pv_registry.yaml`, and exception frontmatter while
 the queue migration is in progress. It also displays the read-only historical
-seed at `fixtures/SEO_v2/review_decisions.json` for comparison.
+fixture at `fixtures/SEO_v2/review_decisions.json` for comparison.
 
 The review UI saves SEO-DB-like JSON row arrays:
 
@@ -59,7 +116,7 @@ The review UI saves SEO-DB-like JSON row arrays:
 
 These decision files are data inputs for later dataset updates; the browser UI
 itself is not a canonical naming policy source. Beamline saves must not rewrite
-fixture seed rows.
+fixture comparison rows.
 
 `apply_decisions.js <beamline>` promotes accepted/fixed beamline decision rows
 into `outputs/<beamline>/pv_registry.yaml`. It requires rawId, sourceId, and
@@ -69,8 +126,8 @@ directory name.
 
 `import_seo_review_decisions.js` converts the historical SEO_v2 DB JSON row
 array into `fixtures/SEO_v2/review_decisions.json`. This file is a read-only
-test seed and reusable decision example, not an active rulebook and not a human
-review output.
+comparison fixture and reusable decision example, not an active rulebook and not
+a human review output.
 
 Bad usage prints a `Usage:` line and exits non-zero. Missing required workbench
 files are reported as `FAIL:` messages so validation output remains actionable.

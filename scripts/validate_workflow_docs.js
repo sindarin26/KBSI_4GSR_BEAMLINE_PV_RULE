@@ -30,6 +30,12 @@ function requireFile(file) {
   return true;
 }
 
+function requireExecutable(file) {
+  const mode = fs.statSync(rel(file)).mode;
+  if ((mode & 0o111) === 0) fail(`${file} is not executable`);
+  else pass(`${file} is executable`);
+}
+
 const requiredFiles = [
   "ARCHITECTURE.md",
   "AGENTS.md",
@@ -37,6 +43,9 @@ const requiredFiles = [
   "schemas/README.md",
   "schemas/database_pool.seo_v3.yaml",
   "scripts/validate_database_pool.js",
+  "scripts/import_database_pool.js",
+  "run_database_pool_workbench.sh",
+  "check_database_pool.sh",
   "scripts/database_pool_pilot/review_workbench.js",
   "scripts/database_pool_pilot/validate_review_workbench.js",
   "database_pool/4GSR_Beamline_PV_Naming_Standard_v1.0/manifest.yaml",
@@ -45,6 +54,8 @@ const requiredFiles = [
 ];
 
 for (const file of requiredFiles) requireFile(file);
+requireExecutable("run_database_pool_workbench.sh");
+requireExecutable("check_database_pool.sh");
 
 if (failures > 0) {
   console.error(`Workflow doc validation failed with ${failures} failure(s).`);
@@ -54,8 +65,11 @@ if (failures > 0) {
 const architecture = read("ARCHITECTURE.md");
 const agents = read("AGENTS.md");
 const readme = read("README.md");
+const scriptsReadme = read("scripts/README.md");
 const schemaReadme = read("schemas/README.md");
 const dbSchema = read("schemas/database_pool.seo_v3.yaml");
+const workbenchWrapper = read("run_database_pool_workbench.sh");
+const checkWrapper = read("check_database_pool.sh");
 
 function requireIncludes(label, text, fragment) {
   if (!text.includes(fragment)) fail(`${label} missing ${fragment}`);
@@ -75,6 +89,14 @@ requireIncludes("ARCHITECTURE.md", architecture, "database_pool/<pool_id>/manife
 requireIncludes("AGENTS.md", agents, "poolId");
 requireIncludes("AGENTS.md", agents, "uid");
 requireIncludes("README.md", readme, "scripts/database_pool_pilot/review_workbench.js --port 8775");
+requireIncludes("README.md", readme, "node scripts/import_database_pool.js --input inputs/BL10A --pool BL10A");
+requireIncludes("README.md", readme, "./run_database_pool_workbench.sh");
+requireIncludes("README.md", readme, "./check_database_pool.sh");
+requireIncludes("scripts/README.md", scriptsReadme, "## Database-Pool Workflow");
+requireIncludes("scripts/README.md", scriptsReadme, "## Legacy SEO_v2 Workflow");
+requireIncludes("run_database_pool_workbench.sh", workbenchWrapper, "http://${HOST}:${PORT}/");
+requireIncludes("run_database_pool_workbench.sh", workbenchWrapper, "node scripts/database_pool_pilot/review_workbench.js");
+requireIncludes("check_database_pool.sh", checkWrapper, "node scripts/validate_database_pool.js \"$@\"");
 requireIncludes("schemas/README.md", schemaReadme, "database_pool.seo_v3.yaml");
 requireIncludes("schemas/database_pool.seo_v3.yaml", dbSchema, "pending: computed_only");
 requireIncludes("schemas/database_pool.seo_v3.yaml", dbSchema, "conflict: computed_only");

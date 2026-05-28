@@ -10,24 +10,52 @@ workflow로 정리하고 검증하기 위한 내부 workbench입니다.
 
 ## Database-Pool Commands
 
-현재 새 작업의 기본 경로는 SEO_V3 database-pool입니다. 전체 database-pool
-pilot 검증을 실행합니다.
+현재 새 작업의 기본 경로는 SEO_V3 database-pool입니다.
+
+원자료 import를 미리 봅니다. 기본값은 preview-only라 파일을 쓰지 않습니다.
 
 ```text
-node scripts/validate_database_pool.js
+node scripts/import_database_pool.js --input inputs/BL10A --pool BL10A
+```
+
+검토할 source row 파일을 생성합니다. 모든 row는 `needs_input`으로 시작합니다.
+
+```text
+node scripts/import_database_pool.js --input inputs/BL10A --pool BL10A --write
+```
+
+브라우저 review workbench를 실행합니다. wrapper는 URL을 출력한 뒤 서버를
+시작합니다.
+
+```text
+./run_database_pool_workbench.sh
+```
+
+포트나 host가 필요하면 다음처럼 실행합니다.
+
+```text
+./run_database_pool_workbench.sh 8775
+HOST=0.0.0.0 ./run_database_pool_workbench.sh 8775
+```
+
+전체 database-pool pilot 검증을 실행합니다.
+
+```text
+./check_database_pool.sh
 ```
 
 HTTP endpoint smoke까지 포함하려면 로컬 포트 바인딩이 가능한 환경에서 다음을
 실행합니다.
 
 ```text
-node scripts/validate_database_pool.js --with-http
+./check_database_pool.sh --with-http
 ```
 
-브라우저 review workbench를 실행합니다.
+Node entry point도 그대로 사용할 수 있습니다.
 
 ```text
 node scripts/database_pool_pilot/review_workbench.js --port 8775
+node scripts/validate_database_pool.js
 ```
 
 주요 파일 위치:
@@ -115,30 +143,42 @@ git diff --check
 
 ### Database-Pool Path
 
-1. 빔라인별 원자료를 넣습니다.
+1. 빔라인별 원자료를 넣습니다. 현재 BL10A pilot source 위치는 다음입니다.
 
 ```text
-inputs/<pool_id>/
+inputs/BL10A/
 ```
 
-2. agent에게 요청합니다.
+2. import preview를 실행합니다. 이 단계는 파일을 쓰지 않습니다.
 
 ```text
-inputs/<pool_id> 자료를 보고 database_pool/<pool_id>에 reviewable SEO_V3 row를 만들어줘.
+node scripts/import_database_pool.js --input inputs/BL10A --pool BL10A
 ```
 
-3. 결과를 확인합니다.
+3. preview 결과를 확인한 뒤 source row 파일을 생성합니다.
 
 ```text
-database_pool/<pool_id>/manifest.yaml
-database_pool/<pool_id>/sources/*.rows.json
-database_pool/<pool_id>/decisions/*.decisions.json
+node scripts/import_database_pool.js --input inputs/BL10A --pool BL10A --write
 ```
 
 4. 브라우저에서 검토합니다.
 
 ```text
-node scripts/database_pool_pilot/review_workbench.js --port 8775
+./run_database_pool_workbench.sh
+```
+
+5. 검증을 실행합니다.
+
+```text
+./check_database_pool.sh
+```
+
+생성/검토되는 주요 파일은 다음입니다.
+
+```text
+database_pool/<pool_id>/manifest.yaml
+database_pool/<pool_id>/sources/*.rows.json
+database_pool/<pool_id>/decisions/*.decisions.json
 ```
 
 ### Legacy SEO_v2 Output Path
