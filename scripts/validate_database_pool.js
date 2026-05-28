@@ -17,6 +17,7 @@ const checks = [
       ...(withHttp ? ["--with-http"] : []),
     ],
   ],
+  ["database-pool importer", ["node", "scripts/validate_database_pool_import.js"]],
 ];
 
 let failures = 0;
