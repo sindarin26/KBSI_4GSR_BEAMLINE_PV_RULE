@@ -110,7 +110,7 @@ until promoted into `rules/draft/`, `rules/review/`, schemas, and examples.
 `inputs/`
 
 Contains source material intended to be processed. Use one subdirectory per
-beamline, such as `inputs/ID10/`.
+beamline, such as `inputs/BL10A/`.
 
 Input files may include memos or comments, but those claims are source context,
 not active rule authority. Approved naming policy belongs in active rulebooks.

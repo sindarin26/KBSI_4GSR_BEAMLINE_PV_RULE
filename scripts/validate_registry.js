@@ -55,6 +55,7 @@ const outputDir = rel("outputs", beamline);
 const registryPath = rel("outputs", beamline, "pv_registry.yaml");
 const referencePath = rel("outputs", beamline, "PV_REFERENCE.md");
 const rawPath = rel("outputs", beamline, "_work", "raw_extracted_pvs.yaml");
+const statusPath = rel("outputs", beamline, "status.yaml");
 requireFile(outputDir);
 const registryExists = requireFile(registryPath);
 const referenceExists = requireFile(referencePath);
@@ -203,7 +204,7 @@ function validateRawExtraction(data) {
   }
 
   let sourceFiles = null;
-  const inputDir = rel("inputs", beamline);
+  const inputDir = sourceInputDir();
   if (fs.existsSync(inputDir)) {
     sourceFiles = new Set(listFiles(inputDir).map(posixRel));
     const extractedSources = new Set((data.extracted_from || []).map((entry) => entry.source_id));
@@ -227,7 +228,7 @@ function validateRawExtraction(data) {
       error(`${source.source_id} excluded source missing exclude_reason`);
     }
     if (source.source_id && sourceFiles && !sourceFiles.has(source.source_id)) {
-      error(`extracted_from source_id not found in inputs/${beamline}/: ${source.source_id}`);
+      error(`extracted_from source_id not found in ${posixRel(inputDir)}/: ${source.source_id}`);
     }
   }
 
@@ -407,4 +408,12 @@ function validateOutputStatus(registryData, statusData, exceptionFiles) {
   } else if (openOnDisk.size > 0) {
     warn(`status.yaml has no open_exceptions list but ${openOnDisk.size} exception file(s) have status "open"`);
   }
+}
+
+function sourceInputDir() {
+  if (!fs.existsSync(statusPath)) return rel("inputs", beamline);
+  const text = fs.readFileSync(statusPath, "utf8");
+  const match = text.match(/^source_input_dir:\s*["']?([^"'\n]+)["']?\s*$/m);
+  if (!match) return rel("inputs", beamline);
+  return rel(...match[1].split("/"));
 }

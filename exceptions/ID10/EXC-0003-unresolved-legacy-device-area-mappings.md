@@ -3,7 +3,7 @@ id: EXC-0003
 beamline: ID10
 status: open
 created: 2026-05-20
-source: inputs/ID10/
+source: inputs/BL10A/
 raw_ids:
   - RAW-0001
   - RAW-0002

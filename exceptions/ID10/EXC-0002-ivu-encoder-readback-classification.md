@@ -4,7 +4,7 @@ beamline: ID10
 status: open
 created: 2026-05-12
 updated: 2026-05-20
-source: inputs/ID10/undulator.md
+source: inputs/BL10A/undulator.md
 raw_ids:
   - RAW-0112
   - RAW-0113

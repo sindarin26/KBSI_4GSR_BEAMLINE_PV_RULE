@@ -166,6 +166,7 @@ output_status:
     reference: string
     raw_extraction: string
   optional:
+    source_input_dir: string_or_null
     review_log: string_or_null
     open_exceptions: list
     notes: list

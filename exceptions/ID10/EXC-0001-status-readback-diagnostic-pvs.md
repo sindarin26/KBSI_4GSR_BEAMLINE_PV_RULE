@@ -4,7 +4,7 @@ beamline: ID10
 status: open
 created: 2026-05-12
 updated: 2026-05-20
-source: inputs/ID10/status and xbpm.txt
+source: inputs/BL10A/status and xbpm.txt
 raw_ids:
   - RAW-0078
   - RAW-0079

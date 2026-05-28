@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Validate outputs/<beamline>/_work/review_queue.json.
 // Checks: shared pv_review_row shape, unique rawId, unique (sourceId,sourceAnchor),
-// sourceId resolves to inputs/<beamline>/.
+// sourceId resolves to the output status source_input_dir, falling back to inputs/<beamline>/.
 
 const fs = require("fs");
 const path = require("path");
@@ -20,6 +20,7 @@ if (!beamline) {
 }
 
 const queuePath = rel("outputs", beamline, "_work", "review_queue.json");
+const statusPath = rel("outputs", beamline, "status.yaml");
 
 if (!fs.existsSync(queuePath)) {
   console.error(`FAIL: missing ${posixRel(queuePath)} — run: node scripts/build_review_queue.js ${beamline}`);
@@ -50,7 +51,7 @@ function warn(msg) {
   warnings.push(msg);
 }
 
-const inputDir = rel("inputs", beamline);
+const inputDir = sourceInputDir();
 const inputFiles = new Set();
 if (fs.existsSync(inputDir)) {
   for (const f of listFiles(inputDir)) {
@@ -100,7 +101,7 @@ for (const [index, row] of queue.entries()) {
   }
 
   if (row.sourceId && inputFiles.size > 0 && !row.orphan && !inputFiles.has(row.sourceId)) {
-    error(`${loc} sourceId not found in inputs/${beamline}/: ${row.sourceId}`);
+    error(`${loc} sourceId not found in ${posixRel(inputDir)}/: ${row.sourceId}`);
   }
 }
 
@@ -117,3 +118,11 @@ if (errors.length > 0) {
 console.log(
   `Review queue validation passed for ${beamline}: ${queue.length} rows, ${warnings.length} warning(s).`,
 );
+
+function sourceInputDir() {
+  if (!fs.existsSync(statusPath)) return rel("inputs", beamline);
+  const text = fs.readFileSync(statusPath, "utf8");
+  const match = text.match(/^source_input_dir:\s*["']?([^"'\n]+)["']?\s*$/m);
+  if (!match) return rel("inputs", beamline);
+  return rel(...match[1].split("/"));
+}

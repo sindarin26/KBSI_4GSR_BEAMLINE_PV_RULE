@@ -146,7 +146,7 @@ node scripts/database_pool_pilot/review_workbench.js --port 8775
 legacy `outputs/<beamline>/` 산출물이 필요할 때만 이 경로를 씁니다.
 
 ```text
-inputs/ID10/
+inputs/BL10A/
 outputs/ID10/pv_registry.yaml
 outputs/ID10/PV_REFERENCE.md
 outputs/ID10/_work/raw_extracted_pvs.yaml

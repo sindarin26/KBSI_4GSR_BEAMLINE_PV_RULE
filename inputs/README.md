@@ -5,7 +5,7 @@ Source material intended for processing should live here.
 Use one subdirectory per beamline, for example:
 
 ```text
-inputs/ID10/
+inputs/BL10A/
 ```
 
 Source packages used for rule promotion or validation may also live under a

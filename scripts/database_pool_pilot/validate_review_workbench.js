@@ -111,7 +111,7 @@ function requestJson(server, pathName) {
   await test("filter semantics cover pool, source, state, components, prefix, and search", () => {
     const state = loadWorkbenchState({ rootDir: root, registryPath });
     assert.strictEqual(filterRows(state.rows, { poolId: "BL10A" }).length, 3);
-    assert.strictEqual(filterRows(state.rows, { sourceId: "inputs/ID10/undulator.md" }).length, 2);
+    assert.strictEqual(filterRows(state.rows, { sourceId: "inputs/BL10A/undulator.md" }).length, 2);
     assert(filterRows(state.rows, { reviewStatus: "needs_input" }).length >= 1);
     assert(filterRows(state.rows, { section: "BL", port: "10A", area: "FE" }).length >= 3);
     assert(filterRows(state.rows, { device: "IVU", subdevice: "GIRD" }).length >= 2);
