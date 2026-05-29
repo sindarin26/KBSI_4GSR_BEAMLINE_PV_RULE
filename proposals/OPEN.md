@@ -13,6 +13,10 @@ and link it here.
   etc.) should be promoted into the published human-facing standard tables.
 - Final coordinate convention for source axes and physical motion semantics.
 - Status/readback/alarm/diagnostic PV naming beyond basic SEO_v2 signal naming.
+- Third-party EPICS suffix mapping policy for vendor support modules whose
+  source suffixes would introduce extra colon tiers, tracked by
+  `exceptions/BL9ASIM/EXC-0001-third-party-epics-suffix-tier-boundary.md` and
+  `proposals/rule_changes/PROP-0001-third-party-epics-suffix-policy.md`.
 - Owner-approved mappings for unresolved ID10 legacy devices and areas tracked
   by `exceptions/ID10/EXC-0003-unresolved-legacy-device-area-mappings.md`.
 - IVU encoder classification tracked by
