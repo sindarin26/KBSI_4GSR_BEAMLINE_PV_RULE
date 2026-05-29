@@ -71,6 +71,10 @@ function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, "utf8").replace(/^\uFEFF/, ""));
 }
 
+function writeJson(filePath, data) {
+  fs.writeFileSync(filePath, `${JSON.stringify(data, null, 2)}\n`);
+}
+
 function requestJson(server, pathName, options = {}) {
   return new Promise((resolve, reject) => {
     server.once("error", reject);
@@ -111,6 +115,57 @@ function requestJson(server, pathName, options = {}) {
       });
       if (body) request.write(body);
       request.end();
+    });
+  });
+}
+
+function requestJsonAtPort(port, pathName, options = {}) {
+  return new Promise((resolve, reject) => {
+    const body = options.body ? JSON.stringify(options.body) : "";
+    const request = http.request(
+      {
+        host: "127.0.0.1",
+        port,
+        path: pathName,
+        method: options.method || "GET",
+        headers: body
+          ? {
+              "Content-Type": "application/json",
+              "Content-Length": Buffer.byteLength(body),
+            }
+          : {},
+      },
+      (res) => {
+        let text = "";
+        res.on("data", (chunk) => {
+          text += chunk;
+        });
+        res.on("end", () => {
+          try {
+            resolve({ statusCode: res.statusCode, body: JSON.parse(text) });
+          } catch (error) {
+            reject(error);
+          }
+        });
+      },
+    );
+    request.on("error", reject);
+    if (body) request.write(body);
+    request.end();
+  });
+}
+
+function withListeningServer(server, fn) {
+  return new Promise((resolve, reject) => {
+    server.once("error", reject);
+    server.listen(0, "127.0.0.1", async () => {
+      const { port } = server.address();
+      try {
+        const result = await fn(port);
+        server.close(() => resolve(result));
+      } catch (error) {
+        server.close(() => reject(error));
+      }
     });
   });
 }
@@ -175,6 +230,118 @@ function requestJson(server, pathName, options = {}) {
     const registry = loadRegistry(targetRegistryPath);
     const mono = registry.entries.find((entry) => entry.kind === "device" && entry.code === "MONO");
     assert.strictEqual(mono.status, "approved");
+  });
+
+  await test("manual reload reflects external decision file edits", () => {
+    const tmpRoot = makeTempRoot();
+    const options = { rootDir: tmpRoot, registryPath, poolIds: ["BL10A"] };
+    const decisionPath = path.join(tmpRoot, "database_pool", "BL10A", "decisions", "m4.decisions.json");
+    const sourcePath = path.join(tmpRoot, "database_pool", "BL10A", "sources", "id10_small_subset.rows.json");
+    const beforeSource = fs.readFileSync(sourcePath, "utf8");
+
+    const initialState = loadWorkbenchState(options);
+    const row = initialState.rows.find((item) => item.standardPv === "BL10A-OH:MONO-CRYS:Theta");
+    assert.strictEqual(row.reviewStatus, "draft");
+
+    writeJson(decisionPath, {
+      poolId: "BL10A",
+      decisions: [
+        {
+          uid: row.uid,
+          reviewStatus: "accepted",
+          reviewNote: "External file edit before manual reload.",
+          updatedAt: "2026-05-29T00:00:00.000Z",
+        },
+      ],
+    });
+
+    const reloadedState = loadWorkbenchState(options);
+    const reloadedRow = reloadedState.rows.find((item) => item.uid === row.uid);
+    assert.strictEqual(reloadedRow.reviewStatus, "accepted");
+    assert.strictEqual(reloadedRow.reviewNote, "External file edit before manual reload.");
+    assert.strictEqual(fs.readFileSync(sourcePath, "utf8"), beforeSource);
+  });
+
+  await test("manual reload reflects external abbreviation registry edits", () => {
+    const tmpRoot = makeTempRoot();
+    const options = { rootDir: tmpRoot, registryPath, poolIds: ["BL10A"] };
+    const targetRegistryPath = path.join(tmpRoot, registryPath);
+
+    const initialState = loadWorkbenchState(options);
+    const initialMono = initialState.registry.entries.find(
+      (entry) => entry.kind === "device" && entry.code === "MONO",
+    );
+    assert(initialMono);
+
+    const registry = readJson(targetRegistryPath);
+    const mono = registry.entries.find((entry) => entry.kind === "device" && entry.code === "MONO");
+    mono.status = "approved";
+    mono.meaning = "Externally reviewed monochromator";
+    writeJson(targetRegistryPath, registry);
+
+    const reloadedState = loadWorkbenchState(options);
+    const reloadedMono = reloadedState.registry.entries.find(
+      (entry) => entry.kind === "device" && entry.code === "MONO",
+    );
+    assert.strictEqual(reloadedMono.status, "approved");
+    assert.strictEqual(reloadedMono.meaning, "Externally reviewed monochromator");
+  });
+
+  await test("row decision API write leaves unrelated decision rows and source rows unchanged", () => {
+    const tmpRoot = makeTempRoot();
+    const options = { rootDir: tmpRoot, registryPath, poolIds: ["BL10A"] };
+    const decisionPath = path.join(tmpRoot, "database_pool", "BL10A", "decisions", "m4.decisions.json");
+    const sourcePath = path.join(tmpRoot, "database_pool", "BL10A", "sources", "id10_small_subset.rows.json");
+    const beforeSource = fs.readFileSync(sourcePath, "utf8");
+    const state = loadWorkbenchState(options);
+    const target = state.rows.find((item) => item.standardPv === "BL10A-OH:MONO-CRYS:Theta");
+    const unrelated = state.rows.find((item) => item.standardPv === "BL10A-FE:IVU-ENC:US");
+
+    writeJson(decisionPath, {
+      poolId: "BL10A",
+      decisions: [
+        {
+          uid: unrelated.uid,
+          reviewStatus: "needs_input",
+          reviewNote: "Existing unrelated decision.",
+          updatedAt: "2026-05-29T00:00:00.000Z",
+        },
+      ],
+    });
+
+    saveRowDecision(options, target.uid, {
+      reviewStatus: "accepted",
+      reviewNote: "Narrow API write.",
+    });
+
+    const decisions = readJson(decisionPath).decisions;
+    assert.strictEqual(decisions.length, 2);
+    assert(decisions.some((decision) => decision.uid === unrelated.uid && decision.reviewNote === "Existing unrelated decision."));
+    assert(decisions.some((decision) => decision.uid === target.uid && decision.reviewNote === "Narrow API write."));
+    assert.strictEqual(fs.readFileSync(sourcePath, "utf8"), beforeSource);
+  });
+
+  await test("abbreviation API write changes one registry entry without dropping others", () => {
+    const tmpRoot = makeTempRoot();
+    const options = { rootDir: tmpRoot, registryPath, poolIds: ["BL10A"] };
+    const targetRegistryPath = path.join(tmpRoot, registryPath);
+    const beforeRegistry = loadRegistry(targetRegistryPath);
+    const beforeIvu = beforeRegistry.entries.find((entry) => entry.kind === "device" && entry.code === "IVU");
+
+    saveAbbreviationDecision(options, {
+      kind: "device",
+      code: "MONO",
+      status: "approved",
+      meaning: "Narrowly approved monochromator",
+    });
+
+    const afterRegistry = loadRegistry(targetRegistryPath);
+    const afterMono = afterRegistry.entries.find((entry) => entry.kind === "device" && entry.code === "MONO");
+    const afterIvu = afterRegistry.entries.find((entry) => entry.kind === "device" && entry.code === "IVU");
+    assert.strictEqual(afterRegistry.entries.length, beforeRegistry.entries.length);
+    assert.strictEqual(afterMono.status, "approved");
+    assert.strictEqual(afterMono.meaning, "Narrowly approved monochromator");
+    assert.deepStrictEqual(afterIvu, beforeIvu);
   });
 
   await test("bulk approval only affects visible pending rows", () => {
@@ -256,6 +423,82 @@ function requestJson(server, pathName, options = {}) {
       assert.strictEqual(response.body.rows.length, 3);
       assert.strictEqual(response.body.visibleRows.length, 3);
       assert.strictEqual(response.body.registry.entries.length, 50);
+    });
+
+    await test("HTTP state endpoint reflects external edits after server start", async () => {
+      const tmpRoot = makeTempRoot();
+      const options = { rootDir: tmpRoot, registryPath, poolIds: ["BL10A"] };
+      const decisionPath = path.join(tmpRoot, "database_pool", "BL10A", "decisions", "m4.decisions.json");
+      const row = loadWorkbenchState(options).rows.find(
+        (item) => item.standardPv === "BL10A-OH:MONO-CRYS:Theta",
+      );
+      const server = createServer(options);
+
+      await withListeningServer(server, async (port) => {
+        const before = await requestJsonAtPort(port, "/api/state?poolId=BL10A");
+        assert.strictEqual(before.statusCode, 200);
+        assert.strictEqual(before.body.rows.find((item) => item.uid === row.uid).reviewStatus, "draft");
+
+        writeJson(decisionPath, {
+          poolId: "BL10A",
+          decisions: [
+            {
+              uid: row.uid,
+              reviewStatus: "accepted",
+              reviewNote: "External edit visible through HTTP state reload.",
+              updatedAt: "2026-05-29T00:00:00.000Z",
+            },
+          ],
+        });
+
+        const after = await requestJsonAtPort(port, "/api/state?poolId=BL10A");
+        const reloadedRow = after.body.rows.find((item) => item.uid === row.uid);
+        assert.strictEqual(after.statusCode, 200);
+        assert.strictEqual(reloadedRow.reviewStatus, "accepted");
+        assert.strictEqual(reloadedRow.reviewNote, "External edit visible through HTTP state reload.");
+      });
+    });
+
+    await test("HTTP row and abbreviation APIs return refreshed state after narrow writes", async () => {
+      const tmpRoot = makeTempRoot();
+      const options = { rootDir: tmpRoot, registryPath, poolIds: ["BL10A"] };
+      const row = loadWorkbenchState(options).rows.find(
+        (item) => item.standardPv === "BL10A-OH:MONO-CRYS:Theta",
+      );
+      const server = createServer(options);
+
+      await withListeningServer(server, async (port) => {
+        const rowResponse = await requestJsonAtPort(port, "/api/row-decision", {
+          method: "POST",
+          body: {
+            uid: row.uid,
+            reviewStatus: "accepted",
+            reviewNote: "HTTP narrow row write.",
+          },
+        });
+        assert.strictEqual(rowResponse.statusCode, 200);
+        assert.strictEqual(
+          rowResponse.body.rows.find((item) => item.uid === row.uid).reviewStatus,
+          "accepted",
+        );
+
+        const abbreviationResponse = await requestJsonAtPort(port, "/api/abbreviation", {
+          method: "POST",
+          body: {
+            kind: "device",
+            code: "MONO",
+            scope: "global",
+            status: "approved",
+            meaning: "HTTP approved monochromator",
+          },
+        });
+        assert.strictEqual(abbreviationResponse.statusCode, 200);
+        const mono = abbreviationResponse.body.registry.entries.find(
+          (entry) => entry.kind === "device" && entry.code === "MONO",
+        );
+        assert.strictEqual(mono.status, "approved");
+        assert.strictEqual(mono.meaning, "HTTP approved monochromator");
+      });
     });
 
     await test("HTTP import endpoints preview and save imported rows", async () => {

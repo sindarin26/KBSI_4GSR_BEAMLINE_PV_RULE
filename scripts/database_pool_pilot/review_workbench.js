@@ -613,6 +613,12 @@ const HTML = `<!doctype html>
     }
     .import-panel input[type="text"] { width: 100%; min-width: 0; padding: 8px 9px; }
     .import-panel label { color: var(--muted); white-space: nowrap; }
+    .manual-reload-note {
+      display: flex;
+      align-items: center;
+      min-height: 36px;
+      color: var(--muted);
+    }
     .import-summary {
       margin-bottom: 10px;
       padding: 9px 11px;
@@ -656,6 +662,7 @@ const HTML = `<!doctype html>
       <button class="primary" id="bulk">Approve Visible Pending</button>
       <label><input type="checkbox" id="approveAbbr"> approve candidate abbreviations</label>
       <button id="reload">Reload</button>
+      <span class="manual-reload-note">External edits are file-backed; click Reload before continuing review.</span>
     </section>
 
     <section class="panel" id="rowsPanel">
