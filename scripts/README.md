@@ -8,7 +8,7 @@ Use:
 ```text
 node scripts/import_database_pool.js --input inputs/BL10A --pool BL10A
 node scripts/import_database_pool.js --input inputs/BL10A --pool BL10A --write
-node scripts/review_server.js --database-pool BL10A --port 8765
+node scripts/review_server.js --database-pool BL10A --port 8212
 node scripts/validate_database_pool.js
 node scripts/validate_database_pool.js --with-http
 ./run_database_pool_workbench.sh
@@ -19,7 +19,7 @@ node scripts/render_reference.js ID10 --check
 node scripts/render_reference.js ID10 --write
 node scripts/build_review_queue.js ID10
 node scripts/validate_review_queue.js ID10
-node scripts/review_server.js ID10 --port 8765
+node scripts/review_server.js ID10 --port 8212
 node scripts/apply_decisions.js ID10
 node scripts/apply_decisions.js ID10 --write
 node scripts/import_seo_review_decisions.js
@@ -54,8 +54,8 @@ it loads explicit pools with repeated `--database-pool` flags and writes human
 decision overlays to `database_pool/<pool_id>/decisions/workbench.decisions.json`.
 
 ```text
-node scripts/review_server.js --database-pool BL10A --port 8765
-node scripts/review_server.js --database-pool BL10A --database-pool 4GSR_Beamline_PV_Naming_Standard_v1.0 --port 8765
+node scripts/review_server.js --database-pool BL10A --port 8212
+node scripts/review_server.js --database-pool BL10A --database-pool 4GSR_Beamline_PV_Naming_Standard_v1.0 --port 8212
 ```
 
 The repo-root wrappers provide the normal user-facing commands:
@@ -64,7 +64,7 @@ The repo-root wrappers provide the normal user-facing commands:
 ./run_database_pool_workbench.sh
 ./run_database_pool_workbench.sh BL10A
 ./run_database_pool_workbench.sh BL10A 4GSR_Beamline_PV_Naming_Standard_v1.0
-PORT=8765 HOST=0.0.0.0 ./run_database_pool_workbench.sh BL10A
+PORT=8212 HOST=0.0.0.0 ./run_database_pool_workbench.sh BL10A
 ./check_database_pool.sh
 ./check_database_pool.sh --with-http
 ```

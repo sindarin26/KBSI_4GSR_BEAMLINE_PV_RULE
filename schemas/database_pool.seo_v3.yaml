@@ -144,7 +144,7 @@ abbreviation_registry:
       html_db_only_codes: candidate
 
 workbench:
-  entrypoint: scripts/review_server.js --database-pool <pool_id> --port 8765
+  entrypoint: scripts/review_server.js --database-pool <pool_id> --port 8212
   wrapper: ./run_database_pool_workbench.sh [pool_id ...]
   validation: scripts/review_server_pilot/validate_database_pool_mode.js
   aggregate_validation: scripts/validate_database_pool.js --with-http

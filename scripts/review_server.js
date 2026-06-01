@@ -100,7 +100,7 @@ function parseCli(args) {
     beamline: "",
     databasePoolIds: [],
     host: "127.0.0.1",
-    port: 8765,
+    port: 8212,
     help: false,
     error: "",
   };
@@ -157,8 +157,8 @@ function parseCli(args) {
 
 function printUsage() {
   console.error("Usage:");
-  console.error("  node scripts/review_server.js <beamline> [--host 127.0.0.1] [--port 8765]");
-  console.error("  node scripts/review_server.js --database-pool <pool_id> [--database-pool <pool_id> ...] [--host 127.0.0.1] [--port 8765]");
+  console.error("  node scripts/review_server.js <beamline> [--host 127.0.0.1] [--port 8212]");
+  console.error("  node scripts/review_server.js --database-pool <pool_id> [--database-pool <pool_id> ...] [--host 127.0.0.1] [--port 8212]");
 }
 
 function sendHtml(res) {
@@ -1028,7 +1028,7 @@ const HTML = `<!doctype html>
       <div class="hero-top">
         <div>
           <h1>4GSR PV Review Workbench</h1>
-          <p class="subtitle" id="heroSubtitle">${mode === "database_pool" ? "SEO_V3 database-pool source rows와 human decision overlays를 같은 8765 review UI에서 검토합니다." : "SEO_V2 registry review queue와 historical SEO fixed/approved seed를 같은 DB-style row browser에서 검토합니다."}</p>
+          <p class="subtitle" id="heroSubtitle">${mode === "database_pool" ? "Database-pool source rows와 human decision overlays를 shared review UI에서 검토합니다." : "Legacy SEO_v2 generated-output review rows를 compatibility view에서 검토합니다."}</p>
         </div>
         <div class="meta">
           <div><strong>Dataset</strong>: <span class="code" id="beamlineName">loading</span></div>
@@ -1226,8 +1226,8 @@ const HTML = `<!doctype html>
     function applyModeUi() {
       const dbMode = isDatabasePoolMode();
       document.getElementById("heroSubtitle").textContent = dbMode
-        ? "SEO_V3 database-pool source rows와 human decision overlays를 같은 8765 review UI에서 검토합니다."
-        : "SEO_V2 registry review queue와 historical SEO fixed/approved seed를 같은 DB-style row browser에서 검토합니다.";
+        ? "Database-pool source rows와 human decision overlays를 shared review UI에서 검토합니다."
+        : "Legacy SEO_v2 generated-output review rows를 compatibility view에서 검토합니다.";
       document.getElementById("ruleShape").textContent = dbMode
         ? "[SEC/SYS][PORT]-[AREA]:[DEV]-[SUBDEV]:[SignalName]"
         : "BL-[PORT]:[AREA]-[DEV]-[SUBDEV]:[SignalName]";

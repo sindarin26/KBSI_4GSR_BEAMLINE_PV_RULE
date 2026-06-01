@@ -59,7 +59,7 @@ outputs/
       raw_extracted_pvs.yaml
     status.yaml
 
-reviews/
+reviews/  # ignored local review workspace
   <beamline>/
     review_decisions.json
     accepted_decisions.json
@@ -177,12 +177,13 @@ with the output so registry entries remain traceable to source material.
 
 `reviews/`
 
-Contains review reports and human review decision files. Use one subdirectory
-per beamline. Browser review decisions should be stored as machine-readable
-JSON rows under `reviews/<beamline>/`, not embedded only in HTML. Source-package
-promotion review reports may live under a named source directory such as
-`reviews/SEO_v2/`, but historical comparison fixture rows must not be stored
-there.
+Contains local review reports and local human review decision files. Use one
+subdirectory per beamline. `reviews/` is ignored by git and is not a
+distribution artifact. Browser review decisions may be stored as
+machine-readable JSON rows under `reviews/<beamline>/`, not embedded only in
+HTML, but durable database-pool decisions belong under
+`database_pool/<pool_id>/decisions/`. Historical comparison fixture rows must
+not be stored under `reviews/`; use `fixtures/` for read-only fixtures.
 
 `fixtures/`
 
@@ -216,7 +217,7 @@ Current database-pool entry points:
 
 ```text
 node scripts/validate_database_pool.js
-node scripts/review_server.js --database-pool <pool_id> --port 8765
+node scripts/review_server.js --database-pool <pool_id> --port 8212
 ./run_database_pool_workbench.sh [pool_id ...]
 ```
 
@@ -227,7 +228,7 @@ node scripts/validate_seo_v2_rules.js
 node scripts/validate_registry.js <beamline>
 node scripts/render_reference.js <beamline> --check
 node scripts/render_reference.js <beamline> --write
-node scripts/review_server.js <beamline> --port 8765
+node scripts/review_server.js <beamline> --port 8212
 node scripts/import_seo_review_decisions.js
 ```
 
@@ -248,17 +249,18 @@ node scripts/import_seo_review_decisions.js
    under `outputs/<beamline>/`.
 7. Generated output directories should declare their status in
    `outputs/<beamline>/status.yaml`.
-8. Draft mode performs a self-review using `rules/review/` and writes
+8. Draft mode performs a self-review using `rules/review/` and writes local
    `reviews/<beamline>/SELF_REVIEW.md`.
 9. Exceptions are recorded under `exceptions/<beamline>/` when current rules are
    insufficient.
-10. Review mode reads existing output, applies clear rule-based fixes unless the
-    user requested read-only review, and writes a review log to
+10. Review mode reads existing output, applies clear rule-based fixes unless
+    the user requested read-only review, and writes a local review log to
     `reviews/<beamline>/REVIEW.md`.
-11. Human review may use `scripts/review_server.js <beamline>` to save
-    row-array decision files under `reviews/<beamline>/`. The server reads
-    `outputs/<beamline>/_work/review_queue.json` when present and falls back to
-    `_work/raw_extracted_pvs.yaml` while the queue migration is in progress.
+11. Human review may use `scripts/review_server.js <beamline>` to save local
+    row-array decision files under ignored `reviews/<beamline>/`. The server
+    reads `outputs/<beamline>/_work/review_queue.json` when present and falls
+    back to `_work/raw_extracted_pvs.yaml` while the queue migration is in
+    progress.
 12. Historical SEO_v2 DB rows may be imported into `fixtures/SEO_v2/` as
     read-only comparison data for UI and pipeline tests. Imported rows remain
     examples of prior accepted rows, not active policy.
@@ -331,7 +333,7 @@ The likely retrieval sources are:
 - `rules/decisions/`
 - accepted outputs under `outputs/`
 - approved database-pool rows and abbreviation records
-- review reports under `reviews/`
+- local review reports under ignored `reviews/` when present
 - exceptions and proposals when investigating rule gaps
 
 RAG should support the workflow, not replace explicit rulebooks.

@@ -44,8 +44,9 @@ Draft agents may:
   standardization.
 - Produce legacy generated material under `outputs/<beamline>/` when the
   request explicitly targets the legacy SEO_v2 output workflow.
-- Create a self-review report at `reviews/<beamline>/SELF_REVIEW.md` for their
-  own draft.
+- Create a local self-review report at `reviews/<beamline>/SELF_REVIEW.md` for
+  their own draft. `reviews/` is git-ignored unless the owner explicitly
+  promotes a review artifact elsewhere.
 - Create or recommend exception records under `exceptions/<beamline>/` when
   current rules cannot represent an input item cleanly.
 
@@ -63,11 +64,11 @@ Draft agents must:
 - Run a self-review pass using `rules/review/` before finalizing.
 - Report unresolved issues rather than silently inventing missing technical facts.
 - Keep the normal database-pool path simple: source material in `inputs/`,
-  reviewable rows in `database_pool/`, findings in `reviews/`, and rule gaps in
-  `exceptions/`.
+  reviewable rows in `database_pool/`, local findings in ignored `reviews/`,
+  and rule gaps in `exceptions/`.
 - Keep the legacy output path simple when explicitly requested: source material
-  in `inputs/`, generated registry/reference in `outputs/`, findings in
-  `reviews/`, and rule gaps in `exceptions/`.
+  in `inputs/`, generated registry/reference in `outputs/`, local findings in
+  ignored `reviews/`, and rule gaps in `exceptions/`.
 
 Draft agents must not:
 
@@ -93,9 +94,9 @@ Review agents may:
 - Read `rules/decisions/` for rationale when active review rules are ambiguous.
 - Apply clear, rule-based fixes directly to generated outputs when the user asks
   for usable/corrected output or does not explicitly request read-only review.
-- Produce review logs at `reviews/<beamline>/REVIEW.md`.
-- Use `reviews/<beamline>/review_decisions.json` as structured human review
-  input when it exists.
+- Produce local review logs at `reviews/<beamline>/REVIEW.md`.
+- Use `reviews/<beamline>/review_decisions.json` as local structured human
+  review input when it exists.
 - Use `fixtures/SEO_v2/review_decisions.json` as historical SEO_v2 comparison
   data only, not as active naming policy.
 - Recommend exception or proposal creation when a rule gap is found.
@@ -117,7 +118,7 @@ Review agents must:
 - Stay read-only when the user explicitly asks for "review only", "audit only",
   or "do not edit".
 - Ask the user before changing ambiguous policy decisions.
-- Log applied fixes and remaining decision-required items in
+- Log applied fixes and remaining decision-required items in local
   `reviews/<beamline>/REVIEW.md`.
 - Treat browser review decision files as source-backed human decisions, not as
   active naming policy.
@@ -154,8 +155,8 @@ Architecture agents must:
 - Keep generated outputs under `outputs/`.
 - Keep generated output status in `outputs/<beamline>/status.yaml` when an
   output directory is current enough to validate.
-- Keep validation reports under `reviews/`.
-- Keep human review decision files under `reviews/<beamline>/`.
+- Keep local validation reports under ignored `reviews/`.
+- Keep local human review decision files under ignored `reviews/<beamline>/`.
 - Keep read-only comparison and test fixtures under `fixtures/`.
 - Keep unsupported cases under `exceptions/`.
 - Keep proposed rule changes under `proposals/`.
@@ -212,6 +213,8 @@ Database-pool material should be machine-checkable with:
 ```text
 node scripts/validate_database_pool.js
 ```
+
+The default browser review port for the shared review server is `8212`.
 
 Legacy SEO_v2 generated outputs should remain machine-checkable with:
 

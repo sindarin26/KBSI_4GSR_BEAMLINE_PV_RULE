@@ -102,7 +102,7 @@ requireIncludes("rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md", inputC
 requireIncludes("rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md", inputConversionRulebook, "deterministic database-pool identity rule");
 requireIncludes("rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md", inputConversionRulebook, "section: BL");
 requireIncludes("rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md", inputConversionRulebook, "port: 09A");
-requireIncludes("README.md", readme, "scripts/review_server.js --database-pool BL10A --port 8765");
+requireIncludes("README.md", readme, "scripts/review_server.js --database-pool BL10A --port 8212");
 requireIncludes("README.md", readme, "node scripts/import_database_pool.js --input inputs/BL10A --pool BL10A");
 requireIncludes("README.md", readme, "./run_database_pool_workbench.sh");
 requireIncludes("README.md", readme, "./check_database_pool.sh");
@@ -115,7 +115,7 @@ requireIncludes("check_database_pool.sh", checkWrapper, "node scripts/validate_d
 requireIncludes("schemas/README.md", schemaReadme, "database_pool.seo_v3.yaml");
 requireIncludes("schemas/database_pool.seo_v3.yaml", dbSchema, "pending: computed_only");
 requireIncludes("schemas/database_pool.seo_v3.yaml", dbSchema, "conflict: computed_only");
-requireIncludes("schemas/database_pool.seo_v3.yaml", dbSchema, "scripts/review_server.js --database-pool <pool_id> --port 8765");
+requireIncludes("schemas/database_pool.seo_v3.yaml", dbSchema, "scripts/review_server.js --database-pool <pool_id> --port 8212");
 requireIncludes("schemas/database_pool.seo_v3.yaml", dbSchema, "database_pool/<pool_id>/decisions/workbench.decisions.json");
 requireIncludes("schemas/database_pool.seo_v3.yaml", dbSchema, "abbreviation_registry: read_only");
 requireIncludes("scripts/database_pool_pilot/review_workbench.js", retiredWorkbenchShim, "DEPRECATED");
