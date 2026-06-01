@@ -87,7 +87,9 @@ scripts/
 
 Contains rulebooks for generating PV drafts from raw or semi-structured source
 material. Draft rules should be written in English so they can be reused by
-LLM agents consistently.
+LLM agents consistently. Database-pool input conversion procedures also live
+here so Draft agents see them before converting `inputs/<pool_id>/` source
+material into `database_pool/<pool_id>/` rows.
 
 `rules/review/`
 
@@ -114,6 +116,9 @@ beamline, such as `inputs/BL10A/`.
 
 Input files may include memos or comments, but those claims are source context,
 not active rule authority. Approved naming policy belongs in active rulebooks.
+When an agent converts natural-language or semi-structured input into SEO_V3
+database-pool rows, it must follow
+`rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md`.
 
 `temp/`
 
@@ -261,6 +266,10 @@ node scripts/import_seo_review_decisions.js
     merge, validation, and UI experiments. They become rule authority only when
     a reviewed decision is promoted into rulebooks, schemas, examples, or
     generated outputs through the proposal/review process.
+14. When source material under `inputs/<pool_id>/` is natural-language or
+    semi-structured inventory that the importer cannot parse safely, Draft
+    agents may convert it directly into reviewable database-pool rows only after
+    consulting `rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md`.
 
 ## Proposal Promotion
 
@@ -291,6 +300,10 @@ The active generation/review rulebooks remain:
 
 - `rules/draft/PV_NAMING_RULEBOOK.md`
 - `rules/review/PV_REVIEW_RULEBOOK.md`
+
+The active database-pool input conversion procedure is:
+
+- `rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md`
 
 The promoted SEO_V3 database-pool shape is:
 

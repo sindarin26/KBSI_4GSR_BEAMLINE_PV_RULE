@@ -33,6 +33,9 @@ Draft agents may:
 - Read `temp/` only when the user explicitly points to it; `temp/` is not an
   active rule source.
 - Read `rules/draft/` for generation rules.
+- Read `rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md` before
+  converting natural-language or semi-structured `inputs/<pool_id>/` material
+  into SEO_V3 database-pool rows.
 - Read `rules/decisions/` only when active draft rules do not resolve an
   ambiguity.
 - Read `examples/good/` and `examples/before_after/` when useful.
@@ -51,6 +54,10 @@ Draft agents must:
 - Generate only the requested scope.
 - Create raw extraction artifacts before normalization when required by
   `rules/draft/PV_NAMING_RULEBOOK.md`.
+- For database-pool input conversion, follow
+  `rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md` and keep rows
+  reviewable unless the conversion is purely mechanical from an approved
+  source.
 - Keep uncertain assumptions explicit in the output.
 - Prefer structured, repeatable output over prose-only summaries.
 - Run a self-review pass using `rules/review/` before finalizing.
@@ -162,6 +169,11 @@ The active generation/review rulebooks are still:
 
 - `rules/draft/PV_NAMING_RULEBOOK.md`
 - `rules/review/PV_REVIEW_RULEBOOK.md`
+
+The active agent procedure for converting natural-language or semi-structured
+input material into SEO_V3 database-pool rows is:
+
+- `rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md`
 
 Documents under `standards/` are for human discussion and distribution. They are
 not active agent rules until promoted into the active rulebooks.

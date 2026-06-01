@@ -40,6 +40,7 @@ const requiredFiles = [
   "ARCHITECTURE.md",
   "AGENTS.md",
   "README.md",
+  "rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md",
   "schemas/README.md",
   "schemas/database_pool.seo_v3.yaml",
   "scripts/validate_database_pool.js",
@@ -65,6 +66,7 @@ if (failures > 0) {
 const architecture = read("ARCHITECTURE.md");
 const agents = read("AGENTS.md");
 const readme = read("README.md");
+const inputConversionRulebook = read("rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md");
 const scriptsReadme = read("scripts/README.md");
 const schemaReadme = read("schemas/README.md");
 const dbSchema = read("schemas/database_pool.seo_v3.yaml");
@@ -86,8 +88,16 @@ for (const [label, text] of [
 }
 
 requireIncludes("ARCHITECTURE.md", architecture, "database_pool/<pool_id>/manifest.yaml");
+requireIncludes("ARCHITECTURE.md", architecture, "rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md");
 requireIncludes("AGENTS.md", agents, "poolId");
 requireIncludes("AGENTS.md", agents, "uid");
+requireIncludes("AGENTS.md", agents, "rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md");
+requireIncludes("rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md", inputConversionRulebook, "agent_input_conversion");
+requireIncludes("rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md", inputConversionRulebook, "sourceTrace.sourceLine");
+requireIncludes("rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md", inputConversionRulebook, "reviewStatus");
+requireIncludes("rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md", inputConversionRulebook, "deterministic database-pool identity rule");
+requireIncludes("rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md", inputConversionRulebook, "section: BL");
+requireIncludes("rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md", inputConversionRulebook, "port: 09A");
 requireIncludes("README.md", readme, "scripts/database_pool_pilot/review_workbench.js --port 8775");
 requireIncludes("README.md", readme, "node scripts/import_database_pool.js --input inputs/BL10A --pool BL10A");
 requireIncludes("README.md", readme, "./run_database_pool_workbench.sh");
