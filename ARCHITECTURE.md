@@ -216,7 +216,8 @@ Current database-pool entry points:
 
 ```text
 node scripts/validate_database_pool.js
-node scripts/database_pool_pilot/review_workbench.js --port 8775
+node scripts/review_server.js --database-pool <pool_id> --port 8765
+./run_database_pool_workbench.sh [pool_id ...]
 ```
 
 Legacy SEO_v2 output entry points:

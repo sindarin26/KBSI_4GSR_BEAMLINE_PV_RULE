@@ -10,10 +10,10 @@ const checks = [
   ["abbreviation registry", ["node", "scripts/abbreviation_registry_pilot/validate_abbreviations.js"]],
   ["small migration pilot", ["node", "scripts/migration_pilot/validate_m4_small_migration.js"]],
   [
-    "review workbench",
+    "review server database-pool mode",
     [
       "node",
-      "scripts/database_pool_pilot/validate_review_workbench.js",
+      "scripts/review_server_pilot/validate_database_pool_mode.js",
       ...(withHttp ? ["--with-http"] : []),
     ],
   ],

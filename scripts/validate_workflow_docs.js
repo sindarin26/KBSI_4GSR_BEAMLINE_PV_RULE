@@ -47,6 +47,8 @@ const requiredFiles = [
   "scripts/import_database_pool.js",
   "run_database_pool_workbench.sh",
   "check_database_pool.sh",
+  "scripts/review_server.js",
+  "scripts/review_server_pilot/validate_database_pool_mode.js",
   "scripts/database_pool_pilot/review_workbench.js",
   "scripts/database_pool_pilot/validate_review_workbench.js",
   "database_pool/4GSR_Beamline_PV_Naming_Standard_v1.0/manifest.yaml",
@@ -72,6 +74,8 @@ const schemaReadme = read("schemas/README.md");
 const dbSchema = read("schemas/database_pool.seo_v3.yaml");
 const workbenchWrapper = read("run_database_pool_workbench.sh");
 const checkWrapper = read("check_database_pool.sh");
+const retiredWorkbenchShim = read("scripts/database_pool_pilot/review_workbench.js");
+const retiredWorkbenchValidatorShim = read("scripts/database_pool_pilot/validate_review_workbench.js");
 
 function requireIncludes(label, text, fragment) {
   if (!text.includes(fragment)) fail(`${label} missing ${fragment}`);
@@ -98,18 +102,26 @@ requireIncludes("rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md", inputC
 requireIncludes("rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md", inputConversionRulebook, "deterministic database-pool identity rule");
 requireIncludes("rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md", inputConversionRulebook, "section: BL");
 requireIncludes("rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md", inputConversionRulebook, "port: 09A");
-requireIncludes("README.md", readme, "scripts/database_pool_pilot/review_workbench.js --port 8775");
+requireIncludes("README.md", readme, "scripts/review_server.js --database-pool BL10A --port 8765");
 requireIncludes("README.md", readme, "node scripts/import_database_pool.js --input inputs/BL10A --pool BL10A");
 requireIncludes("README.md", readme, "./run_database_pool_workbench.sh");
 requireIncludes("README.md", readme, "./check_database_pool.sh");
 requireIncludes("scripts/README.md", scriptsReadme, "## Database-Pool Workflow");
 requireIncludes("scripts/README.md", scriptsReadme, "## Legacy SEO_v2 Workflow");
 requireIncludes("run_database_pool_workbench.sh", workbenchWrapper, "http://${HOST}:${PORT}/");
-requireIncludes("run_database_pool_workbench.sh", workbenchWrapper, "node scripts/database_pool_pilot/review_workbench.js");
+requireIncludes("run_database_pool_workbench.sh", workbenchWrapper, "node scripts/review_server.js");
+requireIncludes("run_database_pool_workbench.sh", workbenchWrapper, "--database-pool");
 requireIncludes("check_database_pool.sh", checkWrapper, "node scripts/validate_database_pool.js \"$@\"");
 requireIncludes("schemas/README.md", schemaReadme, "database_pool.seo_v3.yaml");
 requireIncludes("schemas/database_pool.seo_v3.yaml", dbSchema, "pending: computed_only");
 requireIncludes("schemas/database_pool.seo_v3.yaml", dbSchema, "conflict: computed_only");
+requireIncludes("schemas/database_pool.seo_v3.yaml", dbSchema, "scripts/review_server.js --database-pool <pool_id> --port 8765");
+requireIncludes("schemas/database_pool.seo_v3.yaml", dbSchema, "database_pool/<pool_id>/decisions/workbench.decisions.json");
+requireIncludes("schemas/database_pool.seo_v3.yaml", dbSchema, "abbreviation_registry: read_only");
+requireIncludes("scripts/database_pool_pilot/review_workbench.js", retiredWorkbenchShim, "DEPRECATED");
+requireIncludes("scripts/database_pool_pilot/review_workbench.js", retiredWorkbenchShim, "process.exit(1)");
+requireIncludes("scripts/database_pool_pilot/validate_review_workbench.js", retiredWorkbenchValidatorShim, "DEPRECATED");
+requireIncludes("scripts/database_pool_pilot/validate_review_workbench.js", retiredWorkbenchValidatorShim, "process.exit(1)");
 
 if (/row `dataset` field intact/.test(agents)) {
   fail("AGENTS.md still instructs database-pool work to preserve the legacy dataset field");

@@ -8,7 +8,7 @@ Use:
 ```text
 node scripts/import_database_pool.js --input inputs/BL10A --pool BL10A
 node scripts/import_database_pool.js --input inputs/BL10A --pool BL10A --write
-node scripts/database_pool_pilot/review_workbench.js --port 8775
+node scripts/review_server.js --database-pool BL10A --port 8765
 node scripts/validate_database_pool.js
 node scripts/validate_database_pool.js --with-http
 ./run_database_pool_workbench.sh
@@ -49,20 +49,22 @@ node scripts/import_database_pool.js --input inputs/BL10A --pool BL10A --write -
 Imported rows always start as `reviewStatus: "needs_input"`. The importer must
 not approve rows, update abbreviation registry entries, or promote rules.
 
-`database_pool_pilot/review_workbench.js` starts the browser review workbench.
-The workbench can preview/save imports through the same importer module used by
-the CLI.
+`review_server.js` starts the browser review workbench. In database-pool mode
+it loads explicit pools with repeated `--database-pool` flags and writes human
+decision overlays to `database_pool/<pool_id>/decisions/workbench.decisions.json`.
 
 ```text
-node scripts/database_pool_pilot/review_workbench.js --port 8775
+node scripts/review_server.js --database-pool BL10A --port 8765
+node scripts/review_server.js --database-pool BL10A --database-pool 4GSR_Beamline_PV_Naming_Standard_v1.0 --port 8765
 ```
 
 The repo-root wrappers provide the normal user-facing commands:
 
 ```text
 ./run_database_pool_workbench.sh
-./run_database_pool_workbench.sh 8775
-HOST=0.0.0.0 ./run_database_pool_workbench.sh 8775
+./run_database_pool_workbench.sh BL10A
+./run_database_pool_workbench.sh BL10A 4GSR_Beamline_PV_Naming_Standard_v1.0
+PORT=8765 HOST=0.0.0.0 ./run_database_pool_workbench.sh BL10A
 ./check_database_pool.sh
 ./check_database_pool.sh --with-http
 ```

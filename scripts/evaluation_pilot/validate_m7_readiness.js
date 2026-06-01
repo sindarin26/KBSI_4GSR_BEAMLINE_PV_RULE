@@ -1,16 +1,20 @@
 #!/usr/bin/env node
 
 const assert = require("assert");
+const fs = require("fs");
 const path = require("path");
 
 const {
-  loadWorkbenchState,
-} = require("../database_pool_pilot/review_workbench");
+  loadPool,
+  mergeRows,
+} = require("../database_pool_pilot/database_pool");
 const {
   blockingAbbreviationIssues,
+  loadRegistry,
 } = require("../abbreviation_registry_pilot/abbreviation_registry");
 
 const root = path.resolve(__dirname, "..", "..");
+const registryPath = path.join(root, "fixtures", "seo_v3_pilot", "abbreviation_registry.json");
 const MIN_READY_ROWS = 5;
 const REQUIRED_APPROVED_KINDS = ["section", "port", "area", "device", "subdevice"];
 
@@ -52,6 +56,26 @@ function rowIsEvaluationReady(row, registry) {
   return blockingAbbreviationIssues(row, registry).length === 0;
 }
 
+function listPoolIds() {
+  return fs
+    .readdirSync(path.join(root, "database_pool"), { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .filter((entry) => fs.existsSync(path.join(root, "database_pool", entry.name, "manifest.yaml")))
+    .map((entry) => entry.name)
+    .sort();
+}
+
+function loadEvaluationState() {
+  const registry = loadRegistry(registryPath);
+  const rows = [];
+  for (const poolId of listPoolIds()) {
+    const pool = loadPool(path.join(root, "database_pool", poolId));
+    const merged = mergeRows(pool.sourceRows, pool.decisions);
+    for (const row of merged.rows) rows.push(row);
+  }
+  return { registry, rows };
+}
+
 function readinessReport(state) {
   const approvedCounts = approvedKindCounts(state.registry);
   const readyRows = state.rows.filter((row) => rowIsEvaluationReady(row, state.registry));
@@ -78,7 +102,7 @@ function readinessReport(state) {
   };
 }
 
-const state = loadWorkbenchState({ rootDir: root });
+const state = loadEvaluationState();
 const report = readinessReport(state);
 
 test("M7 readiness report is deterministic and source-backed", () => {

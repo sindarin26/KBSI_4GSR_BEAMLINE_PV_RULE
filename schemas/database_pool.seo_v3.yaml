@@ -144,30 +144,35 @@ abbreviation_registry:
       html_db_only_codes: candidate
 
 workbench:
-  entrypoint: scripts/database_pool_pilot/review_workbench.js
-  validation: scripts/database_pool_pilot/validate_review_workbench.js
+  entrypoint: scripts/review_server.js --database-pool <pool_id> --port 8765
+  wrapper: ./run_database_pool_workbench.sh [pool_id ...]
+  validation: scripts/review_server_pilot/validate_database_pool_mode.js
+  aggregate_validation: scripts/validate_database_pool.js --with-http
   tabs:
     - All Rows
-    - Review
+    - Review Queue
     - Needs Input
-    - Conflicts
-    - Approved
-    - Abbreviations
+    - Accepted/Approved
   filters:
-    - poolId
-    - sourceId
+    - dataset
     - reviewStatus
-    - section
     - port
     - area
-    - device
-    - subdevice
-    - prefix
+    - dev
     - search
   save_targets:
-    row_decisions: database_pool/<pool_id>/decisions/*.decisions.json
-    abbreviation_decisions: fixtures/seo_v3_pilot/abbreviation_registry.json
+    row_decisions: database_pool/<pool_id>/decisions/workbench.decisions.json
+  read_only_inputs:
+    abbreviation_registry: fixtures/seo_v3_pilot/abbreviation_registry.json
   behavior:
+    source_rows: read_only
+    abbreviation_registry: read_only
+    explicit_pools_only: true
+    wrapper_auto_discovers_pools: true
     pending: computed_only
     conflict: computed_only
-    bulk_approval: visible_computed_pending_rows_only
+  deferred_ui:
+    - conflicts_tab
+    - abbreviations_tab
+    - bulk_approval
+    - richer_component_filters
