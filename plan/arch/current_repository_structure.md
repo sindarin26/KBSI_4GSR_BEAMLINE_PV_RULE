@@ -2,9 +2,8 @@
 
 Status: planning artifact, not an active rulebook, schema, or naming policy.
 
-This file describes the current repository shape as observed on 2026-06-01.
-It does not change the authoritative directory responsibilities in
-`ARCHITECTURE.md` or `AGENTS.md`.
+This file describes the current repository shape as observed on 2026-06-02
+after the SEO_v2 / v0 hard-reset alignment.
 
 ## Current Top-Level Roles
 
@@ -22,43 +21,51 @@ standards/
   candidates/
 
 inputs/
-  4GSR_Beamline_PV_Naming_Standard_v1.0/
+  4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md
   BL10A/
   BL9ASIM/
-  SEO_v2/
 
 database_pool/
-  4GSR_Beamline_PV_Naming_Standard_v1.0/
-  BL10A/
-  seo_v3_m2_pilot/
-
-fixtures/
-  SEO_v2/
-  seo_v3_pilot/
+  abbreviations/
+  4GSR_Beamline_PV_Naming_Standard_v1.0/   # manifest only, empty sources/decisions
+  BL10A/                                    # manifest only, empty sources/decisions
 
 outputs/
-  ID10/
-
-reviews/
-  ID10/
-  SEO_v2/
-  database_pool_*/
+  (empty — reserved for future export/render artifacts)
 
 exceptions/
+  BL9ASIM/
+
 proposals/
+  rule_changes/
+
 examples/
+  good/   bad/   before_after/   (READMEs only after the hard reset)
+
 schemas/
+  database_pool.seo_v3.yaml
+
 scripts/
-notes/
+  database_pool_pilot/
+  abbreviation_registry_pilot/
+  seo_v3_pilot/
+  lib/
+    yaml_subset.js
+  import_database_pool.js
+  review_server.js
+  validate_database_pool.js
+  validate_workflow_docs.js
+
+notes/   # git-ignored
+reviews/ # git-ignored
 plan/
-temp/
 ```
 
 ## Active Rule And Procedure Areas
 
 `rules/draft/PV_NAMING_RULEBOOK.md` and
-`rules/review/PV_REVIEW_RULEBOOK.md` remain the active generation/review
-rulebooks.
+`rules/review/PV_REVIEW_RULEBOOK.md` are skeletons after the hard reset; they
+list the fallback authority order to use until they are redrafted.
 
 `rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md` is the active agent
 procedure for converting natural-language or semi-structured `inputs/<pool_id>/`
@@ -71,40 +78,44 @@ rules unless promoted into active rulebooks, schemas, or examples.
 
 `inputs/` contains source material. Current notable source sets include:
 
-- `inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md`
-- `inputs/BL10A/`
-- `inputs/BL9ASIM/`
-- `inputs/SEO_v2/4GSR_Beamline_PV_Naming_Standard_v1.0_DB.json`
+- `inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md` (SEO_V3 standard
+  source document, working policy reference)
+- `inputs/BL10A/` (BL10A pool source files: txt/json/xml/md)
+- `inputs/BL9ASIM/` (BL9ASIM pool source files: md)
 
-`database_pool/` contains normalized SEO_V3 review datasets. Each pool uses:
+`database_pool/` contains the active SEO_V3 review datasets. Each pool uses:
 
 ```text
 database_pool/<pool_id>/manifest.yaml
-database_pool/<pool_id>/sources/*.rows.json
-database_pool/<pool_id>/decisions/*.decisions.json
+database_pool/<pool_id>/sources/*.rows.json   # currently empty
+database_pool/<pool_id>/decisions/*.decisions.json   # currently empty
 ```
 
-`fixtures/seo_v3_pilot/abbreviation_registry.json` is the current promoted
-pilot abbreviation registry. It is loaded by validators and the review server
-as read-only input.
+The hard reset cleared previously imported pilot rows; re-import or agent
+conversion is required before any pool carries reviewable rows again.
 
-`fixtures/SEO_v2/` contains historical comparison data for legacy review paths.
+`database_pool/abbreviations/registry.json` is the current source-of-truth
+abbreviation review registry. It carries explicit source, status, rationale,
+and usage evidence for each abbreviation record.
 
 ## Review And Output Areas
 
-`reviews/` contains review reports and human decision files. It includes both
-beamline reviews and database-pool milestone closeouts.
+`reviews/` contains local ignored review reports and human decision files.
+After the hard reset only `reviews/workflow_alignment/` remains as the planning
+record of this alignment.
 
-`outputs/ID10/` is the current legacy SEO_v2 generated-output path. It remains
-available for historical/compatibility workflows and is not the default target
-for new SEO_V3 database-pool work.
+`outputs/` is empty after the hard reset. It is reserved for future
+generated/exported artifacts derived from approved SEO_V3 evidence.
 
 `exceptions/` and `proposals/` preserve unsupported cases and proposed rule
-changes without silently extending active policy.
+changes without silently extending active policy. Current items:
+
+- `exceptions/BL9ASIM/EXC-0001-third-party-epics-suffix-tier-boundary.md`
+- `proposals/rule_changes/PROP-0001-third-party-epics-suffix-policy.md`
 
 ## Scripts
 
-Current database-pool entry points include:
+Current database-pool entry points:
 
 ```text
 node scripts/import_database_pool.js --input inputs/BL10A --pool BL10A
@@ -114,25 +125,20 @@ node scripts/review_server.js --database-pool BL10A --port 8212
 node scripts/validate_database_pool.js
 ```
 
-Current legacy SEO_v2 entry points include:
-
-```text
-node scripts/review_server.js ID10 --port 8212
-node scripts/validate_registry.js ID10
-node scripts/render_reference.js ID10 --check
-```
+Legacy SEO_v2 entry points (`validate_seo_v2_rules.js`, `validate_registry.js`,
+`render_reference.js`, `build_review_queue.js`, `validate_review_queue.js`,
+`apply_decisions.js`, `import_seo_review_decisions.js`, `lib/pv_workbench.js`)
+were removed during the hard reset.
 
 ## Planning And Local Context
 
 `notes/` contains private or temporary working notes. In this repository it is
-ignored by git, so notes preserve local context but do not become distribution
-artifacts unless explicitly promoted elsewhere.
+ignored by git. After the hard reset only the workflow-alignment context notes
+remain (`2026-06-01_workflow_alignment_context.md`,
+`2026-06-01_workflow_alignment_goal.md`,
+`2026-06-02_uncommitted_abbreviation_structure_review.md`).
 
 `plan/` and `plan/arch/` are used here for planning diagrams and target/current
 architecture notes. They are not currently an active policy directory in
 `ARCHITECTURE.md`; files under `plan/` must label themselves as planning
 artifacts.
-
-`temp/` is local scratch/reference material and not an active source of truth.
-The current abbreviation registry traces to `temp/SEO_v3/...`, which is a
-source-of-truth weakness noted in the workflow-alignment gap review.

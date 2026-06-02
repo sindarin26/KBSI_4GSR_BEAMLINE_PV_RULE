@@ -1,8 +1,8 @@
 # Agent Operating Instructions
 
-This repository is a PV rule processing kit for beamline PV naming work.
+This repository is a PV rule processing kit for SEO_V3 beamline PV naming work.
 Agents must treat it as a rule-driven workflow repository, not as a general note
-dump.
+dump. SEO_v2 / v0 paths were removed during the 2026-06-02 hard-reset alignment.
 
 ## First Step
 
@@ -11,8 +11,8 @@ Before creating, reviewing, or reorganizing any PV material, every agent must:
 1. Read `ARCHITECTURE.md`.
 2. Identify the requested role.
 3. Use only the rulebooks and directories assigned to that role.
-4. Preserve source traceability from input material to generated output, review,
-   exception, or proposal.
+4. Preserve source traceability from input material to database-pool row,
+   decision overlay, exception, or proposal.
 
 If the user request is ambiguous, infer the role from the requested action:
 
@@ -24,14 +24,12 @@ If the role cannot be inferred safely, ask one concise question before editing.
 
 ## Draft Mode
 
-Use Draft mode when the task is to create or normalize PV material.
+Use Draft mode when the task is to create or normalize SEO_V3 PV material.
 
 Draft agents may:
 
 - Read source material from `inputs/` and user-specified paths as data, not as
   active naming policy.
-- Read `temp/` only when the user explicitly points to it; `temp/` is not an
-  active rule source.
 - Read `rules/draft/` for generation rules.
 - Read `rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md` before
   converting natural-language or semi-structured `inputs/<pool_id>/` material
@@ -39,66 +37,56 @@ Draft agents may:
 - Read `rules/decisions/` only when active draft rules do not resolve an
   ambiguity.
 - Read `examples/good/` and `examples/before_after/` when useful.
-- Produce reviewable SEO_V3 database-pool rows under `database_pool/<pool_id>/`
-  when the request is about the database-pool workflow or PV name
-  standardization.
-- Produce legacy generated material under `outputs/<beamline>/` when the
-  request explicitly targets the legacy SEO_v2 output workflow.
-- Create a local self-review report at `reviews/<beamline>/SELF_REVIEW.md` for
-  their own draft. `reviews/` is git-ignored unless the owner explicitly
-  promotes a review artifact elsewhere.
-- Create or recommend exception records under `exceptions/<beamline>/` when
+- Produce reviewable SEO_V3 database-pool rows under `database_pool/<pool_id>/`.
+- Create a local self-review report at
+  `reviews/<beamline-or-pool>/SELF_REVIEW.md`. `reviews/` is git-ignored
+  unless the owner explicitly promotes a review artifact elsewhere.
+- Create or recommend exception records under `exceptions/<scope>/` when
   current rules cannot represent an input item cleanly.
 
 Draft agents must:
 
 - Generate only the requested scope.
-- Create raw extraction artifacts before normalization when required by
-  `rules/draft/PV_NAMING_RULEBOOK.md`.
 - For database-pool input conversion, follow
   `rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md` and keep rows
   reviewable unless the conversion is purely mechanical from an approved
   source.
+- Preserve `poolId`, `sourceId`, `sourceAnchor`, deterministic `uid`, and
+  `sourceTrace.sourceKind` on every produced row.
+- Default new rows to `reviewStatus: "needs_input"`.
 - Keep uncertain assumptions explicit in the output.
 - Prefer structured, repeatable output over prose-only summaries.
 - Run a self-review pass using `rules/review/` before finalizing.
 - Report unresolved issues rather than silently inventing missing technical facts.
-- Keep the normal database-pool path simple: source material in `inputs/`,
+- Keep the database-pool path simple: source material in `inputs/`,
   reviewable rows in `database_pool/`, local findings in ignored `reviews/`,
   and rule gaps in `exceptions/`.
-- Keep the legacy output path simple when explicitly requested: source material
-  in `inputs/`, generated registry/reference in `outputs/`, local findings in
-  ignored `reviews/`, and rule gaps in `exceptions/`.
 
 Draft agents must not:
 
-- Treat simulated PV names as final hardware names without marking the source.
 - Treat claims inside `inputs/` files as active rules unless the user explicitly
   approves them or an active rulebook already supports them.
 - Hide source conflicts or merge conflicting PV definitions without a note.
 - Rewrite review-only reports as if they were source data.
 - Promote a decision record, exception, or proposal into an active rule unless
   the user explicitly asks.
-- Treat a human-facing candidate under `standards/` as an active generation rule
-  unless it has been promoted into the active rulebooks.
+- Treat a human-facing candidate under `standards/candidates/` as an active
+  generation rule unless it has been promoted into the active rulebooks.
+- Approve a row whose component abbreviations are still `candidate`,
+  `deprecated`, or `rejected` in `database_pool/abbreviations/registry.json`.
 
 ## Review Mode
 
-Use Review mode when the task is to validate existing PV material.
+Use Review mode when the task is to validate existing SEO_V3 PV material.
 
 Review agents may:
 
-- Read generated outputs, source inputs, examples, schemas, and rulebooks.
-- Read `database_pool/` source rows and decision overlays when explicitly
-  reviewing database-pool material.
+- Read generated database-pool source rows and decision overlays, source
+  inputs, examples, schemas, and rulebooks.
 - Read `rules/decisions/` for rationale when active review rules are ambiguous.
-- Apply clear, rule-based fixes directly to generated outputs when the user asks
-  for usable/corrected output or does not explicitly request read-only review.
-- Produce local review logs at `reviews/<beamline>/REVIEW.md`.
-- Use `reviews/<beamline>/review_decisions.json` as local structured human
-  review input when it exists.
-- Use `fixtures/SEO_v2/review_decisions.json` as historical SEO_v2 comparison
-  data only, not as active naming policy.
+- Apply clear, rule-based fixes to decision overlays when the user asks for
+  usable/corrected output or does not explicitly request read-only review.
+- Produce local review logs at `reviews/<beamline-or-pool>/REVIEW.md`.
 - Recommend exception or proposal creation when a rule gap is found.
 - Recommend precise corrections.
 
@@ -107,9 +95,10 @@ Review agents must:
 - Follow this decision order:
   1. active review rulebook;
   2. active draft rulebook;
-  3. examples;
-  4. `rules/decisions/` rationale;
-  5. user question or exception/proposal workflow.
+  3. abbreviation registry status;
+  4. examples;
+  5. `rules/decisions/` rationale;
+  6. user question or exception/proposal workflow.
 - Treat active rulebooks as higher authority than examples or decision records.
 - Treat source inputs as evidence for traceability and source facts, not as rule
   authority.
@@ -119,21 +108,20 @@ Review agents must:
   or "do not edit".
 - Ask the user before changing ambiguous policy decisions.
 - Log applied fixes and remaining decision-required items in local
-  `reviews/<beamline>/REVIEW.md`.
-- Treat browser review decision files as source-backed human decisions, not as
+  `reviews/<beamline-or-pool>/REVIEW.md`.
+- Treat workbench decision overlays as source-backed human decisions, not as
   active naming policy.
 - For database-pool rows, preserve `poolId`, `sourceId`, `sourceAnchor`, and
   `uid` so decision overlays remain attached to the correct source facts.
 - Distinguish rule violations, ambiguities, missing data, and suggestions.
-- Avoid expanding the PV list beyond what the reviewed source provides.
+- Avoid expanding the row list beyond what the reviewed source provides.
 
 Review agents must not:
 
 - Make policy decisions silently.
 - Introduce new naming policy during review.
-- Change `source_trace.raw_id`, `source_trace.source_id`, or
-  `source_trace.source_anchor` as a direct fix; require re-extraction or logged
-  regeneration instead.
+- Change `sourceTrace.sourceId`, `sourceTrace.sourceAnchor`, or `uid` as a
+  direct fix; require re-import or logged regeneration instead.
 - Treat a formatting preference as a rule violation unless a rulebook says so.
 
 ## Architecture Mode
@@ -148,16 +136,14 @@ Architecture agents must:
 - Keep decision rationale under `rules/decisions/`.
 - Keep human-facing standard documents and candidates under `standards/`.
 - Keep examples under `examples/`.
-- Keep distributable source material under `inputs/`; keep `temp/` as local
-  scratch only.
+- Keep distributable source material under `inputs/`.
 - Keep normalized database-pool rows and decision overlays under
   `database_pool/`.
-- Keep generated outputs under `outputs/`.
-- Keep generated output status in `outputs/<beamline>/status.yaml` when an
-  output directory is current enough to validate.
+- Keep durable SEO_V3 abbreviation review records under
+  `database_pool/abbreviations/registry.json`.
+- Keep generated or exported outputs under `outputs/` (currently empty —
+  export tooling is future work).
 - Keep local validation reports under ignored `reviews/`.
-- Keep local human review decision files under ignored `reviews/<beamline>/`.
-- Keep read-only comparison and test fixtures under `fixtures/`.
 - Keep unsupported cases under `exceptions/`.
 - Keep proposed rule changes under `proposals/`.
 - Keep validation and maintenance scripts under `scripts/`; scripts may verify
@@ -166,20 +152,23 @@ Architecture agents must:
 
 ## Rulebook Status
 
-The active generation/review rulebooks are still:
+The active generation/review rulebooks are:
 
-- `rules/draft/PV_NAMING_RULEBOOK.md`
-- `rules/review/PV_REVIEW_RULEBOOK.md`
+- `rules/draft/PV_NAMING_RULEBOOK.md` — skeleton after the 2026-06-02 alignment;
+  agents must use `inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md`
+  and `database_pool/abbreviations/registry.json` as the working policy
+  sources until this rulebook is redrafted.
+- `rules/review/PV_REVIEW_RULEBOOK.md` — skeleton; uses the same fallback
+  authority order.
+- `rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md` — active agent
+  procedure for converting natural-language or semi-structured input material
+  into SEO_V3 database-pool rows.
 
-The active agent procedure for converting natural-language or semi-structured
-input material into SEO_V3 database-pool rows is:
+Documents under `standards/candidates/` are for human discussion and
+distribution. They are not active agent rules until promoted into the active
+rulebooks.
 
-- `rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md`
-
-Documents under `standards/` are for human discussion and distribution. They are
-not active agent rules until promoted into the active rulebooks.
-
-The promoted database-pool SEO_V3 workflow uses this PV shape:
+The SEO_V3 PV shape is:
 
 ```text
 [SEC/SYS][PORT]-[AREA]:[DEV]-[SUBDEV]:[SignalName]
@@ -197,37 +186,20 @@ signal
 standardPv
 ```
 
-The older SEO_v2 generated-output path remains available for historical ID10
-outputs and compatibility scripts. Its PV shape is:
-
-```text
-BL-[PORT]:[AREA]-[DEV]-[SUBDEV]:[SignalName]
-```
-
-Historical v0 material using `ID10:{Area}:{Device}:{AxisOrFunction}` may remain
-in decisions, reviews, or legacy outputs, but it is not the active generation
-target for new work.
-
-Database-pool material should be machine-checkable with:
+Database-pool material must be machine-checkable with:
 
 ```text
 node scripts/validate_database_pool.js
 ```
 
-The default browser review port for the shared review server is `8212`.
-
-Legacy SEO_v2 generated outputs should remain machine-checkable with:
-
-```text
-node scripts/validate_registry.js <beamline>
-node scripts/render_reference.js <beamline> --check
-```
+The default browser review port is `8212`.
 
 When an active rulebook does not cover a case, agents must state that limitation
 and use the exception/proposal workflow instead of pretending a full rule exists.
 
 ## Output Discipline
 
-Agents should keep outputs machine-friendly where practical.
-Markdown is acceptable for human review, but canonical PV data should eventually
-have a structured representation in `schemas/` and `outputs/`.
+Agents should keep outputs machine-friendly where practical. Markdown is
+acceptable for human review, but canonical PV data must have a structured
+representation under `database_pool/<pool_id>/` and conform to
+`schemas/database_pool.seo_v3.yaml`.

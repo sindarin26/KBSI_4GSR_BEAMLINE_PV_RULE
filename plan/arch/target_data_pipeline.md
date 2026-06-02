@@ -3,7 +3,8 @@
 Status: planning artifact, not an active rulebook, schema, or naming policy.
 
 This file sketches the desired long-term data-processing pipeline. It is a
-planning target, not an implementation change.
+planning target, not an implementation change. SEO_v2 / v0 pipelines were
+removed in the 2026-06-02 hard-reset alignment and are non-goals.
 
 ## Target Flow
 
@@ -49,7 +50,7 @@ should silently approve interpreted rows.
 
 ## Review
 
-The web review UI should become database-pool-native:
+The web review UI should remain database-pool-native:
 
 - show merged source rows plus decision overlays;
 - expose row review states directly from the SEO_V3 durable vocabulary;
@@ -73,8 +74,24 @@ The target abbreviation workflow should:
 - show row usage/evidence for each abbreviation;
 - allow candidate abbreviations to be approved, rejected, deprecated, or left
   pending;
+- treat rows whose component abbreviations are approved and unambiguous as
+  approval-eligible;
+- add usage evidence when a PV row is approved;
+- require explicit review before a PV approval promotes any abbreviation with
+  possible code, meaning, or scope conflicts;
+- prioritize repeated, blocking, or ambiguous abbreviation candidates in the UI
+  while keeping one-off candidates searchable;
 - warn before changes to approved abbreviations affect already approved rows;
 - feed approved abbreviation records into the retrieval/evidence index.
+
+Code-only matching is insufficient for global abbreviation approval. Future
+workflow should compare at least kind, code, normalized meaning, scope, source
+evidence, aliases, and row usage. Semantic checks by an agent are useful for
+ambiguous cases, but the first implementation should use a repository-local
+approved evidence index before adding external RAG infrastructure.
+
+Any implementation of PV approval coupled to abbreviation approval needs its
+own reviewed goal before code changes.
 
 ## Approved Evidence And Retrieval
 
@@ -110,6 +127,5 @@ candidate differences, not failures.
 ## Export
 
 Exports or generated outputs should be derived from reviewed/approved
-database-pool evidence. Legacy SEO_v2 export paths may remain for compatibility,
-but new SEO_V3 work should not depend on the legacy output directory as its
-review database.
+database-pool evidence and written under `outputs/`. The `outputs/` directory
+is currently empty; export tooling is future work.

@@ -1,19 +1,25 @@
 # Repository Architecture
 
 This repository defines a repeatable workflow for processing beamline PV source
-material into standardized PV naming outputs and review reports.
+material into standardized SEO_V3 PV naming review datasets.
 
-The repository is intentionally separate from beamline control software. It is
-meant to hold rulebooks, examples, schemas, input material, generated outputs,
-and reviews.
+The repository is intentionally separate from beamline control software. It
+holds rulebooks, examples, schemas, input material, source-backed database-pool
+rows, decision overlays, and reviews.
+
+SEO_v2 and v0 paths were removed during the 2026-06-02 hard-reset alignment.
+The repository now carries only the active SEO_V3 database-pool workflow.
 
 ## Design Goals
 
-- Make PV list generation repeatable across beamlines.
-- Keep draft generation and review responsibilities separate.
-- Preserve traceability from source input to final output.
-- Allow deterministic validation scripts or RAG-based retrieval to be added later.
-- Avoid mixing temporary reference material with canonical outputs.
+- Make SEO_V3 PV review datasets repeatable across pools.
+- Keep source rows and human decision overlays separate so review never
+  destroys source evidence.
+- Keep draft conversion and review responsibilities separate.
+- Preserve traceability from source input to source row, decision, exception,
+  or proposal.
+- Allow deterministic validation scripts or retrieval-based search to be added
+  later, after enough approved evidence exists.
 
 ## Directory Layout
 
@@ -24,19 +30,23 @@ README.md
 
 rules/
   draft/
+    PV_NAMING_RULEBOOK.md
+    DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md
   review/
+    PV_REVIEW_RULEBOOK.md
   decisions/
 
 standards/
   candidates/
 
 inputs/
-  <beamline>/
-
-temp/
-  <beamline>/
+  4GSR_Beamline_PV_Naming_Standard_v1.0/
+    standard.md
+  <pool_id>/
 
 database_pool/
+  abbreviations/
+    registry.json
   <pool_id>/
     manifest.yaml
     sources/
@@ -50,35 +60,23 @@ examples/
   before_after/
 
 schemas/
+  database_pool.seo_v3.yaml
 
 outputs/
-  <beamline>/
-    _work/
-      source_lists/
-      review_queue.json
-      raw_extracted_pvs.yaml
-    status.yaml
+  (empty — reserved for future export/render artifacts)
 
 reviews/  # ignored local review workspace
-  <beamline>/
-    review_decisions.json
-    accepted_decisions.json
-    fixed_decisions.json
-  SEO_v2/
-    REVIEW.md
-
-fixtures/
-  SEO_v2/
-    review_decisions.json
+  <beamline-or-pool>/
 
 exceptions/
-  <beamline>/
+  <scope>/
 
 proposals/
   rule_changes/
 
 notes/
 scripts/
+plan/
 ```
 
 ## Directory Responsibilities
@@ -91,10 +89,16 @@ LLM agents consistently. Database-pool input conversion procedures also live
 here so Draft agents see them before converting `inputs/<pool_id>/` source
 material into `database_pool/<pool_id>/` rows.
 
+`PV_NAMING_RULEBOOK.md` is currently a skeleton; agents must use the standard
+source document under `inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md`
+and `database_pool/abbreviations/registry.json` as the working policy until
+redrafted.
+
 `rules/review/`
 
-Contains rulebooks for validating generated PV data and documents. Review rules
-define what counts as a violation, warning, ambiguity, or recommendation.
+Contains rulebooks for validating generated SEO_V3 PV data and documents. The
+review rulebook is currently a skeleton with the same fallback authority order
+as the draft rulebook.
 
 `rules/decisions/`
 
@@ -105,14 +109,15 @@ ambiguous case, but approved rules still belong in `rules/draft/` and
 
 `standards/`
 
-Contains human-facing PV naming standard documents and candidates. These
-documents are for discussion and distribution. They are not active agent rules
-until promoted into `rules/draft/`, `rules/review/`, schemas, and examples.
+Contains human-facing candidate standard documents. These are for discussion
+and distribution. They are not active agent rules until promoted into
+`rules/draft/`, `rules/review/`, schemas, and examples.
 
 `inputs/`
 
 Contains source material intended to be processed. Use one subdirectory per
-beamline, such as `inputs/BL10A/`.
+pool (e.g. `inputs/BL10A/`, `inputs/BL9ASIM/`). The SEO_V3 standard source
+document lives at `inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md`.
 
 Input files may include memos or comments, but those claims are source context,
 not active rule authority. Approved naming policy belongs in active rulebooks.
@@ -120,16 +125,10 @@ When an agent converts natural-language or semi-structured input into SEO_V3
 database-pool rows, it must follow
 `rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md`.
 
-`temp/`
-
-Contains local temporary, external, or reference material. It is not part of the
-distributed workflow and is not an active rule source. Agents should read it only
-when the user explicitly points to it.
-
 `database_pool/`
 
-Contains normalized, reviewable PV candidate datasets for the SEO_V3
-database-pool workflow. Use one subdirectory per pool. Each pool should keep a
+Contains normalized, reviewable SEO_V3 PV candidate datasets and the durable
+abbreviation review registry. Use one subdirectory per pool. Each pool keeps a
 `manifest.yaml`, source-row files under `sources/*.rows.json`, and human
 decision overlays under `decisions/*.decisions.json`.
 
@@ -139,12 +138,18 @@ Canonical database-pool paths are:
 database_pool/<pool_id>/manifest.yaml
 database_pool/<pool_id>/sources/*.rows.json
 database_pool/<pool_id>/decisions/*.decisions.json
+database_pool/abbreviations/registry.json
 ```
 
 Rows in `database_pool/` are source facts, candidates, or human review
 decisions. They are not active naming policy until promoted into rulebooks,
 schemas, examples, or generated outputs through an explicit review/proposal
 step.
+
+`database_pool/abbreviations/registry.json` is the source-of-truth file for
+SEO_V3 abbreviation review records. Each record carries explicit source,
+status, rationale, and usage evidence. Candidate records remain
+review-required and must not unblock silent row approval.
 
 `examples/`
 
@@ -154,42 +159,29 @@ Contains examples used to stabilize generation and review behavior.
 - `examples/bad/`: intentionally invalid examples.
 - `examples/before_after/`: transformation examples.
 
+Examples are currently sparse — ID10 / SEO_v2 examples were removed during the
+2026-06-02 alignment. New examples should be added as approved SEO_V3 evidence
+accumulates.
+
 `schemas/`
 
-Contains machine-readable schema definitions for canonical data formats.
-`schemas/database_pool.seo_v3.yaml` defines the informal promoted
-database-pool contract. `schemas/pv_registry.seo_v2.yaml` defines the legacy
-SEO_v2 generated-output registry contract. `schemas/pv_registry.v0.yaml` is
-retained as a legacy contract for historical outputs and migration reference. A
-stricter validation schema may replace or extend the informal contracts later.
+Contains the active machine-readable schema definition,
+`schemas/database_pool.seo_v3.yaml`, which defines the informal SEO_V3
+database-pool contract. A stricter validation schema may replace or extend the
+informal contract later.
 
 `outputs/`
 
-Contains generated PV draft outputs. Use one subdirectory per beamline.
-Intermediate extraction artifacts live under `outputs/<beamline>/_work/`.
-The browser review path should use `_work/review_queue.json`, built from
-per-source `_work/source_lists/*.rows.json` rows, when present.
-Each active generated output directory should include `status.yaml` so scripts
-and agents can tell whether the output is `draft`, `reviewed`, `approved`, or
-`legacy`.
-For audited or distributed generated outputs, keep `_work/raw_extracted_pvs.yaml`
-with the output so registry entries remain traceable to source material.
+Reserved for future generated or exported artifacts derived from approved
+SEO_V3 evidence. Currently empty. Source rows and decision overlays live under
+`database_pool/`, not under `outputs/`.
 
 `reviews/`
 
 Contains local review reports and local human review decision files. Use one
-subdirectory per beamline. `reviews/` is ignored by git and is not a
-distribution artifact. Browser review decisions may be stored as
-machine-readable JSON rows under `reviews/<beamline>/`, not embedded only in
-HTML, but durable database-pool decisions belong under
-`database_pool/<pool_id>/decisions/`. Historical comparison fixture rows must
-not be stored under `reviews/`; use `fixtures/` for read-only fixtures.
-
-`fixtures/`
-
-Contains read-only test and comparison fixtures. Historical SEO_v2 DB rows live
-under `fixtures/SEO_v2/review_decisions.json`; review tooling may display them
-for comparison, but ordinary beamline saves must not rewrite fixtures.
+subdirectory per pool. `reviews/` is ignored by git and is not a distribution
+artifact. Browser review decisions live under
+`database_pool/<pool_id>/decisions/`, not under `reviews/`.
 
 `exceptions/`
 
@@ -213,65 +205,41 @@ Contains lightweight repository validation or maintenance scripts. Scripts may
 check rulebook/schema/example consistency, but they do not define naming policy.
 Active policy still belongs in `rules/`.
 
-Current database-pool entry points:
+Current entry points:
 
 ```text
-node scripts/validate_database_pool.js
+node scripts/import_database_pool.js --input inputs/<pool_id> --pool <pool_id>
+node scripts/import_database_pool.js --input inputs/<pool_id> --pool <pool_id> --write
 node scripts/review_server.js --database-pool <pool_id> --port 8212
+node scripts/validate_database_pool.js
 ./run_database_pool_workbench.sh [pool_id ...]
-```
-
-Legacy SEO_v2 output entry points:
-
-```text
-node scripts/validate_seo_v2_rules.js
-node scripts/validate_registry.js <beamline>
-node scripts/render_reference.js <beamline> --check
-node scripts/render_reference.js <beamline> --write
-node scripts/review_server.js <beamline> --port 8212
-node scripts/import_seo_review_decisions.js
+./check_database_pool.sh
 ```
 
 ## Workflow
 
-1. Put source material under `inputs/<beamline>/`.
-2. Use `temp/` only as local scratch or when the user explicitly points to it.
-   Do not treat `temp/` as a distributed workflow input or rule source.
-3. Use `standards/` for human-facing standard documents and candidate
-   discussion, not as active generation rules.
-4. Draft mode reads source material plus `rules/draft/`.
-5. Draft mode consults `rules/decisions/` only when active rules are ambiguous.
-6. Draft mode first writes raw extraction artifacts under
-   `outputs/<beamline>/_work/` for directory, mixed-format, structured, or
-   multi-entry source material. Review queue generation then writes per-source
-   SEO_v2-style lists under `_work/source_lists/` and a merged
-   `_work/review_queue.json`, then generated registry/reference results live
-   under `outputs/<beamline>/`.
-7. Generated output directories should declare their status in
-   `outputs/<beamline>/status.yaml`.
-8. Draft mode performs a self-review using `rules/review/` and writes local
-   `reviews/<beamline>/SELF_REVIEW.md`.
-9. Exceptions are recorded under `exceptions/<beamline>/` when current rules are
+1. Put source material under `inputs/<pool_id>/`.
+2. Use `standards/candidates/` for human-facing candidate standard discussion,
+   not as active generation rules.
+3. Draft mode reads source material plus `rules/draft/`.
+4. Draft mode consults `rules/decisions/` only when active rules are ambiguous.
+5. Draft mode converts source material into SEO_V3 database-pool rows under
+   `database_pool/<pool_id>/sources/`. Rows default to
+   `reviewStatus: "needs_input"`.
+6. Draft mode performs a self-review using `rules/review/` and writes local
+   `reviews/<beamline-or-pool>/SELF_REVIEW.md`.
+7. Exceptions are recorded under `exceptions/<scope>/` when current rules are
    insufficient.
-10. Review mode reads existing output, applies clear rule-based fixes unless
-    the user requested read-only review, and writes a local review log to
-    `reviews/<beamline>/REVIEW.md`.
-11. Human review may use `scripts/review_server.js <beamline>` to save local
-    row-array decision files under ignored `reviews/<beamline>/`. The server
-    reads `outputs/<beamline>/_work/review_queue.json` when present and falls
-    back to `_work/raw_extracted_pvs.yaml` while the queue migration is in
-    progress.
-12. Historical SEO_v2 DB rows may be imported into `fixtures/SEO_v2/` as
-    read-only comparison data for UI and pipeline tests. Imported rows remain
-    examples of prior accepted rows, not active policy.
-13. For SEO_V3 database-pool work, normalized source rows and decision overlays
-    are written under `database_pool/<pool_id>/`. These files support review,
-    merge, validation, and UI experiments. They become rule authority only when
-    a reviewed decision is promoted into rulebooks, schemas, examples, or
-    generated outputs through the proposal/review process.
-14. When source material under `inputs/<pool_id>/` is natural-language or
+8. Review mode reads existing database-pool source rows and decision overlays,
+   applies clear rule-based decisions to the overlay unless the user requested
+   read-only review, and writes a local review log to
+   `reviews/<beamline-or-pool>/REVIEW.md`.
+9. Human review uses `scripts/review_server.js --database-pool <pool_id>` to
+   load explicit pools and save workbench decision overlays under
+   `database_pool/<pool_id>/decisions/workbench.decisions.json`.
+10. When source material under `inputs/<pool_id>/` is natural-language or
     semi-structured inventory that the importer cannot parse safely, Draft
-    agents may convert it directly into reviewable database-pool rows only after
+    agents convert it directly into reviewable database-pool rows after
     consulting `rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md`.
 
 ## Proposal Promotion
@@ -287,53 +255,41 @@ When a proposal is approved:
 
 ## Canonical Data Direction
 
-Markdown tables are acceptable during early design because they are easy to read
-and discuss. The long-term direction should be a dual output:
-
-- Human-readable Markdown for review and collaboration.
-- Machine-readable JSON or YAML for validation, indexing, and reuse.
-
-The SEO_V3 database-pool schema and SEO_v2 generated-output schema are
-informal. Stricter validation can be added later without changing the
-user-facing workflow.
+Canonical PV data lives as machine-readable JSON under
+`database_pool/<pool_id>/sources/` and `database_pool/<pool_id>/decisions/`,
+governed by `schemas/database_pool.seo_v3.yaml`. Markdown is acceptable for
+human review and discussion, not as canonical data.
 
 ## Rulebook Direction
 
-The active generation/review rulebooks remain:
+The active generation/review rulebooks are:
 
-- `rules/draft/PV_NAMING_RULEBOOK.md`
-- `rules/review/PV_REVIEW_RULEBOOK.md`
+- `rules/draft/PV_NAMING_RULEBOOK.md` (skeleton)
+- `rules/review/PV_REVIEW_RULEBOOK.md` (skeleton)
 
 The active database-pool input conversion procedure is:
 
 - `rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md`
 
-The promoted SEO_V3 database-pool shape is:
+The active SEO_V3 PV shape is:
 
 ```text
 [SEC/SYS][PORT]-[AREA]:[DEV]-[SUBDEV]:[SignalName]
 ```
 
-The legacy SEO_v2 generated-output shape is:
+Rules should be promoted carefully from source-backed decisions. Do not encode
+a preference as a mandatory rule until the project owner confirms it.
 
-```text
-BL-[PORT]:[AREA]-[DEV]-[SUBDEV]:[SignalName]
-```
+## Future Retrieval Direction
 
-Rules should still be promoted carefully from source-backed decisions. Do not
-encode a preference as a mandatory rule until the project owner confirms it.
-
-## Future RAG Direction
-
-RAG may be added after enough examples, notes, and reviewed outputs exist.
-The likely retrieval sources are:
+A retrieval/evidence index over approved database-pool rows, approved
+abbreviation records, and curated examples may be added later — once enough
+approved evidence exists to make retrieval useful. Retrieval should support
+the workflow, not replace explicit rulebooks. Likely retrieval sources:
 
 - `rules/`
 - `examples/`
 - `rules/decisions/`
-- accepted outputs under `outputs/`
-- approved database-pool rows and abbreviation records
-- local review reports under ignored `reviews/` when present
+- approved rows under `database_pool/<pool_id>/`
+- approved abbreviation records
 - exceptions and proposals when investigating rule gaps
-
-RAG should support the workflow, not replace explicit rulebooks.

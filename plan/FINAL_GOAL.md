@@ -4,7 +4,8 @@ Status: planning artifact, not an active rulebook, schema, or naming policy.
 
 This file states the intended long-term workflow so future agents can check
 their work before changing importer, database-pool, review, or abbreviation
-behavior.
+behavior. Updated after the 2026-06-02 hard-reset alignment that removed all
+SEO_v2 / v0 paths.
 
 ## Target Workflow
 
@@ -52,10 +53,23 @@ conversion handles natural-language or semi-structured source material using
 Abbreviation choices are reviewable evidence. A code that looks plausible is
 not approved until it has gone through the abbreviation workflow.
 
+PV row approval and abbreviation approval are related but must not collapse
+into a silent global promotion. If every component abbreviation in a row is
+already approved and unambiguous, the row may be treated as approval-eligible.
+If a human approves a PV row that uses candidate abbreviations, the action
+should create source-backed abbreviation usage evidence and may promote only
+unambiguous abbreviation records. Any code/meaning/scope conflict must require
+explicit review before promotion.
+
 Approved rows, approved abbreviation records, curated examples, and relevant
 notes should become searchable retrieval evidence for future agents. Retrieval
 supports consistency; it does not override active rulebooks or promote policy
 automatically.
+
+Before any implementation resumes from this planning state, agents must run a
+fresh review gate over the current scope. Completion of future goals must also
+record reviewer/subagent evidence, or an explicit fallback self-review if no
+subagent tool is available.
 
 ## Long-Term Consistency Requirement
 
@@ -85,7 +99,7 @@ are met:
 - Do not expand the importer into natural-language interpretation without an
   explicit goal and review gate.
 - Do not reintroduce a second web workbench.
-- Do not make legacy SEO_v2 output paths the default for new work.
+- Do not reintroduce the removed SEO_v2 / v0 paths.
 
 ## Future Agents Should Check
 
@@ -98,5 +112,7 @@ Before changing this workflow, future agents should verify:
    or retrieval evidence into active policy?
 4. Does the change keep the web UI as a review surface, not the primary source
    interpreter?
-5. Does the change keep SEO_V3 database-pool work separate from legacy SEO_v2
-   compatibility output?
+5. Does the change include the required review gate before implementation and
+   recorded reviewer evidence before completion?
+6. Does abbreviation approval avoid silently promoting ambiguous code, meaning,
+   or scope choices?

@@ -1,13 +1,14 @@
 # SEO_V3 Pilot Scripts
 
-Milestone 1 keeps SEO_V3 contract work isolated from the active SEO_v2 scripts,
-fixtures, and schemas.
+This directory contains shared SEO_V3 contract helpers used by the
+database-pool workflow.
 
-Run the pilot contract validation with:
+Run the aggregate database-pool validation with:
 
 ```text
-node scripts/seo_v3_pilot/validate_contract.js
+node scripts/validate_database_pool.js
 ```
 
-This validates the SEO_V3 grammar, render function, fixture rows, and
-`standardPv` component/render invariant using only Node built-ins.
+The old standalone pilot contract validator was removed during the 2026-06-02
+hard-reset alignment. Contract checks now run through the active database-pool
+validation path.

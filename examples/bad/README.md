@@ -1,8 +1,6 @@
 # Bad Examples
 
-Intentionally invalid examples will live here.
+Intentionally invalid SEO_V3 database-pool examples will live here after the
+active rulebooks and approved evidence set are rebuilt.
 
-Current examples:
-
-- `ID10_bad_legacy_conversion.md`: examples of invalid SEO_v2 conversion and
-  stale v0/legacy output.
+This directory is currently empty after the 2026-06-02 hard-reset alignment.

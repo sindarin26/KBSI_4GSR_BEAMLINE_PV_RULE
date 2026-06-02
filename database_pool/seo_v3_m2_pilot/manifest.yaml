@@ -1,5 +1,0 @@
-pool_id: seo_v3_m2_pilot
-title: SEO_V3 M2 Data Layer Pilot
-status: pilot
-schema_version: database_pool_m2_pilot
-source_note: M2 fixture derived from SEO_V3 M1 golden examples

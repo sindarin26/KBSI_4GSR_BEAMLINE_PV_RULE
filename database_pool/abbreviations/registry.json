@@ -1,0 +1,1311 @@
+{
+  "schemaVersion": "seo_v3_abbreviation_review_v1",
+  "sourceOfTruth": true,
+  "statusPolicy": {
+    "candidateBlocksApproval": true,
+    "approvedDoesNotPromoteRules": true,
+    "promotionRequiresExplicitReview": true
+  },
+  "entries": [
+    {
+      "code": "BL",
+      "kind": "section",
+      "meaning": "Beamline",
+      "status": "approved",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:2.1",
+        "sourceLabel": "section BL definition in 4GSR standard section:2.1"
+      },
+      "rationale": "section code BL is approved only because the initial status policy approved this kind from the source standard. This approval is not inferred from row usage.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:2.1",
+            "sourceLabel": "section BL definition in 4GSR standard section:2.1"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "SR",
+      "kind": "section",
+      "meaning": "Storage Ring",
+      "status": "candidate",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:2.1",
+        "sourceLabel": "section SR definition in 4GSR standard section:2.1"
+      },
+      "rationale": "section code SR is a review-required candidate from the source standard. It must not allow silent row approval until explicitly approved.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:2.1",
+            "sourceLabel": "section SR definition in 4GSR standard section:2.1"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "FE",
+      "kind": "area",
+      "meaning": "Front-end",
+      "status": "approved",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.1",
+        "sourceLabel": "area FE definition in 4GSR standard section:4.1"
+      },
+      "rationale": "area code FE is approved only because the initial status policy approved this kind from the source standard. This approval is not inferred from row usage.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.1",
+            "sourceLabel": "area FE definition in 4GSR standard section:4.1"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "PTL",
+      "kind": "area",
+      "meaning": "Photon Transport Line",
+      "status": "approved",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.1",
+        "sourceLabel": "area PTL definition in 4GSR standard section:4.1"
+      },
+      "rationale": "area code PTL is approved only because the initial status policy approved this kind from the source standard. This approval is not inferred from row usage.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.1",
+            "sourceLabel": "area PTL definition in 4GSR standard section:4.1"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "OH",
+      "kind": "area",
+      "meaning": "Optical Hutch",
+      "status": "approved",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.1",
+        "sourceLabel": "area OH definition in 4GSR standard section:4.1"
+      },
+      "rationale": "area code OH is approved only because the initial status policy approved this kind from the source standard. This approval is not inferred from row usage.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.1",
+            "sourceLabel": "area OH definition in 4GSR standard section:4.1"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "EH",
+      "kind": "area",
+      "meaning": "Experimental Hutch",
+      "status": "approved",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.1",
+        "sourceLabel": "area EH definition in 4GSR standard section:4.1"
+      },
+      "rationale": "area code EH is approved only because the initial status policy approved this kind from the source standard. This approval is not inferred from row usage.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.1",
+            "sourceLabel": "area EH definition in 4GSR standard section:4.1"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "01A",
+      "kind": "port",
+      "meaning": "Beam Line 01A port",
+      "status": "approved",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.2",
+        "sourceLabel": "port 01A definition in 4GSR standard section:4.2"
+      },
+      "rationale": "port code 01A is approved only because the initial status policy approved this kind from the source standard. This approval is not inferred from row usage.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.2",
+            "sourceLabel": "port 01A definition in 4GSR standard section:4.2"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "01B",
+      "kind": "port",
+      "meaning": "Beam Line 01B port",
+      "status": "approved",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.2",
+        "sourceLabel": "port 01B definition in 4GSR standard section:4.2"
+      },
+      "rationale": "port code 01B is approved only because the initial status policy approved this kind from the source standard. This approval is not inferred from row usage.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.2",
+            "sourceLabel": "port 01B definition in 4GSR standard section:4.2"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "02A",
+      "kind": "port",
+      "meaning": "Beam Line 02A port",
+      "status": "approved",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.2",
+        "sourceLabel": "port 02A definition in 4GSR standard section:4.2"
+      },
+      "rationale": "port code 02A is approved only because the initial status policy approved this kind from the source standard. This approval is not inferred from row usage.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.2",
+            "sourceLabel": "port 02A definition in 4GSR standard section:4.2"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "02B",
+      "kind": "port",
+      "meaning": "Beam Line 02B port",
+      "status": "approved",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.2",
+        "sourceLabel": "port 02B definition in 4GSR standard section:4.2"
+      },
+      "rationale": "port code 02B is approved only because the initial status policy approved this kind from the source standard. This approval is not inferred from row usage.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.2",
+            "sourceLabel": "port 02B definition in 4GSR standard section:4.2"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "03A",
+      "kind": "port",
+      "meaning": "Beam Line 03A port",
+      "status": "approved",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.2",
+        "sourceLabel": "port 03A definition in 4GSR standard section:4.2"
+      },
+      "rationale": "port code 03A is approved only because the initial status policy approved this kind from the source standard. This approval is not inferred from row usage.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.2",
+            "sourceLabel": "port 03A definition in 4GSR standard section:4.2"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "03B",
+      "kind": "port",
+      "meaning": "Beam Line 03B port",
+      "status": "approved",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.2",
+        "sourceLabel": "port 03B definition in 4GSR standard section:4.2"
+      },
+      "rationale": "port code 03B is approved only because the initial status policy approved this kind from the source standard. This approval is not inferred from row usage.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.2",
+            "sourceLabel": "port 03B definition in 4GSR standard section:4.2"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "04A",
+      "kind": "port",
+      "meaning": "Beam Line 04A port",
+      "status": "approved",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.2",
+        "sourceLabel": "port 04A definition in 4GSR standard section:4.2"
+      },
+      "rationale": "port code 04A is approved only because the initial status policy approved this kind from the source standard. This approval is not inferred from row usage.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.2",
+            "sourceLabel": "port 04A definition in 4GSR standard section:4.2"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "04B",
+      "kind": "port",
+      "meaning": "Beam Line 04B port",
+      "status": "approved",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.2",
+        "sourceLabel": "port 04B definition in 4GSR standard section:4.2"
+      },
+      "rationale": "port code 04B is approved only because the initial status policy approved this kind from the source standard. This approval is not inferred from row usage.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.2",
+            "sourceLabel": "port 04B definition in 4GSR standard section:4.2"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "05A",
+      "kind": "port",
+      "meaning": "Beam Line 05A port",
+      "status": "approved",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.2",
+        "sourceLabel": "port 05A definition in 4GSR standard section:4.2"
+      },
+      "rationale": "port code 05A is approved only because the initial status policy approved this kind from the source standard. This approval is not inferred from row usage.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.2",
+            "sourceLabel": "port 05A definition in 4GSR standard section:4.2"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "05B",
+      "kind": "port",
+      "meaning": "Beam Line 05B port",
+      "status": "approved",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.2",
+        "sourceLabel": "port 05B definition in 4GSR standard section:4.2"
+      },
+      "rationale": "port code 05B is approved only because the initial status policy approved this kind from the source standard. This approval is not inferred from row usage.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.2",
+            "sourceLabel": "port 05B definition in 4GSR standard section:4.2"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "06A",
+      "kind": "port",
+      "meaning": "Beam Line 06A port",
+      "status": "approved",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.2",
+        "sourceLabel": "port 06A definition in 4GSR standard section:4.2"
+      },
+      "rationale": "port code 06A is approved only because the initial status policy approved this kind from the source standard. This approval is not inferred from row usage.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.2",
+            "sourceLabel": "port 06A definition in 4GSR standard section:4.2"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "06B",
+      "kind": "port",
+      "meaning": "Beam Line 06B port",
+      "status": "approved",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.2",
+        "sourceLabel": "port 06B definition in 4GSR standard section:4.2"
+      },
+      "rationale": "port code 06B is approved only because the initial status policy approved this kind from the source standard. This approval is not inferred from row usage.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.2",
+            "sourceLabel": "port 06B definition in 4GSR standard section:4.2"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "07A",
+      "kind": "port",
+      "meaning": "Beam Line 07A port",
+      "status": "approved",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.2",
+        "sourceLabel": "port 07A definition in 4GSR standard section:4.2"
+      },
+      "rationale": "port code 07A is approved only because the initial status policy approved this kind from the source standard. This approval is not inferred from row usage.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.2",
+            "sourceLabel": "port 07A definition in 4GSR standard section:4.2"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "07B",
+      "kind": "port",
+      "meaning": "Beam Line 07B port",
+      "status": "approved",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.2",
+        "sourceLabel": "port 07B definition in 4GSR standard section:4.2"
+      },
+      "rationale": "port code 07B is approved only because the initial status policy approved this kind from the source standard. This approval is not inferred from row usage.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.2",
+            "sourceLabel": "port 07B definition in 4GSR standard section:4.2"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "08A",
+      "kind": "port",
+      "meaning": "Beam Line 08A port",
+      "status": "approved",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.2",
+        "sourceLabel": "port 08A definition in 4GSR standard section:4.2"
+      },
+      "rationale": "port code 08A is approved only because the initial status policy approved this kind from the source standard. This approval is not inferred from row usage.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.2",
+            "sourceLabel": "port 08A definition in 4GSR standard section:4.2"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "08B",
+      "kind": "port",
+      "meaning": "Beam Line 08B port",
+      "status": "approved",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.2",
+        "sourceLabel": "port 08B definition in 4GSR standard section:4.2"
+      },
+      "rationale": "port code 08B is approved only because the initial status policy approved this kind from the source standard. This approval is not inferred from row usage.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.2",
+            "sourceLabel": "port 08B definition in 4GSR standard section:4.2"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "09A",
+      "kind": "port",
+      "meaning": "Beam Line 09A port",
+      "status": "approved",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.2",
+        "sourceLabel": "port 09A definition in 4GSR standard section:4.2"
+      },
+      "rationale": "port code 09A is approved only because the initial status policy approved this kind from the source standard. This approval is not inferred from row usage.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.2",
+            "sourceLabel": "port 09A definition in 4GSR standard section:4.2"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "09B",
+      "kind": "port",
+      "meaning": "Beam Line 09B port",
+      "status": "approved",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.2",
+        "sourceLabel": "port 09B definition in 4GSR standard section:4.2"
+      },
+      "rationale": "port code 09B is approved only because the initial status policy approved this kind from the source standard. This approval is not inferred from row usage.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.2",
+            "sourceLabel": "port 09B definition in 4GSR standard section:4.2"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "10A",
+      "kind": "port",
+      "meaning": "Beam Line 10A port",
+      "status": "approved",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.2",
+        "sourceLabel": "port 10A definition in 4GSR standard section:4.2"
+      },
+      "rationale": "port code 10A is approved only because the initial status policy approved this kind from the source standard. This approval is not inferred from row usage.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.2",
+            "sourceLabel": "port 10A definition in 4GSR standard section:4.2"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "10B",
+      "kind": "port",
+      "meaning": "Beam Line 10B port",
+      "status": "approved",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.2",
+        "sourceLabel": "port 10B definition in 4GSR standard section:4.2"
+      },
+      "rationale": "port code 10B is approved only because the initial status policy approved this kind from the source standard. This approval is not inferred from row usage.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.2",
+            "sourceLabel": "port 10B definition in 4GSR standard section:4.2"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "IVU",
+      "kind": "device",
+      "meaning": "In-vacuum Undulator",
+      "status": "candidate",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.3",
+        "sourceLabel": "device IVU definition in 4GSR standard section:4.3"
+      },
+      "rationale": "device code IVU is a review-required candidate from the source standard. It must not allow silent row approval until explicitly approved.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.3",
+            "sourceLabel": "device IVU definition in 4GSR standard section:4.3"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "FRMASK",
+      "kind": "device",
+      "meaning": "Fixed Mask",
+      "status": "candidate",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.3",
+        "sourceLabel": "device FRMASK definition in 4GSR standard section:4.3"
+      },
+      "rationale": "device code FRMASK is a review-required candidate from the source standard. It must not allow silent row approval until explicitly approved.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.3",
+            "sourceLabel": "device FRMASK definition in 4GSR standard section:4.3"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "MONO",
+      "kind": "device",
+      "meaning": "Monochromator",
+      "status": "candidate",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.3",
+        "sourceLabel": "device MONO definition in 4GSR standard section:4.3"
+      },
+      "rationale": "device code MONO is a review-required candidate from the source standard. It must not allow silent row approval until explicitly approved.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.3",
+            "sourceLabel": "device MONO definition in 4GSR standard section:4.3"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "MVMASK",
+      "kind": "device",
+      "meaning": "Movable Mask",
+      "status": "candidate",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.3",
+        "sourceLabel": "device MVMASK definition in 4GSR standard section:4.3"
+      },
+      "rationale": "device code MVMASK is a review-required candidate from the source standard. It must not allow silent row approval until explicitly approved.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.3",
+            "sourceLabel": "device MVMASK definition in 4GSR standard section:4.3"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "HHLM",
+      "kind": "device",
+      "meaning": "High Heat Load Mirror",
+      "status": "candidate",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.3",
+        "sourceLabel": "device HHLM definition in 4GSR standard section:4.3"
+      },
+      "rationale": "device code HHLM is a review-required candidate from the source standard. It must not allow silent row approval until explicitly approved.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.3",
+            "sourceLabel": "device HHLM definition in 4GSR standard section:4.3"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "WBSLT",
+      "kind": "device",
+      "meaning": "White Beam Slit",
+      "status": "candidate",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.3",
+        "sourceLabel": "device WBSLT definition in 4GSR standard section:4.3"
+      },
+      "rationale": "device code WBSLT is a review-required candidate from the source standard. It must not allow silent row approval until explicitly approved.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.3",
+            "sourceLabel": "device WBSLT definition in 4GSR standard section:4.3"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "KBVM",
+      "kind": "device",
+      "meaning": "Vertical KB Mirror",
+      "status": "candidate",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.3",
+        "sourceLabel": "device KBVM definition in 4GSR standard section:4.3"
+      },
+      "rationale": "device code KBVM is a review-required candidate from the source standard. It must not allow silent row approval until explicitly approved.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.3",
+            "sourceLabel": "device KBVM definition in 4GSR standard section:4.3"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "KBSLT",
+      "kind": "device",
+      "meaning": "KB Mirror Slit",
+      "status": "candidate",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.3",
+        "sourceLabel": "device KBSLT definition in 4GSR standard section:4.3"
+      },
+      "rationale": "device code KBSLT is a review-required candidate from the source standard. It must not allow silent row approval until explicitly approved.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.3",
+            "sourceLabel": "device KBSLT definition in 4GSR standard section:4.3"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "KBHM",
+      "kind": "device",
+      "meaning": "Horizontal KB Mirror",
+      "status": "candidate",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.3",
+        "sourceLabel": "device KBHM definition in 4GSR standard section:4.3"
+      },
+      "rationale": "device code KBHM is a review-required candidate from the source standard. It must not allow silent row approval until explicitly approved.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.3",
+            "sourceLabel": "device KBHM definition in 4GSR standard section:4.3"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "ION",
+      "kind": "device",
+      "meaning": "Ion Chamber",
+      "status": "candidate",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.3",
+        "sourceLabel": "device ION definition in 4GSR standard section:4.3"
+      },
+      "rationale": "device code ION is a review-required candidate from the source standard. It must not allow silent row approval until explicitly approved.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.3",
+            "sourceLabel": "device ION definition in 4GSR standard section:4.3"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "SMPL",
+      "kind": "device",
+      "meaning": "Sample Stage",
+      "status": "candidate",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.3",
+        "sourceLabel": "device SMPL definition in 4GSR standard section:4.3"
+      },
+      "rationale": "device code SMPL is a review-required candidate from the source standard. It must not allow silent row approval until explicitly approved.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.3",
+            "sourceLabel": "device SMPL definition in 4GSR standard section:4.3"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "ATT",
+      "kind": "device",
+      "meaning": "Attenuator",
+      "status": "candidate",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.3",
+        "sourceLabel": "device ATT definition in 4GSR standard section:4.3"
+      },
+      "rationale": "device code ATT is a review-required candidate from the source standard. It must not allow silent row approval until explicitly approved.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.3",
+            "sourceLabel": "device ATT definition in 4GSR standard section:4.3"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "SH",
+      "kind": "device",
+      "meaning": "Shutter",
+      "status": "candidate",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.3",
+        "sourceLabel": "device SH definition in 4GSR standard section:4.3"
+      },
+      "rationale": "device code SH is a review-required candidate from the source standard. It must not allow silent row approval until explicitly approved.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.3",
+            "sourceLabel": "device SH definition in 4GSR standard section:4.3"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "CCD",
+      "kind": "device",
+      "meaning": "Detector / Camera",
+      "status": "candidate",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.3",
+        "sourceLabel": "device CCD definition in 4GSR standard section:4.3"
+      },
+      "rationale": "device code CCD is a review-required candidate from the source standard. It must not allow silent row approval until explicitly approved.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.3",
+            "sourceLabel": "device CCD definition in 4GSR standard section:4.3"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "GIRD",
+      "kind": "subdevice",
+      "meaning": "Girder",
+      "status": "candidate",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.4",
+        "sourceLabel": "subdevice GIRD definition in 4GSR standard section:4.4"
+      },
+      "rationale": "subdevice code GIRD is a review-required candidate from the source standard. It must not allow silent row approval until explicitly approved.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.4",
+            "sourceLabel": "subdevice GIRD definition in 4GSR standard section:4.4"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "BODY",
+      "kind": "subdevice",
+      "meaning": "Main Body",
+      "status": "candidate",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.4",
+        "sourceLabel": "subdevice BODY definition in 4GSR standard section:4.4"
+      },
+      "rationale": "subdevice code BODY is a review-required candidate from the source standard. It must not allow silent row approval until explicitly approved.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.4",
+            "sourceLabel": "subdevice BODY definition in 4GSR standard section:4.4"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "STG",
+      "kind": "subdevice",
+      "meaning": "Stage",
+      "status": "candidate",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.4",
+        "sourceLabel": "subdevice STG definition in 4GSR standard section:4.4"
+      },
+      "rationale": "subdevice code STG is a review-required candidate from the source standard. It must not allow silent row approval until explicitly approved.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.4",
+            "sourceLabel": "subdevice STG definition in 4GSR standard section:4.4"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "CTRL",
+      "kind": "subdevice",
+      "meaning": "Controller",
+      "status": "candidate",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.4",
+        "sourceLabel": "subdevice CTRL definition in 4GSR standard section:4.4"
+      },
+      "rationale": "subdevice code CTRL is a review-required candidate from the source standard. It must not allow silent row approval until explicitly approved.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.4",
+            "sourceLabel": "subdevice CTRL definition in 4GSR standard section:4.4"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "ENC",
+      "kind": "subdevice",
+      "meaning": "Encoder",
+      "status": "candidate",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.4",
+        "sourceLabel": "subdevice ENC definition in 4GSR standard section:4.4"
+      },
+      "rationale": "subdevice code ENC is a review-required candidate from the source standard. It must not allow silent row approval until explicitly approved.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.4",
+            "sourceLabel": "subdevice ENC definition in 4GSR standard section:4.4"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "MIRR",
+      "kind": "subdevice",
+      "meaning": "Mirror Unit",
+      "status": "candidate",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.4",
+        "sourceLabel": "subdevice MIRR definition in 4GSR standard section:4.4"
+      },
+      "rationale": "subdevice code MIRR is a review-required candidate from the source standard. It must not allow silent row approval until explicitly approved.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.4",
+            "sourceLabel": "subdevice MIRR definition in 4GSR standard section:4.4"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "SLIT",
+      "kind": "subdevice",
+      "meaning": "Slit Unit",
+      "status": "candidate",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.4",
+        "sourceLabel": "subdevice SLIT definition in 4GSR standard section:4.4"
+      },
+      "rationale": "subdevice code SLIT is a review-required candidate from the source standard. It must not allow silent row approval until explicitly approved.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.4",
+            "sourceLabel": "subdevice SLIT definition in 4GSR standard section:4.4"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "CRYS",
+      "kind": "subdevice",
+      "meaning": "Crystal Unit",
+      "status": "candidate",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.4",
+        "sourceLabel": "subdevice CRYS definition in 4GSR standard section:4.4"
+      },
+      "rationale": "subdevice code CRYS is a review-required candidate from the source standard. It must not allow silent row approval until explicitly approved.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.4",
+            "sourceLabel": "subdevice CRYS definition in 4GSR standard section:4.4"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "DIAG",
+      "kind": "subdevice",
+      "meaning": "Diagnostics",
+      "status": "candidate",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.4",
+        "sourceLabel": "subdevice DIAG definition in 4GSR standard section:4.4"
+      },
+      "rationale": "subdevice code DIAG is a review-required candidate from the source standard. It must not allow silent row approval until explicitly approved.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.4",
+            "sourceLabel": "subdevice DIAG definition in 4GSR standard section:4.4"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "code": "VALV",
+      "kind": "subdevice",
+      "meaning": "Valve Unit",
+      "status": "candidate",
+      "scope": "global",
+      "source": {
+        "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+        "sourceAnchor": "section:4.4",
+        "sourceLabel": "subdevice VALV definition in 4GSR standard section:4.4"
+      },
+      "rationale": "subdevice code VALV is a review-required candidate from the source standard. It must not allow silent row approval until explicitly approved.",
+      "usageEvidence": {
+        "sourceList": [
+          {
+            "sourceId": "inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md",
+            "sourceAnchor": "section:4.4",
+            "sourceLabel": "subdevice VALV definition in 4GSR standard section:4.4"
+          }
+        ],
+        "rowUsage": {
+          "currentCount": 0,
+          "examples": []
+        }
+      }
+    }
+  ]
+}

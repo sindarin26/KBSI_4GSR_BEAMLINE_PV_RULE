@@ -1,8 +1,7 @@
 # Before And After Examples
 
-Transformation examples will live here.
+SEO_V3 transformation examples will live here. They should show how rough
+source material becomes source-backed `database_pool/<pool_id>/sources/*.rows.json`
+rows.
 
-Current examples:
-
-- `ID10_legacy_migration.md`: legacy simulation PVs mapped to active SEO_v2
-  identity names.
+This directory is currently empty after the 2026-06-02 hard-reset alignment.

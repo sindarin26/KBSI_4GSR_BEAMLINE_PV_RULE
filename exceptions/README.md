@@ -10,13 +10,12 @@ may recommend an exception record instead of creating it.
 Exception records should include:
 
 - source file or user-provided source;
-- `raw_id` and source trace when `raw_extracted_pvs.yaml` exists;
-- beamline and SEO_v2 `BL-[PORT]` context when available;
+- pool ID and source trace when a database-pool row exists;
+- related `uid`, `sourceId`, `sourceAnchor`, and `standardPv` when available;
 - unsupported case;
 - why current rules do not cover it;
-- proposed temporary output status, such as `decision_required` or `exception`;
-- link to the registry entry when the same `raw_id` is also kept in
-  `pv_registry.yaml`;
+- proposed temporary row status, such as `needs_input`, `exception`, or
+  `proposal`;
 - optional link to a rule-change proposal.
 
 ## File Naming
@@ -24,21 +23,22 @@ Exception records should include:
 Use:
 
 ```text
-exceptions/<beamline>/EXC-0001-short-slug.md
+exceptions/<scope>/EXC-0001-short-slug.md
 ```
 
-Increment the numeric ID within each beamline directory.
+Increment the numeric ID within each scope directory.
 
 ## Required Frontmatter
 
 ```yaml
 ---
 id: EXC-0001
-beamline: ID10
+scope: BL10A
 status: open
 created: YYYY-MM-DD
 source: path/or/user-message
-raw_ids: []
+uids: []
+standard_pvs: []
 related_proposals: []
 ---
 ```

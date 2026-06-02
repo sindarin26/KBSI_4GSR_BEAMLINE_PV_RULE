@@ -1,35 +1,12 @@
 # Outputs
 
-Generated PV outputs should live here.
+Generated or exported artifacts derived from approved SEO_V3 database-pool
+evidence belong here.
 
-Use one subdirectory per beamline, for example:
+The directory is intentionally empty after the 2026-06-02 hard-reset alignment.
+Approved-evidence export and rendering are planned future work; the active
+review database lives under `database_pool/<pool_id>/`, not under `outputs/`.
 
-```text
-outputs/ID10/
-```
-
-Generated outputs intended to be current must declare:
-
-```yaml
-rulebook_version: SEO_v2
-```
-
-Each output directory should include:
-
-```text
-pv_registry.yaml
-PV_REFERENCE.md
-_work/raw_extracted_pvs.yaml
-status.yaml
-```
-
-`status.yaml` records whether the directory is `draft`, `reviewed`, `approved`,
-or `legacy` and points to the canonical registry, reference, raw extraction, and
-review log.
-
-Validate a current output directory with:
-
-```text
-node scripts/validate_registry.js <beamline>
-node scripts/render_reference.js <beamline> --check
-```
+Do not use this directory as a review database. Source rows and decision
+overlays belong under `database_pool/<pool_id>/sources/` and
+`database_pool/<pool_id>/decisions/`.

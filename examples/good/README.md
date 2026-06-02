@@ -1,7 +1,6 @@
 # Good Examples
 
-Valid examples will live here.
+Valid SEO_V3 database-pool examples will live here after approved evidence
+accumulates.
 
-Current examples:
-
-- `ID10_minimal_registry.yaml`: minimal valid SEO_v2 registry shape.
+This directory is currently empty after the 2026-06-02 hard-reset alignment.

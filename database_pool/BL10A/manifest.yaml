@@ -1,5 +1,11 @@
 pool_id: BL10A
-title: BL10A Small Migration Pilot Pool
-status: pilot
-schema_version: database_pool_m4_pilot
-source_note: Controlled M4 subset from ID10 source material using the owner-confirmed BL10A pilot port
+title: BL10A Beamline Database Pool
+status: empty
+schema_version: database_pool_seo_v3
+source_inputs:
+  - inputs/BL10A/
+source_note: |
+  BL10A pool. Source material under inputs/BL10A/ awaits conversion
+  (mechanical importer or agent conversion) into source-backed rows.
+  Sources and decisions were reset on 2026-06-02 during the SEO_V3
+  hard-reset alignment.

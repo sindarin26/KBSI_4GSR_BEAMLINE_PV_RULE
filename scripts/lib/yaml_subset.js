@@ -169,7 +169,7 @@ function parseFrontmatterMarkdown(text) {
 //   - booleans  → bare true/false
 //   - arrays    → block sequence ("- ") at the given indent
 //   - objects   → block mapping at the given indent
-// Produces output compatible with the existing pv_registry.yaml format.
+// Produces output compatible with the parser above.
 function serializeYaml(value, indent) {
   indent = indent || 0;
   const pad = " ".repeat(indent);

@@ -3,7 +3,7 @@
 Status: planning artifact, not an active rulebook, schema, or naming policy.
 
 This file describes the current data-processing pipeline as observed on
-2026-06-01.
+2026-06-02 after the SEO_v2 / v0 hard-reset alignment.
 
 ## SEO_V3 Database-Pool Pipeline
 
@@ -16,11 +16,15 @@ flowchart TD
   D --> E
   E --> F[review_server.js database-pool mode]
   G[database_pool/<pool_id>/decisions/*.decisions.json] --> F
-  H[fixtures/seo_v3_pilot/abbreviation_registry.json\nread-only] --> F
+  H[database_pool/abbreviations/registry.json\nread-only] --> F
   F --> I[merged review rows in browser]
   I --> J[database_pool/<pool_id>/decisions/workbench.decisions.json]
   J --> F
 ```
+
+The hard reset cleared previously imported pilot rows and decisions; the
+pipeline above is in place but the database pools are empty until re-import
+or agent conversion runs.
 
 ## Mechanical Importer
 
@@ -36,8 +40,8 @@ Current behavior:
 - records `sourceTrace.sourceKind: "database_pool_import"`;
 - marks rows as aggressive inference requiring human review.
 
-This path is not natural-language understanding. In the current repository it
-is separate from agent-mediated conversion.
+This path is not natural-language understanding. It is intentionally separate
+from agent-mediated conversion.
 
 ## Agent-Mediated Conversion
 
@@ -62,7 +66,8 @@ importer command.
 
 `scripts/review_server.js --database-pool <pool_id> --port 8212` currently:
 
-- loads explicit database pools;
+- loads explicit database pools (positional beamline arguments were removed
+  in the hard reset);
 - reads `sources/*.rows.json`;
 - reads `decisions/*.decisions.json`;
 - gives `workbench.decisions.json` effective overlay precedence;
@@ -70,7 +75,7 @@ importer command.
 - computes orphan decisions and duplicate approved `standardPv` conflicts;
 - loads the abbreviation registry as read-only input;
 - computes abbreviation issues for database-pool rows;
-- adapts SEO_V3 rows to the existing review table UI;
+- adapts SEO_V3 rows to the review table UI;
 - saves changed decisions to
   `database_pool/<pool_id>/decisions/workbench.decisions.json`.
 
@@ -78,15 +83,15 @@ The server is a review surface. It does not rewrite source rows.
 
 ## Abbreviation Data
 
-Current abbreviation data lives at:
+Current abbreviation review data lives at:
 
 ```text
-fixtures/seo_v3_pilot/abbreviation_registry.json
+database_pool/abbreviations/registry.json
 ```
 
 The registry is machine-readable and validated by database-pool checks. It is
 currently read-only from the browser review server. Dedicated abbreviation
-review and edit behavior is deferred.
+edit behavior is deferred.
 
 ## Validation
 
@@ -103,22 +108,14 @@ Current aggregate database-pool validation:
 node scripts/validate_database_pool.js
 ```
 
-Some validators create temporary fixtures or HTTP servers. In a read-only
-sandbox those checks may fail for environmental reasons even when the workflow
-contract is valid.
+The current aggregate validator does not start the browser server. Use
+`node --check scripts/review_server.js` for syntax validation and launch
+`scripts/review_server.js --database-pool <pool_id> --port 8212` manually when
+an HTTP smoke check is needed.
 
-## Legacy SEO_v2 Pipeline
+## Removed Legacy Pipelines
 
-```mermaid
-flowchart TD
-  A[inputs/<beamline>/ source material] --> B[raw extraction artifacts]
-  B --> C[outputs/<beamline>/_work/review_queue.json]
-  C --> D[review_server.js legacy mode]
-  E[reviews/<beamline>/*.json decisions] --> D
-  D --> E
-  E --> F[outputs/<beamline>/pv_registry.yaml]
-  F --> G[outputs/<beamline>/PV_REFERENCE.md]
-```
-
-The legacy path remains available for historical ID10 output and compatibility
-scripts. It should not be treated as the default new-work path.
+The previous SEO_v2 generated-output pipeline
+(`outputs/<beamline>/pv_registry.yaml`, `PV_REFERENCE.md`,
+`_work/review_queue.json`, related validators/renderers) was removed during the
+hard reset. Re-introducing a parallel non-SEO_V3 pipeline is a non-goal.

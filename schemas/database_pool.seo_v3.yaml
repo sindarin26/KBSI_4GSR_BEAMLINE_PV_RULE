@@ -7,6 +7,7 @@ database_pool:
     manifest: manifest.yaml
     sources: sources/*.rows.json
     decisions: decisions/*.decisions.json
+    abbreviations: database_pool/abbreviations/registry.json
   status: promoted_pilot
   policy:
     source_rows_are: source_facts_or_reviewable_candidates
@@ -110,8 +111,8 @@ decision_rows_file:
     rule: decision uid overlays a source row uid; missing source rows merge as orphan
 
 abbreviation_registry:
-  path: fixtures/seo_v3_pilot/abbreviation_registry.json
-  status: promoted_pilot_fixture
+  path: database_pool/abbreviations/registry.json
+  status: source_of_truth
   required:
     entries: list
   entry:
@@ -121,7 +122,23 @@ abbreviation_registry:
       meaning: string
       status: string
       scope: string
-      source: string
+      source: object
+      rationale: string
+      usageEvidence: object
+    source:
+      required:
+        sourceId: string
+        sourceAnchor: string
+        sourceLabel: string
+      rule: sourceId must not point at temp/
+    usageEvidence:
+      required:
+        sourceList: list
+        rowUsage: object
+      rowUsage:
+        required:
+          currentCount: integer
+          examples: list
     kind_values:
       - section
       - port
@@ -146,8 +163,9 @@ abbreviation_registry:
 workbench:
   entrypoint: scripts/review_server.js --database-pool <pool_id> --port 8212
   wrapper: ./run_database_pool_workbench.sh [pool_id ...]
-  validation: scripts/review_server_pilot/validate_database_pool_mode.js
-  aggregate_validation: scripts/validate_database_pool.js --with-http
+  validation: node --check scripts/review_server.js
+  aggregate_validation: node scripts/validate_database_pool.js
+  manual_smoke: scripts/review_server.js --database-pool <pool_id> --port 8212
   tabs:
     - All Rows
     - Review Queue
@@ -163,7 +181,7 @@ workbench:
   save_targets:
     row_decisions: database_pool/<pool_id>/decisions/workbench.decisions.json
   read_only_inputs:
-    abbreviation_registry: fixtures/seo_v3_pilot/abbreviation_registry.json
+    abbreviation_registry: database_pool/abbreviations/registry.json
   behavior:
     source_rows: read_only
     abbreviation_registry: read_only

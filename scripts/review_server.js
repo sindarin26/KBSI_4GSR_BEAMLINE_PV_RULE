@@ -4,13 +4,6 @@ const fs = require("fs");
 const http = require("http");
 const path = require("path");
 const {
-  rel,
-  posixRel,
-  loadRegistry,
-  loadRawExtraction,
-  loadExceptionFrontmatters,
-} = require("./lib/pv_workbench");
-const {
   DURABLE_REVIEW_STATUSES,
   loadPool,
   mergeRows,
@@ -18,50 +11,31 @@ const {
 const {
   blockingAbbreviationIssues,
   loadRegistry: loadAbbreviationRegistry,
+  resolveRegistryPath,
   validateRegistry: validateAbbreviationRegistry,
 } = require("./abbreviation_registry_pilot/abbreviation_registry");
 
+const repoRoot = path.resolve(__dirname, "..");
+const rel = (...parts) => path.join(repoRoot, ...parts);
+const posixRel = (absolute) => path.relative(repoRoot, absolute).split(path.sep).join("/");
+
 const cli = parseCli(process.argv.slice(2));
 if (cli.help || cli.error) {
-  if (cli.error && cli.error !== "missing beamline") console.error(`FAIL: ${cli.error}`);
+  if (cli.error) console.error(`FAIL: ${cli.error}`);
   printUsage();
-  process.exit(2);
+  process.exit(cli.help ? 0 : 2);
 }
 
-const mode = cli.databasePoolIds.length > 0 ? "database_pool" : "legacy_output";
-const beamline = mode === "legacy_output" ? cli.beamline : "";
 const databasePoolIds = cli.databasePoolIds;
 const port = cli.port;
 const host = cli.host;
-
-const reviewDir = mode === "legacy_output" ? rel("reviews", beamline) : "";
-const decisionsPath = mode === "legacy_output" ? path.join(reviewDir, "review_decisions.json") : "";
-const acceptedPath = mode === "legacy_output" ? path.join(reviewDir, "accepted_decisions.json") : "";
-const fixedPath = mode === "legacy_output" ? path.join(reviewDir, "fixed_decisions.json") : "";
-const queuePath = mode === "legacy_output" ? rel("outputs", beamline, "_work", "review_queue.json") : "";
-const activeRulebookVersion = mode === "legacy_output" ? "SEO_v2" : "SEO_V3";
-const activeRulebookLabel = mode === "legacy_output" ? "SEO_V2" : "SEO_V3";
-const seedDataset = mode === "legacy_output" ? "SEO_v2" : "";
-const seedFixturesDir = mode === "legacy_output" ? rel("fixtures", seedDataset) : "";
-const seedDecisionsPath = mode === "legacy_output" ? path.join(seedFixturesDir, "review_decisions.json") : "";
-const abbreviationRegistryPath = rel("fixtures", "seo_v3_pilot", "abbreviation_registry.json");
+const abbreviationRegistryPath = resolveRegistryPath(repoRoot);
 let cachedAbbreviationRegistry = null;
 let cachedRows = [];
 let cachedLoadedAt = "";
 
-const LEGACY_REVIEW_STATUSES = [
-  "needs_input",
-  "accepted",
-  "approved",
-  "edited",
-  "exception",
-  "skipped",
-  "proposal",
-  "fixed",
-];
-const DATABASE_POOL_REVIEW_STATUSES = [...DURABLE_REVIEW_STATUSES];
-const REVIEW_STATUSES = mode === "legacy_output" ? LEGACY_REVIEW_STATUSES : DATABASE_POOL_REVIEW_STATUSES;
-const ACCEPTED_STATUSES = new Set(["accepted", "approved", "edited", "fixed"]);
+const REVIEW_STATUSES = [...DURABLE_REVIEW_STATUSES];
+const ACCEPTED_STATUSES = new Set(["accepted", "approved"]);
 
 reloadStateCache();
 
@@ -78,16 +52,9 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(port, host, () => {
-  if (mode === "legacy_output") {
-    console.log(`Review server for ${beamline}: http://${host}:${port}/`);
-    const queueExists = fs.existsSync(queuePath);
-    console.log(`Reading queue from: ${posixRel(queueExists ? queuePath : rel("outputs", beamline, "_work", "raw_extracted_pvs.yaml"))}${queueExists ? "" : " (fallback — run build_review_queue.js to generate review_queue.json)"}`);
-    console.log(`Saving decisions to ${posixRel(decisionsPath)}`);
-  } else {
-    console.log(`Review server for database pools ${databasePoolIds.join(", ")}: http://${host}:${port}/`);
-    console.log("Server-side pool auto-discovery is disabled; loaded only explicit --database-pool arguments.");
-    console.log("Saving database-pool decisions to database_pool/<pool_id>/decisions/workbench.decisions.json");
-  }
+  console.log(`Review server for database pools ${databasePoolIds.join(", ")}: http://${host}:${port}/`);
+  console.log("Server-side pool auto-discovery is disabled; loaded only explicit --database-pool arguments.");
+  console.log("Saving database-pool decisions to database_pool/<pool_id>/decisions/workbench.decisions.json");
 });
 
 server.on("error", (err) => {
@@ -97,14 +64,12 @@ server.on("error", (err) => {
 
 function parseCli(args) {
   const result = {
-    beamline: "",
     databasePoolIds: [],
     host: "127.0.0.1",
     port: 8212,
     help: false,
     error: "",
   };
-  const positionals = [];
   for (let index = 0; index < args.length; index += 1) {
     const arg = args[index];
     if (arg === "--help" || arg === "-h") {
@@ -137,19 +102,11 @@ function parseCli(args) {
       result.error = `unknown option: ${arg}`;
       continue;
     }
-    positionals.push(arg);
+    result.error = `unexpected positional argument: ${arg}`;
   }
   if (result.help) return result;
-  if (positionals.length > 0 && result.databasePoolIds.length > 0) {
-    result.error = "legacy beamline argument cannot be mixed with --database-pool";
-    return result;
-  }
-  if (result.databasePoolIds.length === 0) {
-    if (positionals.length !== 1) {
-      result.error = "missing beamline";
-      return result;
-    }
-    result.beamline = positionals[0];
+  if (!result.error && result.databasePoolIds.length === 0) {
+    result.error = "at least one --database-pool <pool_id> is required";
   }
   if (!result.host) result.error = "--host requires a value";
   return result;
@@ -157,7 +114,6 @@ function parseCli(args) {
 
 function printUsage() {
   console.error("Usage:");
-  console.error("  node scripts/review_server.js <beamline> [--host 127.0.0.1] [--port 8212]");
   console.error("  node scripts/review_server.js --database-pool <pool_id> [--database-pool <pool_id> ...] [--host 127.0.0.1] [--port 8212]");
 }
 
@@ -170,7 +126,7 @@ function sendHtml(res) {
 }
 
 function reloadStateCache() {
-  cachedRows = mode === "legacy_output" ? buildDecisionRows() : buildDatabasePoolRows();
+  cachedRows = buildDatabasePoolRows();
   cachedLoadedAt = new Date().toISOString();
 }
 
@@ -178,25 +134,12 @@ function sendState(res) {
   try {
     reloadStateCache();
     sendJson(res, 200, {
-      mode,
-      beamline: mode === "legacy_output" ? beamline : databasePoolIds.join(","),
-      poolIds: mode === "database_pool" ? databasePoolIds : [],
-      activeRulebookVersion,
-      activeRulebookLabel,
-      seedDataset,
-      queueSource: mode === "legacy_output"
-        ? fs.existsSync(queuePath)
-          ? posixRel(queuePath)
-          : posixRel(rel("outputs", beamline, "_work", "raw_extracted_pvs.yaml"))
-        : databasePoolIds.map((poolId) => posixRel(rel("database_pool", poolId))).join(", "),
+      poolIds: databasePoolIds,
+      activeRulebookVersion: "SEO_V3",
+      queueSource: databasePoolIds.map((poolId) => posixRel(rel("database_pool", poolId))).join(", "),
       loadedAt: cachedLoadedAt,
-      paths: mode === "legacy_output" ? {
-        reviewDecisions: posixRel(decisionsPath),
-        acceptedDecisions: posixRel(acceptedPath),
-        fixedDecisions: posixRel(fixedPath),
-        seedDecisions: posixRel(seedDecisionsPath),
-      } : databasePoolPaths(),
-      abbreviationRegistry: mode === "database_pool" ? abbreviationRegistrySummary() : null,
+      paths: databasePoolPaths(),
+      abbreviationRegistry: abbreviationRegistrySummary(),
       reviewStatuses: REVIEW_STATUSES,
       rows: cachedRows,
     });
@@ -206,56 +149,6 @@ function sendState(res) {
 }
 
 function saveDecisionRows(res, body) {
-  if (mode === "database_pool") {
-    return saveDatabasePoolDecisionRows(res, body);
-  }
-  try {
-    const rows = normalizeRows(Array.isArray(body.rows) ? body.rows : body);
-    const beamlineRows = rows.filter((row) => row.dataset !== seedDataset);
-    const seedRows = rows.filter((row) => row.dataset === seedDataset);
-    if (rows.length > 0 && beamlineRows.length === 0) {
-      sendJson(res, 400, {
-        error: "seed_only_write_rejected",
-        message: "seed fixture rows are read-only; POST must contain beamline decision rows",
-      });
-      return;
-    }
-    if (beamlineRows.length === 0 && fs.existsSync(decisionsPath)) {
-      sendJson(res, 400, {
-        error: "empty_write_rejected",
-        message: `POST contains 0 beamline rows but ${posixRel(decisionsPath)} already exists — send at least one row or delete the file first`,
-      });
-      return;
-    }
-    const acceptedRows = beamlineRows.filter((row) => ACCEPTED_STATUSES.has(row.reviewStatus));
-    const fixedRows = beamlineRows.filter((row) => row.reviewStatus === "fixed");
-    fs.mkdirSync(reviewDir, { recursive: true });
-    writeJson(decisionsPath, beamlineRows);
-    writeJson(acceptedPath, acceptedRows);
-    writeJson(fixedPath, fixedRows);
-    reloadStateCache();
-    cachedLoadedAt = new Date().toISOString();
-    sendJson(res, 200, {
-      ok: true,
-      rowCount: beamlineRows.length,
-      acceptedRows: acceptedRows.length,
-      fixedRows: fixedRows.length,
-      seedRowsIgnored: seedRows.length,
-      stateRows: cachedRows,
-      loadedAt: cachedLoadedAt,
-      paths: {
-        reviewDecisions: posixRel(decisionsPath),
-        acceptedDecisions: posixRel(acceptedPath),
-        fixedDecisions: posixRel(fixedPath),
-        seedDecisions: posixRel(seedDecisionsPath),
-      },
-    });
-  } catch (err) {
-    sendJson(res, 400, { error: "save_error", message: err.message });
-  }
-}
-
-function saveDatabasePoolDecisionRows(res, body) {
   try {
     const rows = Array.isArray(body.rows) ? body.rows : body;
     if (!Array.isArray(rows)) throw new Error("expected a JSON array or { rows: [...] }");
@@ -299,13 +192,10 @@ function saveDatabasePoolDecisionRows(res, body) {
     }
 
     reloadStateCache();
-    cachedLoadedAt = new Date().toISOString();
     sendJson(res, 200, {
       ok: true,
-      mode,
       rowCount,
-      acceptedRows: cachedRows.filter((row) => row.reviewStatus === "accepted" || row.reviewStatus === "approved").length,
-      fixedRows: 0,
+      acceptedRows: cachedRows.filter((row) => ACCEPTED_STATUSES.has(row.reviewStatus)).length,
       stateRows: cachedRows,
       loadedAt: cachedLoadedAt,
       paths: {
@@ -427,8 +317,6 @@ function loadDecisionRowsWithSources(files, expectedPoolId) {
 }
 
 function orderDecisionFilesByPrecedence(files) {
-  // Apply sorted curated decisions first, then workbench.decisions.json last so
-  // the workbench-owned overlay wins for duplicate uid values.
   return [...files].sort((a, b) => {
     const aWorkbench = path.basename(a) === "workbench.decisions.json";
     const bWorkbench = path.basename(b) === "workbench.decisions.json";
@@ -475,7 +363,6 @@ function normalizeDatabasePoolUiRow(row, index, fallbackPoolId, registry) {
     reviewNote: stringValue(row.reviewNote),
     exceptionIds: Array.isArray(row.exceptionIds) ? row.exceptionIds.map(String) : [],
     orphan: Boolean(row.orphan),
-    legacyStandardPv: stringValue(row.legacyStandardPv),
     decisionSource: stringValue(row.decisionSource || ""),
     computed: {
       ...(row.computed || {}),
@@ -488,7 +375,6 @@ function normalizeDatabasePoolUiRow(row, index, fallbackPoolId, registry) {
 }
 
 function getAbbreviationRegistry() {
-  if (mode !== "database_pool") return null;
   if (!cachedAbbreviationRegistry) {
     cachedAbbreviationRegistry = loadAbbreviationRegistry(abbreviationRegistryPath);
     const errors = validateAbbreviationRegistry(cachedAbbreviationRegistry);
@@ -521,183 +407,6 @@ function databasePoolPaths() {
   };
 }
 
-function buildDecisionRows() {
-  const existingByRaw = new Map();
-  for (const row of readJsonArray(decisionsPath)) {
-    if (row.rawId) existingByRaw.set(row.rawId, row);
-  }
-
-  const rows = fs.existsSync(queuePath)
-    ? buildFromQueue(existingByRaw)
-    : buildFromRawExtraction(existingByRaw);
-
-  for (const [rawId, existing] of existingByRaw.entries()) {
-    if (!rows.some((row) => row.rawId === rawId)) {
-      rows.push(normalizeRow({ ...existing, orphan: true }, rows.length));
-    }
-  }
-  return [...rows, ...loadSeedRows(rows.length)];
-}
-
-function buildFromQueue(existingByRaw) {
-  return readJsonArray(queuePath).map((queueRow, index) => {
-    const existing = existingByRaw.get(queueRow.rawId);
-    return existing
-      ? normalizeRow({ ...queueRow, ...existing, orphan: false }, index)
-      : normalizeRow({ ...queueRow, orphan: false }, index);
-  });
-}
-
-function buildFromRawExtraction(existingByRaw) {
-  const registry = loadRegistry(beamline).data;
-  const raw = loadRawExtraction(beamline).data;
-  if (!raw || !Array.isArray(raw.entries)) {
-    throw new Error(`missing or invalid outputs/${beamline}/_work/raw_extracted_pvs.yaml`);
-  }
-
-  const registryByRaw = new Map();
-  for (const entry of registry.pvs || []) {
-    const rawId = entry.source_trace && entry.source_trace.raw_id;
-    if (rawId) registryByRaw.set(rawId, entry);
-  }
-
-  const exceptionIdsByRaw = new Map();
-  for (const exception of loadExceptionFrontmatters(beamline)) {
-    const data = exception.data || {};
-    for (const rawId of data.raw_ids || []) {
-      if (!exceptionIdsByRaw.has(rawId)) exceptionIdsByRaw.set(rawId, []);
-      exceptionIdsByRaw.get(rawId).push(data.id || path.basename(exception.path, ".md"));
-    }
-  }
-
-  return raw.entries.map((rawEntry, index) => {
-    const registryEntry = registryByRaw.get(rawEntry.raw_id);
-    const exceptionIds = exceptionIdsByRaw.get(rawEntry.raw_id) || [];
-    const base = defaultRow(index + 1, rawEntry, registryEntry, exceptionIds);
-    const existing = existingByRaw.get(rawEntry.raw_id);
-    return existing
-      ? normalizeRow({ ...base, ...existing, orphan: false }, index)
-      : normalizeRow({ ...base, orphan: false }, index);
-  });
-}
-
-function defaultRow(seq, rawEntry, registryEntry, exceptionIds) {
-  const trace = rawEntry.source_trace || {};
-  const metadata = rawEntry.raw_metadata || {};
-  const reviewStatus = registryEntry
-    ? "accepted"
-    : rawEntry.status === "skipped"
-      ? "skipped"
-      : exceptionIds.length > 0
-        ? "exception"
-        : "needs_input";
-  const section = registryEntry ? registryEntry.section : "BL";
-  const port = registryEntry ? registryEntry.port : "";
-  const area = registryEntry ? registryEntry.area : rawEntry.raw_area || "";
-  const dev = registryEntry ? registryEntry.device : rawEntry.raw_device || "";
-  const subdev = registryEntry ? registryEntry.subdevice : rawEntry.raw_subdevice || "";
-  const signal = registryEntry
-    ? registryEntry.signal
-    : rawEntry.raw_signal || rawEntry.raw_axis_or_function || "";
-  return {
-    seq,
-    rawId: rawEntry.raw_id,
-    dataset: beamline,
-    reviewStatus,
-    section,
-    port,
-    area,
-    dev,
-    subdev,
-    signal,
-    standardPv: registryEntry ? registryEntry.pv : renderPv(section, port, area, dev, subdev, signal),
-    source: registryEntry
-      ? registryEntry.source_pv || rawEntry.raw_source_pv || rawEntry.raw_pv || ""
-      : rawEntry.raw_source_pv || rawEntry.raw_pv || "",
-    note: defaultNote(rawEntry, registryEntry, exceptionIds),
-    sourceId: trace.source_id || "",
-    sourceLine: trace.source_line === undefined ? null : trace.source_line,
-    sourceAnchor: trace.source_anchor || "",
-    sourceLabel: trace.source_label || null,
-    reviewNote: "",
-    exceptionIds,
-    egu: metadata.egu || "",
-    ioc: metadata.ioc || "",
-  };
-}
-
-function loadSeedRows(offset) {
-  const rows = readJsonArray(seedDecisionsPath);
-  return rows.map((row, index) =>
-    normalizeRow(
-      {
-        ...row,
-        dataset: seedDataset,
-        seq: offset + index + 1,
-      },
-      offset + index,
-    ),
-  );
-}
-
-function defaultNote(rawEntry, registryEntry, exceptionIds) {
-  if (registryEntry && Array.isArray(registryEntry.notes)) return registryEntry.notes.join("; ");
-  const metadata = rawEntry.raw_metadata || {};
-  const parts = [];
-  if (metadata.source_text) parts.push(metadata.source_text);
-  if (exceptionIds.length > 0) parts.push(`exception: ${exceptionIds.join(", ")}`);
-  return parts.join("; ");
-}
-
-function normalizeRows(rows) {
-  if (!Array.isArray(rows)) throw new Error("expected a JSON array or { rows: [...] }");
-  return rows.map(normalizeRow);
-}
-
-function normalizeRow(row, index) {
-  const normalized = {
-    seq: Number.isFinite(Number(row.seq)) ? Number(row.seq) : index + 1,
-    rawId: stringValue(row.rawId),
-    dataset: stringValue(row.dataset || beamline),
-    reviewStatus: REVIEW_STATUSES.includes(row.reviewStatus) ? row.reviewStatus : "needs_input",
-    section: upperValue(row.section || "BL"),
-    port: upperValue(row.port),
-    area: upperValue(row.area),
-    dev: upperValue(row.dev),
-    subdev: upperValue(row.subdev),
-    signal: stringValue(row.signal),
-    standardPv: stringValue(row.standardPv),
-    source: stringValue(row.source),
-    note: stringValue(row.note),
-    sourceId: stringValue(row.sourceId),
-    sourceLine: row.sourceLine === undefined ? null : row.sourceLine,
-    sourceAnchor: stringValue(row.sourceAnchor),
-    sourceLabel: row.sourceLabel === undefined ? null : row.sourceLabel,
-    reviewNote: stringValue(row.reviewNote),
-    exceptionIds: Array.isArray(row.exceptionIds) ? row.exceptionIds.map(String) : [],
-    orphan: Boolean(row.orphan),
-    legacyStandardPv: stringValue(row.legacyStandardPv),
-    egu: stringValue(row.egu),
-    ioc: stringValue(row.ioc),
-    updatedAt: new Date().toISOString(),
-  };
-  const rendered = renderPv(
-    normalized.section,
-    normalized.port,
-    normalized.area,
-    normalized.dev,
-    normalized.subdev,
-    normalized.signal,
-  );
-  if (rendered) normalized.standardPv = rendered;
-  return normalized;
-}
-
-function renderPv(section, port, area, dev, subdev, signal) {
-  if (![section, port, area, dev, subdev, signal].every(Boolean)) return "";
-  return `${section}-${port}:${area}-${dev}-${subdev}:${signal}`;
-}
-
 function stringValue(value) {
   return value === undefined || value === null ? "" : String(value);
 }
@@ -706,15 +415,8 @@ function upperValue(value) {
   return stringValue(value).toUpperCase();
 }
 
-function readJsonArray(file) {
-  if (!fs.existsSync(file)) return [];
-  const parsed = JSON.parse(fs.readFileSync(file, "utf8"));
-  if (!Array.isArray(parsed)) throw new Error(`${posixRel(file)} must contain a JSON array`);
-  return parsed;
-}
-
 function readJsonObject(file) {
-  const parsed = JSON.parse(fs.readFileSync(file, "utf8").replace(/^\uFEFF/, ""));
+  const parsed = JSON.parse(fs.readFileSync(file, "utf8").replace(/^﻿/, ""));
   if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
     throw new Error(`${posixRel(file)} must contain a JSON object`);
   }
@@ -859,7 +561,7 @@ const HTML = `<!doctype html>
     }
     .cards {
       display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 14px;
       margin-bottom: 16px;
     }
@@ -999,11 +701,9 @@ const HTML = `<!doctype html>
     }
     .pill.good { background: #e6fffb; color: var(--accent); border-color: #bff0ea; }
     .pill.warn { background: #fff7ed; color: var(--warn); border-color: #fed7aa; }
-    .pill.seed { background: #f4f0ff; color: #5b21b6; border-color: #ddd6fe; }
     .hidden { display: none !important; }
     .trace { color: var(--muted); font-size: 12px; }
     .row-exception td { background: #fffaf0; }
-    .row-fixed td { background: #f0fff4; }
     .row-approved td, .row-accepted td { background: #f8fffb; }
     .row-needs_input td { background: #fff; }
     .row-orphan td { background: #fff0f0; outline: 1px solid #fca5a5; }
@@ -1028,25 +728,22 @@ const HTML = `<!doctype html>
       <div class="hero-top">
         <div>
           <h1>4GSR PV Review Workbench</h1>
-          <p class="subtitle" id="heroSubtitle">${mode === "database_pool" ? "Database-pool source rows와 human decision overlays를 shared review UI에서 검토합니다." : "Legacy SEO_v2 generated-output review rows를 compatibility view에서 검토합니다."}</p>
+          <p class="subtitle">Database-pool source rows와 human decision overlays를 review UI에서 검토합니다.</p>
         </div>
         <div class="meta">
-          <div><strong>Dataset</strong>: <span class="code" id="beamlineName">loading</span></div>
-          <div><strong>Rule</strong>: <span class="code" id="ruleShape">${mode === "database_pool" ? "[SEC/SYS][PORT]-[AREA]:[DEV]-[SUBDEV]:[SignalName]" : "BL-[PORT]:[AREA]-[DEV]-[SUBDEV]:[SignalName]"}</span></div>
-          <div><strong>Queue</strong>: <span class="code" id="queueSource">loading</span></div>
-          <div id="seedMeta"><strong id="seedMetaLabel">${mode === "database_pool" ? "Registry" : "Seed"}</strong>: <span class="code" id="seedMetaPath">${mode === "database_pool" ? "fixtures/seo_v3_pilot/abbreviation_registry.json" : "fixtures/SEO_v2"}</span></div>
+          <div><strong>Pools</strong>: <span class="code" id="poolsLabel">loading</span></div>
+          <div><strong>Rule</strong>: <span class="code">[SEC/SYS][PORT]-[AREA]:[DEV]-[SUBDEV]:[SignalName]</span></div>
+          <div><strong>Source</strong>: <span class="code" id="queueSource">loading</span></div>
+          <div><strong>Registry</strong>: <span class="code" id="registryPath">database_pool/abbreviations/registry.json</span></div>
         </div>
       </div>
     </header>
 
     <nav class="tabs" aria-label="review views">
       <button class="tab-btn active" type="button" data-view="all">All Rows</button>
-      <button class="tab-btn" id="beamlineTab" type="button" data-view="beamline">${mode === "database_pool" ? "Review Queue" : "Beamline Review"}</button>
-      ${mode === "database_pool"
-        ? '<button class="tab-btn hidden" id="seedTab" type="button" data-view="seed"></button>'
-        : '<button class="tab-btn" id="seedTab" type="button" data-view="seed">Fixed Seed</button>'}
+      <button class="tab-btn" type="button" data-view="queue">Review Queue</button>
       <button class="tab-btn" type="button" data-view="attention">Needs Input</button>
-      <button class="tab-btn" id="fixedTab" type="button" data-view="fixed">${mode === "database_pool" ? "Accepted/Approved" : "Fixed/Approved"}</button>
+      <button class="tab-btn" type="button" data-view="accepted">Accepted/Approved</button>
     </nav>
 
     <section class="section">
@@ -1054,16 +751,13 @@ const HTML = `<!doctype html>
       <div class="cards" id="statsCards">
         <div class="card"><span class="label">Total</span><div class="value" id="statTotal">0</div><div class="desc">loaded rows</div></div>
         <div class="card"><span class="label">Visible</span><div class="value" id="statVisible">0</div><div class="desc">current filter</div></div>
-        <div class="card"><span class="label">Review Queue</span><div class="value" id="statBeamline">0</div><div class="desc">active beamline rows</div></div>
-        ${mode === "database_pool"
-          ? '<div class="card hidden" id="statSeedCard"><div class="value" id="statSeed">0</div></div>'
-          : '<div class="card" id="statSeedCard"><span class="label">SEO Seed</span><div class="value" id="statSeed">0</div><div class="desc">fixed/approved rows</div></div>'}
-        <div class="card"><span class="label">Decision Required</span><div class="value" id="statNeeds">0</div><div class="desc">needs_input / exception / proposal</div></div>
+        <div class="card"><span class="label">Review Queue</span><div class="value" id="statQueue">0</div><div class="desc">active queue rows</div></div>
+        <div class="card"><span class="label">Decision Required</span><div class="value" id="statNeeds">0</div><div class="desc">needs_input / exception / proposal / abbreviation</div></div>
       </div>
 
       <div class="toolbar">
         <div class="field">
-          <label for="datasetFilter">Dataset</label>
+          <label for="datasetFilter">Pool</label>
           <select id="datasetFilter"></select>
         </div>
         <div class="field">
@@ -1084,7 +778,7 @@ const HTML = `<!doctype html>
         </div>
         <div class="field">
           <label for="search">Search</label>
-          <input id="search" type="search" placeholder="PV / signal / source / note / raw id">
+          <input id="search" type="search" placeholder="PV / signal / source / note / uid">
         </div>
       </div>
 
@@ -1107,11 +801,11 @@ const HTML = `<!doctype html>
           <thead>
             <tr>
               <th class="seq">Seq</th>
-              <th class="dataset">Dataset</th>
-              <th class="raw">Raw / Trace</th>
+              <th class="dataset">Pool</th>
+              <th class="raw">UID / Trace</th>
               <th class="status-col">Status</th>
               <th class="review">Accept</th>
-              <th class="review" id="fixedHeader">${mode === "database_pool" ? "Approved" : "Fixed"}</th>
+              <th class="review">Approve</th>
               <th class="narrow">Section</th>
               <th class="narrow">Port</th>
               <th class="narrow">Area</th>
@@ -1139,14 +833,8 @@ const HTML = `<!doctype html>
     const pageSize = 250;
     let renderQueued = false;
     const editableFields = ["section", "port", "area", "dev", "subdev", "signal", "standardPv", "source", "note", "reviewNote"];
-    const acceptedStatuses = ["accepted", "approved", "edited", "fixed"];
+    const acceptedStatuses = ["accepted", "approved"];
     const filterIds = ["datasetFilter", "statusFilter", "portFilter", "areaFilter", "devFilter", "search"];
-
-    const appConfig = {
-      mode: ${JSON.stringify(mode)},
-      seedDataset: ${JSON.stringify(seedDataset)},
-      activeRulebookLabel: ${JSON.stringify(activeRulebookLabel)}
-    };
 
     document.getElementById("reload").addEventListener("click", function() { loadState(); });
     document.getElementById("reset").addEventListener("click", resetFilters);
@@ -1192,9 +880,11 @@ const HTML = `<!doctype html>
         state = data;
         rows = data.rows || [];
         pageIndex = 0;
-        document.getElementById("beamlineName").textContent = state.beamline || "";
+        document.getElementById("poolsLabel").textContent = (state.poolIds || []).join(", ") || "(none)";
         document.getElementById("queueSource").textContent = state.queueSource || "unknown";
-        applyModeUi();
+        if (state.paths && state.paths.abbreviationRegistry) {
+          document.getElementById("registryPath").textContent = state.paths.abbreviationRegistry;
+        }
         setupFilters();
         if (firstLoad) resetFilterControls();
         hasLoadedState = true;
@@ -1217,30 +907,6 @@ const HTML = `<!doctype html>
       setOptions("portFilter", ["All"].concat(unique(rows.map(function(row) { return row.port || ""; }))));
       setOptions("areaFilter", ["All"].concat(unique(rows.map(function(row) { return row.area || ""; }))));
       setOptions("devFilter", ["All"].concat(unique(rows.map(function(row) { return row.dev || ""; }))));
-    }
-
-    function isDatabasePoolMode() {
-      return (state && state.mode === "database_pool") || appConfig.mode === "database_pool";
-    }
-
-    function applyModeUi() {
-      const dbMode = isDatabasePoolMode();
-      document.getElementById("heroSubtitle").textContent = dbMode
-        ? "Database-pool source rows와 human decision overlays를 shared review UI에서 검토합니다."
-        : "Legacy SEO_v2 generated-output review rows를 compatibility view에서 검토합니다.";
-      document.getElementById("ruleShape").textContent = dbMode
-        ? "[SEC/SYS][PORT]-[AREA]:[DEV]-[SUBDEV]:[SignalName]"
-        : "BL-[PORT]:[AREA]-[DEV]-[SUBDEV]:[SignalName]";
-      document.getElementById("seedMetaLabel").textContent = dbMode ? "Registry" : "Seed";
-      document.getElementById("seedMetaPath").textContent = dbMode
-        ? ((state.paths && state.paths.abbreviationRegistry) || "fixtures/seo_v3_pilot/abbreviation_registry.json")
-        : "fixtures/SEO_v2";
-      document.getElementById("seedTab").classList.toggle("hidden", dbMode);
-      document.getElementById("statSeedCard").classList.toggle("hidden", dbMode);
-      document.getElementById("beamlineTab").textContent = dbMode ? "Review Queue" : "Beamline Review";
-      document.getElementById("fixedHeader").textContent = dbMode ? "Approved" : "Fixed";
-      document.getElementById("fixedTab").textContent = dbMode ? "Accepted/Approved" : "Fixed/Approved";
-      if (dbMode && activeView === "seed") activeView = "all";
     }
 
     function setOptions(id, values) {
@@ -1267,18 +933,11 @@ const HTML = `<!doctype html>
 
     function renderPaths() {
       const paths = state.paths || {};
-      if (isDatabasePoolMode()) {
-        const decisionPaths = paths.workbenchDecisions || {};
-        document.getElementById("paths").innerHTML =
-          "<div><strong>Database pools</strong>: " + codeList(paths.databasePools || []) + "</div>" +
-          "<div><strong>Workbench decisions</strong>: " + codeList(Object.values(decisionPaths)) + "</div>" +
-          "<div><strong>Abbreviation registry</strong>: <code>" + escapeHtml(paths.abbreviationRegistry || "") + "</code></div>";
-        return;
-      }
+      const decisionPaths = paths.workbenchDecisions || {};
       document.getElementById("paths").innerHTML =
-        "<div><strong>Beamline writes</strong>: <code>" + escapeHtml(paths.reviewDecisions || "") + "</code> | <code>" +
-        escapeHtml(paths.acceptedDecisions || "") + "</code> | <code>" + escapeHtml(paths.fixedDecisions || "") + "</code></div>" +
-        "<div><strong>Seed</strong>: <code>" + escapeHtml(paths.seedDecisions || "") + "</code></div>";
+        "<div><strong>Database pools</strong>: " + codeList(paths.databasePools || []) + "</div>" +
+        "<div><strong>Workbench decisions</strong>: " + codeList(Object.values(decisionPaths)) + "</div>" +
+        "<div><strong>Abbreviation registry</strong>: <code>" + escapeHtml(paths.abbreviationRegistry || "") + "</code></div>";
     }
 
     function currentFilters() {
@@ -1295,14 +954,9 @@ const HTML = `<!doctype html>
     function visibleRows() {
       const filters = currentFilters();
       return rows.filter(function(row) {
-        if (activeView === "beamline") {
-          if (isDatabasePoolMode()) {
-            if (!isReviewQueueRow(row)) return false;
-          } else if (row.dataset !== state.beamline) return false;
-        }
-        if (activeView === "seed" && (isDatabasePoolMode() || row.dataset !== appConfig.seedDataset)) return false;
+        if (activeView === "queue" && !isReviewQueueRow(row)) return false;
         if (activeView === "attention" && !hasAttentionIssue(row)) return false;
-        if (activeView === "fixed" && !acceptedStatuses.includes(row.reviewStatus)) return false;
+        if (activeView === "accepted" && !acceptedStatuses.includes(row.reviewStatus)) return false;
         if (filters.dataset !== "All" && row.dataset !== filters.dataset) return false;
         if (filters.status !== "All" && row.reviewStatus !== filters.status) return false;
         if (filters.port !== "All" && row.port !== filters.port) return false;
@@ -1325,6 +979,7 @@ const HTML = `<!doctype html>
       return [
         row.seq,
         row.dataset,
+        row.uid,
         row.rawId,
         row.reviewStatus,
         row.section,
@@ -1334,7 +989,6 @@ const HTML = `<!doctype html>
         row.subdev,
         row.signal,
         row.standardPv,
-        row.legacyStandardPv,
         row.source,
         row.note,
         row.reviewNote,
@@ -1371,23 +1025,15 @@ const HTML = `<!doctype html>
     }
 
     function updateStats(visible, pageRows, start, pageCount) {
-      const seedRows = rows.filter(function(row) { return row.dataset === appConfig.seedDataset; }).length;
-      const dbMode = isDatabasePoolMode();
-      const beamlineRows = dbMode
-        ? rows.filter(function(row) {
-            return !["accepted", "approved", "rejected", "deprecated", "skipped", "orphan"].includes(row.reviewStatus);
-          }).length
-        : rows.filter(function(row) { return row.dataset === state.beamline; }).length;
+      const queueRows = rows.filter(isReviewQueueRow).length;
       const needs = rows.filter(function(row) {
         const issues = row.computed && Array.isArray(row.computed.abbreviationIssues) ? row.computed.abbreviationIssues : [];
         return ["needs_input", "exception", "proposal"].includes(row.reviewStatus) || issues.length > 0;
       }).length;
-      const fixed = rows.filter(function(row) { return row.reviewStatus === "fixed"; }).length;
       const accepted = rows.filter(function(row) { return acceptedStatuses.includes(row.reviewStatus); }).length;
       document.getElementById("statTotal").textContent = formatNumber(rows.length);
       document.getElementById("statVisible").textContent = formatNumber(visible.length);
-      document.getElementById("statBeamline").textContent = formatNumber(beamlineRows);
-      document.getElementById("statSeed").textContent = formatNumber(seedRows);
+      document.getElementById("statQueue").textContent = formatNumber(queueRows);
       document.getElementById("statNeeds").textContent = formatNumber(needs);
       document.getElementById("prevPage").disabled = pageIndex <= 0;
       document.getElementById("nextPage").disabled = pageIndex >= pageCount - 1;
@@ -1397,10 +1043,7 @@ const HTML = `<!doctype html>
       document.getElementById("countline").innerHTML =
         "Showing <strong>" + formatNumber(firstShown) + "-" + formatNumber(end) + "</strong> of <strong>" +
         formatNumber(visible.length) + "</strong> filtered rows out of <strong>" +
-        formatNumber(rows.length) + "</strong>. " +
-        (dbMode
-          ? "Accepted/approved: <strong>" + formatNumber(accepted) + "</strong>."
-          : "Accepted/fixed: <strong>" + formatNumber(accepted) + "</strong>, fixed only: <strong>" + formatNumber(fixed) + "</strong>.");
+        formatNumber(rows.length) + "</strong>. Accepted/approved: <strong>" + formatNumber(accepted) + "</strong>.";
     }
 
     function renderRow(row) {
@@ -1408,10 +1051,10 @@ const HTML = `<!doctype html>
       tr.className = "row-" + (row.reviewStatus || "").replace(/[^a-z0-9_]/gi, "") + (row.orphan ? " row-orphan" : "");
       tr.appendChild(seqCell(row));
       tr.appendChild(datasetCell(row));
-      tr.appendChild(rawCell(row));
+      tr.appendChild(uidCell(row));
       tr.appendChild(statusCell(row));
       tr.appendChild(checkCell(row, "accepted"));
-      tr.appendChild(checkCell(row, isDatabasePoolMode() ? "approved" : "fixed"));
+      tr.appendChild(checkCell(row, "approved"));
       editableFields.forEach(function(field) {
         tr.appendChild(inputCell(row, field));
       });
@@ -1428,20 +1071,19 @@ const HTML = `<!doctype html>
     function datasetCell(row) {
       const td = document.createElement("td");
       td.className = "dataset";
-      td.innerHTML = "<span class=\\"pill " + (row.dataset === appConfig.seedDataset ? "seed" : "good") + "\\">" + escapeHtml(row.dataset) + "</span>";
+      td.innerHTML = "<span class=\\"pill good\\">" + escapeHtml(row.dataset) + "</span>";
       return td;
     }
 
-    function rawCell(row) {
+    function uidCell(row) {
       const td = document.createElement("td");
       td.className = "raw trace";
       const exceptions = (row.exceptionIds || []).join(", ");
       td.innerHTML =
-        "<strong>" + escapeHtml(row.rawId) + "</strong><br>" +
+        "<strong>" + escapeHtml(row.uid || row.rawId) + "</strong><br>" +
         "<code>" + escapeHtml(row.sourceId || "") + "</code><br>" +
         escapeHtml(row.sourceAnchor || "") +
         (row.sourceLabel ? "<br>" + escapeHtml(row.sourceLabel) : "") +
-        (row.legacyStandardPv ? "<br><span class=\\"pill warn\\">legacy</span> " + escapeHtml(row.legacyStandardPv) : "") +
         (exceptions ? "<br><span class=\\"pill warn\\">" + escapeHtml(exceptions) + "</span>" : "") +
         (row.orphan ? "<br><span class=\\"pill orphan\\">orphan</span>" : "");
       return td;
@@ -1458,7 +1100,6 @@ const HTML = `<!doctype html>
         select.appendChild(option);
       });
       select.value = row.reviewStatus;
-      select.disabled = row.dataset === appConfig.seedDataset;
       select.addEventListener("change", function() {
         row.reviewStatus = select.value;
         markDirty(row);
@@ -1475,7 +1116,6 @@ const HTML = `<!doctype html>
       const input = document.createElement("input");
       input.type = "checkbox";
       input.checked = row.reviewStatus === value;
-      input.disabled = row.dataset === appConfig.seedDataset;
       input.addEventListener("change", function() {
         if (input.checked) row.reviewStatus = value;
         else if (row.reviewStatus === value) row.reviewStatus = "needs_input";
@@ -1497,7 +1137,7 @@ const HTML = `<!doctype html>
       const input = ["note", "reviewNote"].includes(field) ? document.createElement("textarea") : document.createElement("input");
       input.dataset.field = field;
       input.value = row[field] || "";
-      input.readOnly = field === "standardPv" || row.dataset === appConfig.seedDataset;
+      input.readOnly = field === "standardPv";
       input.addEventListener("input", function() {
         row[field] = input.value;
         markDirty(row);
@@ -1516,10 +1156,7 @@ const HTML = `<!doctype html>
 
     function renderPv(row) {
       if (!row.section || !row.port || !row.area || !row.dev || !row.subdev || !row.signal) return "";
-      if (isDatabasePoolMode()) {
-        return row.section + row.port + "-" + row.area + ":" + row.dev + "-" + row.subdev + ":" + row.signal;
-      }
-      return row.section + "-" + row.port + ":" + row.area + "-" + row.dev + "-" + row.subdev + ":" + row.signal;
+      return row.section + row.port + "-" + row.area + ":" + row.dev + "-" + row.subdev + ":" + row.signal;
     }
 
     function resetFilterControls() {
@@ -1540,16 +1177,14 @@ const HTML = `<!doctype html>
     }
 
     function markDirty(row) {
-      if (isDatabasePoolMode()) row.__dirty = true;
+      row.__dirty = true;
     }
 
     async function saveRows() {
       setStatus("Saving decisions...");
       try {
-        const rowsToSave = rows.filter(function(row) {
-          return isDatabasePoolMode() ? row.__dirty : row.dataset !== appConfig.seedDataset;
-        });
-        if (isDatabasePoolMode() && rowsToSave.length === 0) {
+        const rowsToSave = rows.filter(function(row) { return row.__dirty; });
+        if (rowsToSave.length === 0) {
           setStatus("No database-pool row changes to save.", false, true);
           return;
         }
@@ -1564,10 +1199,7 @@ const HTML = `<!doctype html>
           return;
         }
         setStatus(
-          isDatabasePoolMode()
-            ? "Saved " + formatNumber(data.rowCount) + " database-pool decision rows to workbench overlays."
-            : "Saved " + formatNumber(data.rowCount) + " beamline rows. Fixed: " +
-              formatNumber(data.fixedRows || 0) + ". Seed fixture rows are read-only.",
+          "Saved " + formatNumber(data.rowCount) + " database-pool decision rows to workbench overlays.",
           false,
           true
         );

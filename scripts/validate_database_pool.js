@@ -1,36 +1,57 @@
 #!/usr/bin/env node
 
-const { spawnSync } = require("child_process");
+const fs = require("fs");
+const path = require("path");
 
-const withHttp = process.argv.includes("--with-http");
+const { loadDefaultRegistry, validateRegistry, validateRegistryUsageEvidence } =
+  require("./abbreviation_registry_pilot/abbreviation_registry");
+const { loadPool } = require("./database_pool_pilot/database_pool");
 
-const checks = [
-  ["SEO_V3 contract", ["node", "scripts/seo_v3_pilot/validate_contract.js"]],
-  ["database-pool data layer", ["node", "scripts/database_pool_pilot/validate_data_layer.js"]],
-  ["abbreviation registry", ["node", "scripts/abbreviation_registry_pilot/validate_abbreviations.js"]],
-  ["small migration pilot", ["node", "scripts/migration_pilot/validate_m4_small_migration.js"]],
-  [
-    "review server database-pool mode",
-    [
-      "node",
-      "scripts/review_server_pilot/validate_database_pool_mode.js",
-      ...(withHttp ? ["--with-http"] : []),
-    ],
-  ],
-  ["database-pool importer", ["node", "scripts/validate_database_pool_import.js"]],
-];
-
+const root = path.resolve(__dirname, "..");
 let failures = 0;
 
-for (const [label, command] of checks) {
-  console.log(`\n== ${label} ==`);
-  const result = spawnSync(command[0], command.slice(1), {
-    stdio: "inherit",
-  });
-  if (result.status !== 0) {
-    failures += 1;
-    console.error(`FAIL: ${label} exited with ${result.status}`);
+function pass(message) {
+  console.log(`PASS: ${message}`);
+}
+
+function fail(message, error) {
+  failures += 1;
+  console.error(`FAIL: ${message}`);
+  if (error && error.stack) console.error(error.stack);
+  else if (error) console.error(String(error));
+}
+
+function check(message, fn) {
+  try {
+    fn();
+    pass(message);
+  } catch (error) {
+    fail(message, error);
   }
+}
+
+check("abbreviation registry loads and validates", () => {
+  const registry = loadDefaultRegistry(root);
+  const errors = validateRegistry(registry, { requireReviewFields: true });
+  if (errors.length > 0) {
+    throw new Error(`registry validation errors: ${errors.join("; ")}`);
+  }
+  const usageErrors = validateRegistryUsageEvidence(registry, root);
+  if (usageErrors.length > 0) {
+    throw new Error(`registry usage evidence errors: ${usageErrors.join("; ")}`);
+  }
+});
+
+const poolsDir = path.join(root, "database_pool");
+const poolIds = fs
+  .readdirSync(poolsDir, { withFileTypes: true })
+  .filter((entry) => entry.isDirectory() && entry.name !== "abbreviations")
+  .map((entry) => entry.name);
+
+for (const poolId of poolIds) {
+  check(`pool ${poolId} loads (manifest + optional source/decision files)`, () => {
+    loadPool(path.join(poolsDir, poolId));
+  });
 }
 
 if (failures > 0) {
@@ -38,4 +59,4 @@ if (failures > 0) {
   process.exit(1);
 }
 
-console.log("\nDatabase-pool validation passed.");
+console.log("Database-pool validation passed.");
