@@ -1,11 +1,13 @@
 pool_id: 4GSR_Beamline_PV_Naming_Standard_v1.0
-title: 4GSR Beamline PV Naming Standard v1.0 Reference Pool
-status: empty
+title: 4GSR Beamline PV Naming Standard v1.0 Semantic Import Pool
+status: pilot
 schema_version: database_pool_seo_v3
 source_inputs:
   - inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md
+  - inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/4GSR_Beamline_PV_Naming_Standard_v1.0.html
 source_note: |
-  Reference pool seeded from the SEO_V3 standard document. Sources and
-  decisions were reset on 2026-06-02 during the SEO_V3 hard-reset
-  alignment. Re-import or agent conversion is required before this pool
-  carries any reviewable rows.
+  Reviewable semantic-import rows were generated from the copied 4GSR HTML
+  source on 2026-06-02. Rows are source-backed candidates and remain
+  reviewStatus: needs_input; they are not approved naming policy. HTML
+  structured candidates are preserved as metadata only. Vocabulary gaps such as
+  source port 10C remain review-required.
