@@ -3,6 +3,7 @@ const path = require("path");
 
 const REGISTRY_KINDS = new Set(["section", "port", "area", "device", "subdevice"]);
 const REGISTRY_STATUSES = new Set(["candidate", "approved", "deprecated", "rejected"]);
+const EVIDENCE_REVIEW_STATUSES = new Set(["accepted", "approved"]);
 const REVIEW_REGISTRY_SCHEMA_VERSION = "seo_v3_abbreviation_review_v1";
 const PRIMARY_REGISTRY_REL_PATH = path.join("database_pool", "abbreviations", "registry.json");
 const COMPONENT_KIND_BY_FIELD = {
@@ -152,6 +153,7 @@ function collectRowUsage(rootDir) {
   for (const rowsFile of listRowsFiles(poolRoot)) {
     const data = JSON.parse(fs.readFileSync(rowsFile, "utf8").replace(/^\uFEFF/, ""));
     for (const row of data.rows || []) {
+      if (!EVIDENCE_REVIEW_STATUSES.has(row.reviewStatus)) continue;
       for (const [field, kind] of Object.entries(COMPONENT_KIND_BY_FIELD)) {
         const code = row[field];
         if (!code) continue;

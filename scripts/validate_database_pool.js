@@ -5,7 +5,7 @@ const path = require("path");
 
 const { loadDefaultRegistry, validateRegistry, validateRegistryUsageEvidence } =
   require("./abbreviation_registry_pilot/abbreviation_registry");
-const { loadPool } = require("./database_pool_pilot/database_pool");
+const { loadPool, validatePoolSourceRows } = require("./database_pool_pilot/database_pool");
 
 const root = path.resolve(__dirname, "..");
 let failures = 0;
@@ -50,7 +50,12 @@ const poolIds = fs
 
 for (const poolId of poolIds) {
   check(`pool ${poolId} loads (manifest + optional source/decision files)`, () => {
-    loadPool(path.join(poolsDir, poolId));
+    const pool = loadPool(path.join(poolsDir, poolId));
+    const errors = validatePoolSourceRows(pool.sourceRows);
+    errors.push(...duplicateStandardPvErrors(pool.sourceRows));
+    if (errors.length > 0) {
+      throw new Error(errors.join("; "));
+    }
   });
 }
 
@@ -60,3 +65,19 @@ if (failures > 0) {
 }
 
 console.log("Database-pool validation passed.");
+
+function duplicateStandardPvErrors(rows) {
+  const errors = [];
+  const byPv = new Map();
+  for (const row of rows) {
+    if (!row.standardPv) continue;
+    if (!byPv.has(row.standardPv)) byPv.set(row.standardPv, []);
+    byPv.get(row.standardPv).push(row);
+  }
+  for (const [standardPv, matches] of byPv.entries()) {
+    if (matches.length < 2) continue;
+    const refs = matches.map((row) => `${row.sourceId}#${row.sourceAnchor}`).join(", ");
+    errors.push(`duplicate source row standardPv ${standardPv}: ${refs}`);
+  }
+  return errors;
+}
