@@ -191,6 +191,29 @@ abbreviation_registry:
       markdown_devices: candidate
       markdown_subdevices: candidate
       html_db_only_codes: candidate
+  derived_issue_contract:
+    status: proposed
+    proposal: proposals/rule_changes/PROP-0002-abbreviation-issue-resolution-contract.md
+    durable_storage: computed_only
+    abbreviation_issue_kinds:
+      - section
+      - port
+      - area
+      - device
+      - subdevice
+    signal_policy: separate_issue_class
+    exact_resolution_key: abbreviation:<scope>:<kind>:<code>
+    meaning_resolution_key: abbreviation:<scope>:<kind>:<code>:<sourceTerm>
+    pattern_resolution_key: abbreviation-pattern:<scope>:<kind>:<codePattern>:<meaning>
+    blocking_statuses:
+      - missing_registry_entry
+      - candidate
+      - deprecated
+      - rejected
+      - meaning_conflict
+    rule: approving a matching registry entry resolves derived issues on
+      recomputation; approving a row does not silently promote its component
+      abbreviations
 
 workbench:
   entrypoint: scripts/review_server.js --database-pool <pool_id> --port 8212

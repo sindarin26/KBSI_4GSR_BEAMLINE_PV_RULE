@@ -12,6 +12,10 @@ and link it here.
 - Whether `10C` should be added to the human-facing Markdown port table.
 - Whether DB-backed operational codes (`SYS`, `CTRL`, `MOTOR`, `LOGIC`, `UTIL`,
   etc.) should be promoted into the published human-facing standard tables.
+- Abbreviation issue resolution semantics, including exact-code confirmation,
+  meaning-aware confirmation, instance patterns such as `SLIT##`, and conflict
+  handling. Tracked by
+  `proposals/rule_changes/PROP-0002-abbreviation-issue-resolution-contract.md`.
 - Final coordinate convention for source axes and physical motion semantics.
 - Status/readback/alarm/diagnostic PV naming beyond basic SEO_V3 signal naming.
 - Third-party EPICS suffix mapping policy for vendor support modules whose

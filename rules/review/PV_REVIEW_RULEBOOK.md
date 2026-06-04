@@ -43,3 +43,18 @@ Future drafting of this rulebook should cover, in order:
 Until those sections are written, reviewers must surface findings in plain
 language with concrete file:line citations and route policy decisions through
 the exception/proposal workflow rather than applying them as silent fixes.
+
+## Interim Abbreviation Review Contract
+
+The active abbreviation registry covers `section`, `port`, `area`, `device`,
+and `subdevice`. `signal` is not an abbreviation-registry kind and should be
+handled by a separate signal naming policy.
+
+Abbreviation issues are derived from row components and
+`database_pool/abbreviations/registry.json`. They should not be treated as
+durable source-row data. Missing, candidate, deprecated, rejected, or
+meaning-conflicting abbreviation records are blocking until the matching
+registry record or pattern is explicitly approved.
+
+Future meaning-aware and pattern-aware resolution is tracked by
+`proposals/rule_changes/PROP-0002-abbreviation-issue-resolution-contract.md`.

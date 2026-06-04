@@ -21,3 +21,35 @@ approval-eligible. That behavior must remain review-gated: candidate
 abbreviations can receive usage evidence from approved rows, but ambiguous
 code, meaning, or scope matches must require explicit review before any global
 abbreviation promotion.
+
+## Derived Issue Resolution Direction
+
+Abbreviation issues should be derived from source-row components and this
+registry, not stored as durable source-row fields. A confirmed abbreviation
+resolves all derived row issues with the same resolution key when the issue set
+is recomputed.
+
+The current exact-code key is:
+
+```text
+abbreviation:<scope>:<kind>:<code>
+```
+
+Meaning-aware review should prefer:
+
+```text
+abbreviation:<scope>:<kind>:<code>:<sourceTerm>
+```
+
+Pattern-derived codes such as `SLIT01` should use an explicit pattern approval
+before the pattern clears issues:
+
+```text
+abbreviation-pattern:<scope>:<kind>:SLIT##:<meaning>
+```
+
+Approving a base code such as `SLIT` must not silently approve every numbered
+instance such as `SLIT01` unless the registry also records an approved pattern.
+
+This direction is tracked by
+`proposals/rule_changes/PROP-0002-abbreviation-issue-resolution-contract.md`.
