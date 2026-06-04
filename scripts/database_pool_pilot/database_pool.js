@@ -162,6 +162,53 @@ function validateReviewerVisibleNotes(row, label) {
   if (stringValue(row.reviewNote)) {
     errors.push(`${label}.reviewNote is reserved for decision overlays, not source rows`);
   }
+  errors.push(...validateNoteContract(row, label));
+  return errors;
+}
+
+function validateNoteContract(row, label) {
+  const errors = [];
+  const contract = stringValue(row.metadata && row.metadata.noteContract);
+  if (!contract) return errors;
+  if (contract !== "standard_pv_evidence_v1") {
+    return [`${label}.metadata.noteContract has unsupported value: ${contract}`];
+  }
+  const note = stringValue(row.note);
+  const requiredSections = [
+    "Source:",
+    "HTML candidate:",
+    "Chosen PV:",
+    "Component changes:",
+    "Mapping evidence:",
+    "Uncertainty/Review required:",
+    "Vocabulary:",
+  ];
+  let previousIndex = -1;
+  for (const section of requiredSections) {
+    const index = note.indexOf(section);
+    if (index < 0) {
+      errors.push(`${label}.note missing ${section} for standard_pv_evidence_v1`);
+      continue;
+    }
+    if (index <= previousIndex) {
+      errors.push(`${label}.note section order invalid near ${section}`);
+    }
+    previousIndex = index;
+  }
+  for (let i = 0; i < requiredSections.length; i += 1) {
+    const section = requiredSections[i];
+    const start = note.indexOf(section);
+    if (start < 0) continue;
+    const nextStarts = requiredSections
+      .slice(i + 1)
+      .map((nextSection) => note.indexOf(nextSection))
+      .filter((index) => index > start);
+    const end = nextStarts.length > 0 ? Math.min(...nextStarts) : note.length;
+    const value = note.slice(start + section.length, end).trim();
+    if (!value) {
+      errors.push(`${label}.note section ${section} is empty for standard_pv_evidence_v1`);
+    }
+  }
   return errors;
 }
 

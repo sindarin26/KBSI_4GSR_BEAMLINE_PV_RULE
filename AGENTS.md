@@ -58,6 +58,11 @@ Draft agents must:
   non-empty top-level `note` with reviewer-visible source context, mapping
   assumptions, uncertainty, conflicts, and vocabulary gaps. Metadata-only notes
   are insufficient.
+- For newly generated or regenerated semantic import rows, set
+  `metadata.noteContract: "standard_pv_evidence_v1"` and write the top-level
+  `note` with the required evidence sections: `Source:`, `HTML candidate:`,
+  `Chosen PV:`, `Component changes:`, `Mapping evidence:`,
+  `Uncertainty/Review required:`, and `Vocabulary:`.
 - Leave source-row `reviewNote` empty; `reviewNote` is reserved for human or
   workbench decision overlays.
 - Keep uncertain assumptions explicit in the output.

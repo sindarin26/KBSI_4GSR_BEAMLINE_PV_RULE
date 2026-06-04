@@ -153,6 +153,14 @@ vocabulary gaps. Raw structured candidates may also be preserved in `metadata`,
 but metadata-only notes are not enough for workbench review. `reviewNote` is
 reserved for human decision overlays under `database_pool/<pool_id>/decisions/`.
 
+Newly generated or regenerated semantic import rows use
+`metadata.noteContract: "standard_pv_evidence_v1"`. Under that contract,
+top-level `note` must include labeled evidence sections for `Source`, `HTML
+candidate`, `Chosen PV`, `Component changes`, `Mapping evidence`,
+`Uncertainty/Review required`, and `Vocabulary`, so reviewers can see the
+source-backed reasons for the rendered `standardPv` without opening raw
+metadata.
+
 `database_pool/abbreviations/registry.json` is the source-of-truth file for
 SEO_V3 abbreviation review records. Each record carries explicit source,
 status, rationale, and usage evidence. Candidate records remain
@@ -234,7 +242,8 @@ node scripts/validate_database_pool.js
    `database_pool/<pool_id>/sources/`. Rows default to
    `reviewStatus: "needs_input"`. Agent-converted rows must include a
    reviewer-visible top-level `note`; human review comments belong in decision
-   overlay `reviewNote`.
+   overlay `reviewNote`. Regenerated semantic import rows must use the
+   `standard_pv_evidence_v1` note contract.
 6. Draft mode performs a self-review using `rules/review/` and writes local
    `reviews/<beamline-or-pool>/SELF_REVIEW.md`.
 7. Exceptions are recorded under `exceptions/<scope>/` when current rules are

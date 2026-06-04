@@ -113,6 +113,49 @@ Do not write source-row `reviewNote` during agent conversion. `reviewNote` is
 reserved for human or workbench decision overlays under
 `database_pool/<pool_id>/decisions/`.
 
+### Standard PV Evidence Note Contract
+
+Rows generated or regenerated after this contract must set:
+
+```text
+metadata.noteContract: standard_pv_evidence_v1
+```
+
+For that contract, top-level `note` must use labeled sections so the evidence is
+reviewable and reproducible across agents:
+
+```text
+Source: ...
+HTML candidate: ...
+Chosen PV: ...
+Component changes: ...
+Mapping evidence: ...
+Uncertainty/Review required: ...
+Vocabulary: ...
+```
+
+The sections mean:
+
+- `Source`: source PV/token, stable source anchor, source line when available,
+  and any source label used to identify the row.
+- `HTML candidate`: the source-provided `area`, `dev`, `subdev`, `signal`,
+  `standardPv`, and HTML note/category before agent normalization.
+- `Chosen PV`: the final SEO_V3 components and rendered `standardPv`.
+- `Component changes`: every component changed from the HTML candidate to the
+  chosen PV, or `none` when no component changed.
+- `Mapping evidence`: every source-backed input used to choose the PV, including
+  source pattern parsing, family rule, source-index rule, and nearby
+  narrative/migration evidence when available. If a known narrative example was
+  not applied to sibling rows, state that limitation.
+- `Uncertainty/Review required`: fallback status, conflicts, missing source
+  evidence, withheld alternatives, unresolved physical meaning, or any rule gap.
+- `Vocabulary`: abbreviation review status for `section`, `port`, `area`,
+  `device`, and `subdevice`, including missing/candidate codes.
+
+The note may be concise, but it must carry all evidence that affected the
+rendered `standardPv`. Do not put evidence only in `metadata` and do not omit
+evidence merely because it is repeated across many rows.
+
 ## Row Status
 
 Rows produced from agent interpretation must not be silently approved.

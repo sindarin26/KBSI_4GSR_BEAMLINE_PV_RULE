@@ -61,6 +61,20 @@ source_rows_file:
         rule: agent-mediated rows must expose reviewer-facing source context,
           mapping assumptions, uncertainty, and vocabulary gaps in top-level
           note; metadata-only notes are insufficient
+      standard_pv_evidence_v1:
+        when: metadata.noteContract == standard_pv_evidence_v1
+        fields:
+          note: labeled evidence sections
+        required_note_sections:
+          - "Source:"
+          - "HTML candidate:"
+          - "Chosen PV:"
+          - "Component changes:"
+          - "Mapping evidence:"
+          - "Uncertainty/Review required:"
+          - "Vocabulary:"
+        rule: regenerated semantic imports must make the evidence used to render
+          standardPv visible in top-level note, not only in metadata
     disallowed:
       reviewNote: source rows must not carry reviewNote; human review comments
         belong in decision overlays
@@ -103,6 +117,11 @@ source_rows_file:
       optional:
         legacyRawId: string
       rule: sourceTrace.sourceId and sourceTrace.sourceAnchor must match row sourceId and sourceAnchor
+    metadata:
+      optional:
+        noteContract: string
+      note_contract_values:
+        - standard_pv_evidence_v1
 
 decision_rows_file:
   required:
