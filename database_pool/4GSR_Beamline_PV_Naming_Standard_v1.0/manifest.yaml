@@ -6,8 +6,10 @@ source_inputs:
   - inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/standard.md
   - inputs/4GSR_Beamline_PV_Naming_Standard_v1.0/4GSR_Beamline_PV_Naming_Standard_v1.0.html
 source_note: |
-  Reviewable semantic-import rows were generated from the copied 4GSR HTML
-  source on 2026-06-02. Rows are source-backed candidates and remain
-  reviewStatus: needs_input; they are not approved naming policy. HTML
-  structured candidates are preserved as metadata only. Vocabulary gaps such as
-  source port 10C remain review-required.
+  Reviewable semantic-import rows were regenerated from the copied 4GSR HTML
+  source on 2026-06-04 for abbreviation-evidence review. Rows are source-backed
+  candidates and remain reviewStatus: needs_input; they are not approved naming
+  policy. HTML structured candidates are preserved as metadata only. Rows use
+  metadata.noteContract: standard_pv_evidence_v1 and include component evidence
+  for future exact-code, meaning-aware, and pattern-aware abbreviation review.
+  Vocabulary gaps such as source port 10C and area SYS remain review-required.
