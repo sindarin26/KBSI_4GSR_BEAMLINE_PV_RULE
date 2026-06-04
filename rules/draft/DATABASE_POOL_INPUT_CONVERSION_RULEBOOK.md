@@ -89,6 +89,30 @@ Use `sourceTrace.sourceLabel` for the shortest source-backed label or phrase
 that identifies the original item, such as the source PV token, motor label,
 device name, or quoted equipment phrase.
 
+## Reviewer-Visible Row Notes
+
+Rows created by agent interpretation must include a non-empty top-level `note`.
+This note is the reviewer-visible summary shown by the web workbench and must
+not be replaced by metadata-only context.
+
+For `sourceTrace.sourceKind: "agent_input_conversion"`, `note` must summarize
+the information a reviewer needs without opening the raw metadata:
+
+- source description or source-provided note;
+- mapping method or normalization rule used by the agent;
+- source candidate PV when it differs from the generated `standardPv`;
+- uncertainty, conflict, fallback, or rule-gap signals;
+- abbreviation or vocabulary review requirements.
+
+Use `metadata` to preserve raw source candidates, structured input fields, and
+machine-oriented audit details. Metadata is not a substitute for the top-level
+`note` because the workbench does not use metadata as the reviewer-facing note
+column.
+
+Do not write source-row `reviewNote` during agent conversion. `reviewNote` is
+reserved for human or workbench decision overlays under
+`database_pool/<pool_id>/decisions/`.
+
 ## Row Status
 
 Rows produced from agent interpretation must not be silently approved.
@@ -110,9 +134,10 @@ review-required. Do not promote abbreviations to approved status merely because
 an agent inferred them.
 
 When a device, subdevice, or signal abbreviation is uncertain, keep the row
-reviewable and record the uncertainty in `note`, `metadata`, an exception, or a
-proposal. The row should expose the question instead of hiding it behind a
-plausible-looking abbreviation.
+reviewable and record reviewer-facing uncertainty in top-level `note`; preserve
+raw or structured evidence in `metadata`, an exception, or a proposal. The row
+should expose the question instead of hiding it behind a plausible-looking
+abbreviation.
 
 ## Ambiguity Handling
 

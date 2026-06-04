@@ -135,14 +135,32 @@ function loadPool(poolDir) {
 function validatePoolSourceRows(sourceRows) {
   const errors = [];
   for (const [index, row] of sourceRows.entries()) {
+    const label = `sourceRows[${index}]`;
     for (const field of ["uid", "rowId", "poolId", "sourceId", "sourceAnchor", "reviewStatus"]) {
-      if (!row[field]) errors.push(`sourceRows[${index}].${field} is required`);
+      if (!row[field]) errors.push(`${label}.${field} is required`);
     }
-    errors.push(...validateSourceTrace(row, `sourceRows[${index}]`));
+    errors.push(...validateSourceTrace(row, label));
+    errors.push(...validateReviewerVisibleNotes(row, label));
     if (!DURABLE_REVIEW_STATUSES.has(row.reviewStatus)) {
-      errors.push(`sourceRows[${index}] invalid reviewStatus: ${row.reviewStatus}`);
+      errors.push(`${label} invalid reviewStatus: ${row.reviewStatus}`);
     }
-    errors.push(...validateSourceRow(row, `sourceRows[${index}]`));
+    errors.push(...validateSourceRow(row, label));
+  }
+  return errors;
+}
+
+function validateReviewerVisibleNotes(row, label) {
+  const errors = [];
+  const trace = row.sourceTrace || {};
+  if (trace.sourceKind === "agent_input_conversion" && !stringValue(row.note)) {
+    const metadataNote = stringValue(row.metadata && row.metadata.htmlStructuredCandidate
+      ? row.metadata.htmlStructuredCandidate.note
+      : "");
+    const metadataHint = metadataNote ? " metadata note is not reviewer-visible" : "";
+    errors.push(`${label}.note is required for agent_input_conversion rows;${metadataHint}`);
+  }
+  if (stringValue(row.reviewNote)) {
+    errors.push(`${label}.reviewNote is reserved for decision overlays, not source rows`);
   }
   return errors;
 }
@@ -166,6 +184,10 @@ function validateSourceTrace(row, label) {
     errors.push(`${label}.sourceTrace.sourceAnchor must match sourceAnchor`);
   }
   return errors;
+}
+
+function stringValue(value) {
+  return value === undefined || value === null ? "" : String(value).trim();
 }
 
 function mergeRows(sourceRows, decisions) {

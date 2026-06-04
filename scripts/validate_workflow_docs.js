@@ -90,15 +90,21 @@ for (const [label, text] of [
 requireIncludes("ARCHITECTURE.md", architecture, "database_pool/<pool_id>/manifest.yaml");
 requireIncludes("ARCHITECTURE.md", architecture, "database_pool/abbreviations/registry.json");
 requireIncludes("ARCHITECTURE.md", architecture, "rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md");
+requireIncludes("ARCHITECTURE.md", architecture, "agent_input_conversion");
+requireIncludes("ARCHITECTURE.md", architecture, "reviewer-visible top-level `note`");
 requireIncludes("AGENTS.md", agents, "poolId");
 requireIncludes("AGENTS.md", agents, "uid");
 requireIncludes("AGENTS.md", agents, "rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md");
+requireIncludes("AGENTS.md", agents, "Metadata-only notes");
+requireIncludes("AGENTS.md", agents, "source-row `reviewNote` empty");
 requireIncludes("rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md", inputConversionRulebook, "agent_input_conversion");
 requireIncludes("rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md", inputConversionRulebook, "sourceTrace.sourceLine");
 requireIncludes("rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md", inputConversionRulebook, "reviewStatus");
 requireIncludes("rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md", inputConversionRulebook, "deterministic database-pool identity rule");
 requireIncludes("rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md", inputConversionRulebook, "section: BL");
 requireIncludes("rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md", inputConversionRulebook, "port: 09A");
+requireIncludes("rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md", inputConversionRulebook, "Reviewer-Visible Row Notes");
+requireIncludes("rules/draft/DATABASE_POOL_INPUT_CONVERSION_RULEBOOK.md", inputConversionRulebook, "metadata-only context");
 requireIncludes("README.md", readme, "scripts/review_server.js --database-pool BL10A --port 8212");
 requireIncludes("README.md", readme, "node scripts/import_database_pool.js --input inputs/BL10A --pool BL10A");
 requireIncludes("README.md", readme, "database_pool/abbreviations/registry.json");
@@ -117,6 +123,9 @@ requireIncludes("schemas/database_pool.seo_v3.yaml", dbSchema, "database_pool/ab
 requireIncludes("schemas/database_pool.seo_v3.yaml", dbSchema, "usageEvidence");
 requireIncludes("schemas/database_pool.seo_v3.yaml", dbSchema, "database_pool/<pool_id>/decisions/workbench.decisions.json");
 requireIncludes("schemas/database_pool.seo_v3.yaml", dbSchema, "abbreviation_registry: read_only");
+requireIncludes("schemas/database_pool.seo_v3.yaml", dbSchema, "conditional_required");
+requireIncludes("schemas/database_pool.seo_v3.yaml", dbSchema, "agent_input_conversion");
+requireIncludes("schemas/database_pool.seo_v3.yaml", dbSchema, "reviewNote: source rows must not carry reviewNote");
 
 if (/row `dataset` field intact/.test(agents)) {
   fail("AGENTS.md still instructs database-pool work to preserve the legacy dataset field");

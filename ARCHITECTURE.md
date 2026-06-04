@@ -146,6 +146,13 @@ decisions. They are not active naming policy until promoted into rulebooks,
 schemas, examples, or generated outputs through an explicit review/proposal
 step.
 
+Rows produced by agent interpretation (`sourceTrace.sourceKind:
+"agent_input_conversion"`) must carry a non-empty top-level `note` with
+reviewer-visible source context, mapping assumptions, uncertainty, and
+vocabulary gaps. Raw structured candidates may also be preserved in `metadata`,
+but metadata-only notes are not enough for workbench review. `reviewNote` is
+reserved for human decision overlays under `database_pool/<pool_id>/decisions/`.
+
 `database_pool/abbreviations/registry.json` is the source-of-truth file for
 SEO_V3 abbreviation review records. Each record carries explicit source,
 status, rationale, and usage evidence. Candidate records remain
@@ -225,7 +232,9 @@ node scripts/validate_database_pool.js
 4. Draft mode consults `rules/decisions/` only when active rules are ambiguous.
 5. Draft mode converts source material into SEO_V3 database-pool rows under
    `database_pool/<pool_id>/sources/`. Rows default to
-   `reviewStatus: "needs_input"`.
+   `reviewStatus: "needs_input"`. Agent-converted rows must include a
+   reviewer-visible top-level `note`; human review comments belong in decision
+   overlay `reviewNote`.
 6. Draft mode performs a self-review using `rules/review/` and writes local
    `reviews/<beamline-or-pool>/SELF_REVIEW.md`.
 7. Exceptions are recorded under `exceptions/<scope>/` when current rules are

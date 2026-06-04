@@ -54,6 +54,12 @@ Draft agents must:
 - Preserve `poolId`, `sourceId`, `sourceAnchor`, deterministic `uid`, and
   `sourceTrace.sourceKind` on every produced row.
 - Default new rows to `reviewStatus: "needs_input"`.
+- For `sourceTrace.sourceKind: "agent_input_conversion"`, populate a
+  non-empty top-level `note` with reviewer-visible source context, mapping
+  assumptions, uncertainty, conflicts, and vocabulary gaps. Metadata-only notes
+  are insufficient.
+- Leave source-row `reviewNote` empty; `reviewNote` is reserved for human or
+  workbench decision overlays.
 - Keep uncertain assumptions explicit in the output.
 - Prefer structured, repeatable output over prose-only summaries.
 - Run a self-review pass using `rules/review/` before finalizing.

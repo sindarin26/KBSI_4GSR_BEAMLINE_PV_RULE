@@ -53,6 +53,17 @@ source_rows_file:
       legacyRawId: string
       note: string
       metadata: object
+    conditional_required:
+      agent_input_conversion:
+        when: sourceTrace.sourceKind == agent_input_conversion
+        fields:
+          note: non_empty string
+        rule: agent-mediated rows must expose reviewer-facing source context,
+          mapping assumptions, uncertainty, and vocabulary gaps in top-level
+          note; metadata-only notes are insufficient
+    disallowed:
+      reviewNote: source rows must not carry reviewNote; human review comments
+        belong in decision overlays
     identity:
       uid: deterministic SHA1 prefix over poolId + sourceId + sourceAnchor
       rowId: should equal standardPv for current SEO_V3 rows
@@ -109,6 +120,8 @@ decision_rows_file:
       useAsExample: boolean
       exampleRole: string
     rule: decision uid overlays a source row uid; missing source rows merge as orphan
+    review_note_rule: reviewNote is a human/workbench decision-overlay field,
+      not an agent source-row field
 
 abbreviation_registry:
   path: database_pool/abbreviations/registry.json
