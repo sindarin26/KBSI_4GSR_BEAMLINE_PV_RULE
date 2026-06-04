@@ -654,7 +654,17 @@ const HTML = `<!doctype html>
       border-radius: 14px;
       background: white;
     }
-    table { width: 100%; min-width: 1880px; border-collapse: collapse; font-size: 13px; }
+    table {
+      width: 100%;
+      min-width: 2200px;
+      border-collapse: collapse;
+      font-size: 13px;
+      table-layout: fixed;
+    }
+    table[data-view="all"] { min-width: 2520px; }
+    table[data-view="queue"] { min-width: 2200px; }
+    table[data-view="attention"] { min-width: 2420px; }
+    table[data-view="accepted"] { min-width: 1580px; }
     th, td {
       padding: 9px 10px;
       border-bottom: 1px solid var(--line);
@@ -676,18 +686,50 @@ const HTML = `<!doctype html>
     td input, td select, td textarea { width: 100%; }
     td input { padding: 7px 8px; border-radius: 8px; }
     td select { padding: 7px 8px; border-radius: 8px; }
-    textarea { min-height: 54px; resize: vertical; padding: 7px 8px; border-radius: 8px; }
+    textarea {
+      min-height: 72px;
+      max-height: 120px;
+      overflow: auto;
+      resize: vertical;
+      padding: 7px 8px;
+      border-radius: 8px;
+      line-height: 1.35;
+    }
+    textarea:focus { max-height: 220px; }
     input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--primary); }
-    .seq { width: 72px; }
-    .dataset { width: 96px; }
-    .raw { width: 170px; }
-    .review { width: 88px; text-align: center; }
-    .status-col { width: 132px; }
-    .narrow { width: 92px; }
+    .seq { width: 56px; }
+    .dataset { width: 150px; }
+    .dataset .pill {
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      vertical-align: top;
+    }
+    .raw { width: 190px; }
+    .review { width: 72px; text-align: center; }
+    .status-col { width: 128px; }
+    .narrow { width: 78px; }
     .signal { width: 150px; }
-    .pv { width: 310px; }
-    .note { width: 280px; }
-    .source { width: 260px; }
+    .pv { width: 430px; }
+    .pv input {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      white-space: nowrap;
+    }
+    .note { width: 360px; }
+    .review-note { width: 300px; }
+    .source { width: 220px; }
+    .issues { width: 220px; }
+    .issue-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      align-items: flex-start;
+    }
+    .issues .pill {
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
     .pill {
       display: inline-block;
       border-radius: 999px;
@@ -703,6 +745,14 @@ const HTML = `<!doctype html>
     .pill.warn { background: #fff7ed; color: var(--warn); border-color: #fed7aa; }
     .hidden { display: none !important; }
     .trace { color: var(--muted); font-size: 12px; }
+    .trace strong,
+    .trace code,
+    .trace span {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
     .row-exception td { background: #fffaf0; }
     .row-approved td, .row-accepted td { background: #f8fffb; }
     .row-needs_input td { background: #fff; }
@@ -797,26 +847,9 @@ const HTML = `<!doctype html>
       <div id="paths" class="paths"></div>
 
       <div class="table-wrap" id="tableWrap">
-        <table>
+        <table id="reviewTable" data-view="all">
           <thead>
-            <tr>
-              <th class="seq">Seq</th>
-              <th class="dataset">Pool</th>
-              <th class="raw">UID / Trace</th>
-              <th class="status-col">Status</th>
-              <th class="review">Accept</th>
-              <th class="review">Approve</th>
-              <th class="narrow">Section</th>
-              <th class="narrow">Port</th>
-              <th class="narrow">Area</th>
-              <th class="narrow">DEV</th>
-              <th class="narrow">SUBDEV</th>
-              <th class="signal">Signal</th>
-              <th class="pv">Standard PV</th>
-              <th class="source">Source</th>
-              <th class="note">Note</th>
-              <th class="note">Review Note</th>
-            </tr>
+            <tr id="headerRow"></tr>
           </thead>
           <tbody id="rows"></tbody>
         </table>
@@ -832,9 +865,33 @@ const HTML = `<!doctype html>
     let hasLoadedState = false;
     const pageSize = 250;
     let renderQueued = false;
-    const editableFields = ["section", "port", "area", "dev", "subdev", "signal", "standardPv", "source", "note", "reviewNote"];
     const acceptedStatuses = ["accepted", "approved"];
     const filterIds = ["datasetFilter", "statusFilter", "portFilter", "areaFilter", "devFilter", "search"];
+    const columnDefinitions = {
+      seq: { label: "Seq", className: "seq", render: seqCell },
+      dataset: { label: "Pool", className: "dataset", render: datasetCell },
+      uid: { label: "UID / Trace", className: "raw", render: uidCell },
+      status: { label: "Status", className: "status-col", render: statusCell },
+      accepted: { label: "Accept", className: "review", render: function(row) { return checkCell(row, "accepted"); } },
+      approved: { label: "Approve", className: "review", render: function(row) { return checkCell(row, "approved"); } },
+      issues: { label: "Issues", className: "issues", render: issuesCell },
+      section: { label: "Section", className: "narrow", render: function(row) { return inputCell(row, "section"); } },
+      port: { label: "Port", className: "narrow", render: function(row) { return inputCell(row, "port"); } },
+      area: { label: "Area", className: "narrow", render: function(row) { return inputCell(row, "area"); } },
+      dev: { label: "DEV", className: "narrow", render: function(row) { return inputCell(row, "dev"); } },
+      subdev: { label: "SUBDEV", className: "narrow", render: function(row) { return inputCell(row, "subdev"); } },
+      signal: { label: "Signal", className: "signal", render: function(row) { return inputCell(row, "signal"); } },
+      standardPv: { label: "Standard PV", className: "pv", render: function(row) { return inputCell(row, "standardPv"); } },
+      source: { label: "Source", className: "source", render: function(row) { return inputCell(row, "source"); } },
+      note: { label: "Note", className: "note", render: function(row) { return inputCell(row, "note"); } },
+      reviewNote: { label: "Review Note", className: "review-note", render: function(row) { return inputCell(row, "reviewNote"); } },
+    };
+    const viewColumns = {
+      all: ["seq", "dataset", "uid", "status", "accepted", "approved", "section", "port", "area", "dev", "subdev", "signal", "standardPv", "source", "note", "reviewNote"],
+      queue: ["seq", "status", "accepted", "approved", "section", "port", "area", "dev", "subdev", "signal", "standardPv", "source", "note", "reviewNote"],
+      attention: ["seq", "status", "issues", "accepted", "approved", "section", "port", "area", "dev", "subdev", "signal", "standardPv", "source", "note", "reviewNote"],
+      accepted: ["seq", "status", "standardPv", "source", "note", "reviewNote"],
+    };
 
     document.getElementById("reload").addEventListener("click", function() { loadState(); });
     document.getElementById("reset").addEventListener("click", resetFilters);
@@ -1010,6 +1067,8 @@ const HTML = `<!doctype html>
 
     function renderRows() {
       const tbody = document.getElementById("rows");
+      const columns = currentColumns();
+      renderHeader(columns);
       const visible = visibleRows();
       const pageCount = Math.max(1, Math.ceil(visible.length / pageSize));
       if (pageIndex >= pageCount) pageIndex = pageCount - 1;
@@ -1018,10 +1077,29 @@ const HTML = `<!doctype html>
       tbody.innerHTML = "";
       const fragment = document.createDocumentFragment();
       pageRows.forEach(function(row) {
-        fragment.appendChild(renderRow(row));
+        fragment.appendChild(renderRow(row, columns));
       });
       tbody.appendChild(fragment);
       updateStats(visible, pageRows, start, pageCount);
+    }
+
+    function currentColumns() {
+      return (viewColumns[activeView] || viewColumns.all).map(function(key) {
+        return columnDefinitions[key];
+      });
+    }
+
+    function renderHeader(columns) {
+      const table = document.getElementById("reviewTable");
+      const headerRow = document.getElementById("headerRow");
+      table.dataset.view = activeView;
+      headerRow.innerHTML = "";
+      columns.forEach(function(column) {
+        const th = document.createElement("th");
+        th.className = column.className || "";
+        th.textContent = column.label;
+        headerRow.appendChild(th);
+      });
     }
 
     function updateStats(visible, pageRows, start, pageCount) {
@@ -1046,17 +1124,11 @@ const HTML = `<!doctype html>
         formatNumber(rows.length) + "</strong>. Accepted/approved: <strong>" + formatNumber(accepted) + "</strong>.";
     }
 
-    function renderRow(row) {
+    function renderRow(row, columns) {
       const tr = document.createElement("tr");
       tr.className = "row-" + (row.reviewStatus || "").replace(/[^a-z0-9_]/gi, "") + (row.orphan ? " row-orphan" : "");
-      tr.appendChild(seqCell(row));
-      tr.appendChild(datasetCell(row));
-      tr.appendChild(uidCell(row));
-      tr.appendChild(statusCell(row));
-      tr.appendChild(checkCell(row, "accepted"));
-      tr.appendChild(checkCell(row, "approved"));
-      editableFields.forEach(function(field) {
-        tr.appendChild(inputCell(row, field));
+      columns.forEach(function(column) {
+        tr.appendChild(column.render(row));
       });
       return tr;
     }
@@ -1071,6 +1143,7 @@ const HTML = `<!doctype html>
     function datasetCell(row) {
       const td = document.createElement("td");
       td.className = "dataset";
+      td.title = row.dataset || "";
       td.innerHTML = "<span class=\\"pill good\\">" + escapeHtml(row.dataset) + "</span>";
       return td;
     }
@@ -1078,14 +1151,61 @@ const HTML = `<!doctype html>
     function uidCell(row) {
       const td = document.createElement("td");
       td.className = "raw trace";
+      const uid = row.uid || row.rawId || "";
       const exceptions = (row.exceptionIds || []).join(", ");
+      const traceSummary = [
+        row.sourceAnchor || "",
+        row.sourceLine ? "line " + row.sourceLine : "",
+      ].filter(Boolean).join(" · ");
+      td.title = [
+        uid,
+        row.sourceId || "",
+        row.sourceAnchor || "",
+        row.sourceLine ? "line " + row.sourceLine : "",
+        row.sourceLabel || "",
+        exceptions ? "exceptions: " + exceptions : "",
+      ].filter(Boolean).join("\\n");
       td.innerHTML =
-        "<strong>" + escapeHtml(row.uid || row.rawId) + "</strong><br>" +
-        "<code>" + escapeHtml(row.sourceId || "") + "</code><br>" +
-        escapeHtml(row.sourceAnchor || "") +
-        (row.sourceLabel ? "<br>" + escapeHtml(row.sourceLabel) : "") +
-        (exceptions ? "<br><span class=\\"pill warn\\">" + escapeHtml(exceptions) + "</span>" : "") +
-        (row.orphan ? "<br><span class=\\"pill orphan\\">orphan</span>" : "");
+        "<strong>" + escapeHtml(compactMiddle(uid, 24)) + "</strong>" +
+        (traceSummary ? "<code>" + escapeHtml(traceSummary) + "</code>" : "") +
+        (row.sourceLabel ? "<span>" + escapeHtml(compactMiddle(row.sourceLabel, 42)) + "</span>" : "") +
+        (exceptions ? "<span class=\\"pill warn\\">" + escapeHtml(exceptions) + "</span>" : "") +
+        (row.orphan ? "<span class=\\"pill orphan\\">orphan</span>" : "");
+      return td;
+    }
+
+    function issuesCell(row) {
+      const td = document.createElement("td");
+      td.className = "issues";
+      const issues = row.computed && Array.isArray(row.computed.abbreviationIssues) ? row.computed.abbreviationIssues : [];
+      if (issues.length === 0 && !row.orphan) {
+        td.textContent = "";
+        return td;
+      }
+      const labels = issues.map(function(issue) {
+        return [
+          issue.field || issue.kind || "issue",
+          issue.code || "",
+          issue.status || "",
+        ].filter(Boolean).join(":");
+      });
+      td.title = issues.map(function(issue) {
+        return [
+          issue.field || issue.kind || "issue",
+          issue.code || "",
+          issue.status || "",
+          issue.reason || "",
+        ].filter(Boolean).join(" | ");
+      }).join("\\n");
+      const visibleLabels = labels.slice(0, 5);
+      td.innerHTML =
+        "<div class=\\"issue-list\\">" +
+        (row.orphan ? "<span class=\\"pill orphan\\">orphan</span>" : "") +
+        visibleLabels.map(function(label) {
+          return "<span class=\\"pill warn\\">" + escapeHtml(label) + "</span>";
+        }).join("") +
+        (labels.length > visibleLabels.length ? "<span class=\\"pill warn\\">+" + escapeHtml(labels.length - visibleLabels.length) + "</span>" : "") +
+        "</div>";
       return td;
     }
 
@@ -1132,11 +1252,13 @@ const HTML = `<!doctype html>
       td.className =
         field === "standardPv" ? "pv" :
         field === "source" ? "source" :
-        ["note", "reviewNote"].includes(field) ? "note" :
+        field === "note" ? "note" :
+        field === "reviewNote" ? "review-note" :
         field === "signal" ? "signal" : "narrow";
       const input = ["note", "reviewNote"].includes(field) ? document.createElement("textarea") : document.createElement("input");
       input.dataset.field = field;
       input.value = row[field] || "";
+      input.title = row[field] || "";
       input.readOnly = field === "standardPv";
       input.addEventListener("input", function() {
         row[field] = input.value;
@@ -1152,6 +1274,13 @@ const HTML = `<!doctype html>
       });
       td.appendChild(input);
       return td;
+    }
+
+    function compactMiddle(value, maxLength) {
+      const text = String(value || "");
+      if (text.length <= maxLength) return text;
+      const edge = Math.max(4, Math.floor((maxLength - 3) / 2));
+      return text.slice(0, edge) + "..." + text.slice(text.length - edge);
     }
 
     function renderPv(row) {
