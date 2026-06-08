@@ -58,3 +58,25 @@ registry record or pattern is explicitly approved.
 
 Future meaning-aware and pattern-aware resolution is tracked by
 `proposals/rule_changes/PROP-0002-abbreviation-issue-resolution-contract.md`.
+
+During the abbreviation issue engine pilot, materialized abbreviation issues
+remain computed review data. They must include stable resolution keys and must
+not be copied into source rows as durable data. The pilot issue modes are:
+
+- exact code: `abbreviation:<scope>:<kind>:<code>`;
+- meaning-aware exact code:
+  `abbreviation:<scope>:<kind>:<code>:<normalizedSourceTerm>`;
+- explicit pattern:
+  `abbreviation-pattern:<scope>:<kind>:<codePattern>:<normalizedMeaning>`;
+- conflict: `abbreviation-conflict:<scope>:<kind>:<code>`;
+- row-local missing component:
+  `abbreviation-missing-component:<poolId>:<uid>:<field>`.
+
+Pattern syntax is not regex syntax. `#` matches exactly one ASCII digit,
+matching is full-string only, and `baseCode` must equal the literal prefix
+before the first `#`. Exact base-code approval, such as `SLIT`, must not clear
+instance codes such as `SLIT01`; an explicit approved pattern is required.
+
+These pilot rules support review-server computation only. They do not approve
+PV rows, do not approve registry entries, and do not promote `PROP-0002` into
+active naming policy without owner approval.

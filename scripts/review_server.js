@@ -10,6 +10,7 @@ const {
 } = require("./database_pool_pilot/database_pool");
 const {
   blockingAbbreviationIssues,
+  groupAbbreviationIssues,
   loadRegistry: loadAbbreviationRegistry,
   resolveRegistryPath,
   validateRegistry: validateAbbreviationRegistry,
@@ -32,6 +33,7 @@ const host = cli.host;
 const abbreviationRegistryPath = resolveRegistryPath(repoRoot);
 let cachedAbbreviationRegistry = null;
 let cachedRows = [];
+let cachedAbbreviationIssueGroups = [];
 let cachedLoadedAt = "";
 
 const REVIEW_STATUSES = [...DURABLE_REVIEW_STATUSES];
@@ -126,7 +128,9 @@ function sendHtml(res) {
 }
 
 function reloadStateCache() {
-  cachedRows = buildDatabasePoolRows();
+  const state = buildDatabasePoolState();
+  cachedRows = state.rows;
+  cachedAbbreviationIssueGroups = state.abbreviationIssueGroups;
   cachedLoadedAt = new Date().toISOString();
 }
 
@@ -140,6 +144,7 @@ function sendState(res) {
       loadedAt: cachedLoadedAt,
       paths: databasePoolPaths(),
       abbreviationRegistry: abbreviationRegistrySummary(),
+      abbreviationIssueGroups: cachedAbbreviationIssueGroups,
       reviewStatuses: REVIEW_STATUSES,
       rows: cachedRows,
     });
@@ -275,8 +280,9 @@ function readDatabasePoolDecisionFile(file, poolId) {
   };
 }
 
-function buildDatabasePoolRows() {
+function buildDatabasePoolState() {
   const rows = [];
+  const sourceRowsForIssues = [];
   const registry = getAbbreviationRegistry();
   for (const poolId of databasePoolIds) {
     const poolDir = rel("database_pool", poolId);
@@ -284,10 +290,14 @@ function buildDatabasePoolRows() {
     const decisions = loadDecisionRowsWithSources(pool.decisionFiles, poolId);
     const merged = mergeRows(pool.sourceRows, decisions);
     for (const row of merged.rows) {
+      if (!row.orphan) sourceRowsForIssues.push(row);
       rows.push(normalizeDatabasePoolUiRow(row, rows.length, poolId, registry));
     }
   }
-  return rows;
+  return {
+    rows,
+    abbreviationIssueGroups: groupAbbreviationIssues(sourceRowsForIssues, registry),
+  };
 }
 
 function loadDecisionRowsWithSources(files, expectedPoolId) {
@@ -328,13 +338,8 @@ function orderDecisionFilesByPrecedence(files) {
 function normalizeDatabasePoolUiRow(row, index, fallbackPoolId, registry) {
   const trace = row.sourceTrace || {};
   const poolId = row.sourceRow && row.sourceRow.poolId ? row.sourceRow.poolId : row.poolId || fallbackPoolId;
-  const abbreviationIssues = row.orphan ? [] : blockingAbbreviationIssues(row, registry).map((issue) => ({
-    field: issue.field,
-    kind: issue.kind,
-    code: issue.code,
-    status: issue.status,
-    reason: issue.reason,
-  }));
+  const abbreviationIssues = row.orphan ? [] : blockingAbbreviationIssues(row, registry).map(normalizeAbbreviationIssueForApi);
+  const blockingAbbreviationIssueCount = abbreviationIssues.filter((issue) => issue.blocking !== false).length;
   return {
     seq: index + 1,
     uid: stringValue(row.uid),
@@ -367,11 +372,37 @@ function normalizeDatabasePoolUiRow(row, index, fallbackPoolId, registry) {
     computed: {
       ...(row.computed || {}),
       abbreviationIssues,
+      abbreviationApprovalEligibility: {
+        hasBlockingIssues: blockingAbbreviationIssueCount > 0,
+        blockingIssueCount: blockingAbbreviationIssueCount,
+        canApproveWithoutAbbreviationReview: blockingAbbreviationIssueCount === 0,
+      },
     },
     egu: stringValue(row.egu),
     ioc: stringValue(row.ioc),
     updatedAt: new Date().toISOString(),
   };
+}
+
+function normalizeAbbreviationIssueForApi(issue) {
+  const apiIssue = {
+    issueType: issue.issueType || "abbreviation",
+    field: issue.field,
+    kind: issue.kind,
+    code: issue.code,
+    status: issue.status,
+    blocking: issue.blocking !== false,
+    reason: issue.reason || "",
+    resolutionMode: issue.resolutionMode || "",
+    resolutionKey: issue.resolutionKey || "",
+  };
+  for (const key of ["sourceTerm", "sourceAnchor", "matchedPattern"]) {
+    if (issue[key]) apiIssue[key] = issue[key];
+  }
+  if (Array.isArray(issue.candidateMeanings) && issue.candidateMeanings.length > 0) {
+    apiIssue.candidateMeanings = [...issue.candidateMeanings];
+  }
+  return apiIssue;
 }
 
 function getAbbreviationRegistry() {

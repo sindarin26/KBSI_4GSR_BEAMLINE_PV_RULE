@@ -18,6 +18,7 @@ const DURABLE_REVIEW_STATUSES = new Set([
 ]);
 
 const COMPLETE_REVIEW_STATUSES = new Set(["accepted", "approved"]);
+const ABBREVIATION_REVIEW_FIELDS = ["section", "port", "area", "device", "subdevice"];
 
 function stableUid({ poolId, sourceId, sourceAnchor }) {
   const missing = [];
@@ -163,6 +164,7 @@ function validateReviewerVisibleNotes(row, label) {
     errors.push(`${label}.reviewNote is reserved for decision overlays, not source rows`);
   }
   errors.push(...validateNoteContract(row, label));
+  errors.push(...validateComponentEvidence(row, label));
   return errors;
 }
 
@@ -212,6 +214,84 @@ function validateNoteContract(row, label) {
   return errors;
 }
 
+function validateComponentEvidence(row, label) {
+  const errors = [];
+  const contract = stringValue(row.metadata && row.metadata.noteContract);
+  if (contract !== "standard_pv_evidence_v1") return errors;
+
+  const evidence = row.metadata && row.metadata.componentEvidence;
+  if (!evidence || typeof evidence !== "object" || Array.isArray(evidence)) {
+    return [`${label}.metadata.componentEvidence is required for standard_pv_evidence_v1`];
+  }
+
+  for (const field of ABBREVIATION_REVIEW_FIELDS) {
+    const fieldEvidence = evidence[field];
+    const fieldLabel = `${label}.metadata.componentEvidence.${field}`;
+    if (!fieldEvidence || typeof fieldEvidence !== "object" || Array.isArray(fieldEvidence)) {
+      errors.push(`${fieldLabel} is required`);
+      continue;
+    }
+    const candidates = Array.isArray(fieldEvidence.exactCodeCandidates)
+      ? fieldEvidence.exactCodeCandidates
+      : [];
+    if (candidates.length === 0) {
+      errors.push(`${fieldLabel}.exactCodeCandidates must be a non-empty array`);
+    }
+    for (const [candidateIndex, candidate] of candidates.entries()) {
+      const candidateLabel = `${fieldLabel}.exactCodeCandidates[${candidateIndex}]`;
+      if (!candidate || typeof candidate !== "object" || Array.isArray(candidate)) {
+        errors.push(`${candidateLabel} must be an object`);
+        continue;
+      }
+      if (candidate.code !== row[field]) {
+        errors.push(`${candidateLabel}.code must match row.${field}: ${row[field]}`);
+      }
+      if (!nonEmptyStringArray(candidate.sourceTerms)) {
+        errors.push(`${candidateLabel}.sourceTerms must be a non-empty string array`);
+      }
+      if (!nonEmptyStringArray(candidate.resolutionKeyCandidates)) {
+        errors.push(`${candidateLabel}.resolutionKeyCandidates must be a non-empty string array`);
+      }
+      if (!stringValue(candidate.sourceAnchor)) {
+        errors.push(`${candidateLabel}.sourceAnchor is required`);
+      }
+      errors.push(...validatePatternCandidates(candidate.patternCandidates, `${candidateLabel}.patternCandidates`));
+    }
+    errors.push(...validatePatternCandidates(fieldEvidence.patternCandidates, `${fieldLabel}.patternCandidates`));
+    if (field === "subdevice" && /^[A-Z]+\d+$/.test(stringValue(row.subdevice))) {
+      const patterns = [
+        ...(Array.isArray(fieldEvidence.patternCandidates) ? fieldEvidence.patternCandidates : []),
+        ...candidates.flatMap((candidate) =>
+          Array.isArray(candidate.patternCandidates) ? candidate.patternCandidates : [],
+        ),
+      ];
+      if (patterns.length === 0) {
+        errors.push(`${fieldLabel} must include patternCandidates for instance subdevice ${row.subdevice}`);
+      }
+    }
+  }
+  return errors;
+}
+
+function validatePatternCandidates(patterns, label) {
+  const errors = [];
+  if (patterns === undefined) return errors;
+  if (!Array.isArray(patterns)) return [`${label} must be an array when present`];
+  for (const [index, pattern] of patterns.entries()) {
+    if (!stringValue(pattern)) {
+      errors.push(`${label}[${index}] must be a non-empty string`);
+      continue;
+    }
+    if (!/^[A-Z0-9#]+$/.test(pattern)) {
+      errors.push(`${label}[${index}] may only contain A-Z, 0-9, and #`);
+    }
+    if (!pattern.includes("#")) {
+      errors.push(`${label}[${index}] must include at least one # digit token`);
+    }
+  }
+  return errors;
+}
+
 function validateSourceTrace(row, label) {
   const errors = [];
   const trace = row.sourceTrace;
@@ -235,6 +315,10 @@ function validateSourceTrace(row, label) {
 
 function stringValue(value) {
   return value === undefined || value === null ? "" : String(value).trim();
+}
+
+function nonEmptyStringArray(value) {
+  return Array.isArray(value) && value.length > 0 && value.every((item) => Boolean(stringValue(item)));
 }
 
 function mergeRows(sourceRows, decisions) {
@@ -305,6 +389,7 @@ function updateDecision(decisions, uid, patch) {
 }
 
 module.exports = {
+  ABBREVIATION_REVIEW_FIELDS,
   COMPLETE_REVIEW_STATUSES,
   DURABLE_REVIEW_STATUSES,
   loadPool,

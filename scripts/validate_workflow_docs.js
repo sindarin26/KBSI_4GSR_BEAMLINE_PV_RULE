@@ -133,6 +133,12 @@ requireIncludes("schemas/database_pool.seo_v3.yaml", dbSchema, "agent_input_conv
 requireIncludes("schemas/database_pool.seo_v3.yaml", dbSchema, "reviewNote: source rows must not carry reviewNote");
 requireIncludes("schemas/database_pool.seo_v3.yaml", dbSchema, "standard_pv_evidence_v1");
 requireIncludes("schemas/database_pool.seo_v3.yaml", dbSchema, "required_note_sections");
+requireIncludes("schemas/database_pool.seo_v3.yaml", dbSchema, "componentEvidence");
+requireIncludes("schemas/database_pool.seo_v3.yaml", dbSchema, "codePattern");
+requireIncludes("schemas/database_pool.seo_v3.yaml", dbSchema, "abbreviation-conflict:<scope>:<kind>:<code>");
+requireIncludes("schemas/database_pool.seo_v3.yaml", dbSchema, "abbreviation-missing-component:<poolId>:<uid>:<field>");
+requireIncludes("database_pool/abbreviations/README.md", read("database_pool/abbreviations/README.md"), "codePattern");
+requireIncludes("rules/review/PV_REVIEW_RULEBOOK.md", read("rules/review/PV_REVIEW_RULEBOOK.md"), "abbreviation-conflict:<scope>:<kind>:<code>");
 
 if (/row `dataset` field intact/.test(agents)) {
   fail("AGENTS.md still instructs database-pool work to preserve the legacy dataset field");

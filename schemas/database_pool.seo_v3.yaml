@@ -120,8 +120,29 @@ source_rows_file:
     metadata:
       optional:
         noteContract: string
+        componentEvidence: object
       note_contract_values:
         - standard_pv_evidence_v1
+      componentEvidence:
+        status: required_for_standard_pv_evidence_v1
+        fields:
+          - section
+          - port
+          - area
+          - device
+          - subdevice
+        field_contract:
+          exactCodeCandidates: non_empty_list
+          candidate:
+            code: must_match_rendered_row_component
+            sourceTerms: non_empty_list_or_explicit_code_only_rationale
+            resolutionKeyCandidates: non_empty_list
+            sourceAnchor: required
+            patternCandidates: optional_list
+        pattern_candidate_rule:
+          applies_to: numbered subdevice instance codes
+          pattern_syntax: codePattern is not regex; # matches one ASCII digit;
+            matching is full-string only
 
 decision_rows_file:
   required:
@@ -149,7 +170,6 @@ abbreviation_registry:
     entries: list
   entry:
     required:
-      code: string
       kind: string
       meaning: string
       status: string
@@ -157,6 +177,21 @@ abbreviation_registry:
       source: object
       rationale: string
       usageEvidence: object
+    exact_entry:
+      required:
+        code: string
+      disallowed:
+        codePattern: exact entries must not also define a pattern
+    pattern_entry:
+      status: pilot_contract_for_computed_issue_engine
+      required:
+        codePattern: string
+        baseCode: string
+      disallowed:
+        code: pattern entries must not also define an exact code
+      rule: codePattern is not regex; # matches one ASCII digit; matching is
+        full-string only; baseCode must equal the literal prefix before the
+        first #
     source:
       required:
         sourceId: string
@@ -192,9 +227,10 @@ abbreviation_registry:
       markdown_subdevices: candidate
       html_db_only_codes: candidate
   derived_issue_contract:
-    status: proposed
+    status: proposed_pilot_computed_only
     proposal: proposals/rule_changes/PROP-0002-abbreviation-issue-resolution-contract.md
     durable_storage: computed_only
+    policy_scope: not active naming policy unless explicitly owner-promoted
     abbreviation_issue_kinds:
       - section
       - port
@@ -203,9 +239,33 @@ abbreviation_registry:
       - subdevice
     signal_policy: separate_issue_class
     exact_resolution_key: abbreviation:<scope>:<kind>:<code>
-    meaning_resolution_key: abbreviation:<scope>:<kind>:<code>:<sourceTerm>
-    pattern_resolution_key: abbreviation-pattern:<scope>:<kind>:<codePattern>:<meaning>
+    meaning_resolution_key: abbreviation:<scope>:<kind>:<code>:<normalizedSourceTerm>
+    pattern_resolution_key: abbreviation-pattern:<scope>:<kind>:<codePattern>:<normalizedMeaning>
+    conflict_resolution_key: abbreviation-conflict:<scope>:<kind>:<code>
+    missing_component_key: abbreviation-missing-component:<poolId>:<uid>:<field>
+    issue_shape:
+      required:
+        - issueType
+        - field
+        - kind
+        - code
+        - status
+        - blocking
+        - resolutionKey
+      optional:
+        - sourceTerm
+        - sourceAnchor
+        - candidateMeanings
+        - matchedPattern
+        - resolutionMode
+    resolution_modes:
+      - exact
+      - meaning
+      - pattern
+      - conflict
+      - missing_component
     blocking_statuses:
+      - missing_component
       - missing_registry_entry
       - candidate
       - deprecated

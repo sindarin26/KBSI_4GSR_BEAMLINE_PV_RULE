@@ -38,18 +38,43 @@ abbreviation:<scope>:<kind>:<code>
 Meaning-aware review should prefer:
 
 ```text
-abbreviation:<scope>:<kind>:<code>:<sourceTerm>
+abbreviation:<scope>:<kind>:<code>:<normalizedSourceTerm>
 ```
 
 Pattern-derived codes such as `SLIT01` should use an explicit pattern approval
 before the pattern clears issues:
 
 ```text
-abbreviation-pattern:<scope>:<kind>:SLIT##:<meaning>
+abbreviation-pattern:<scope>:<kind>:SLIT##:<normalizedMeaning>
 ```
 
 Approving a base code such as `SLIT` must not silently approve every numbered
 instance such as `SLIT01` unless the registry also records an approved pattern.
+
+Pattern syntax is intentionally narrow for the pilot issue engine:
+
+- `codePattern` is not a regular expression;
+- `#` matches exactly one ASCII digit;
+- matching is full-string only;
+- `baseCode` must equal the literal prefix before the first `#`.
+
+Durable pattern entries, when explicitly approved in a future goal, must carry
+the same review evidence fields as exact entries: `source`, `rationale`, and
+`usageEvidence`. Minimal pattern records are acceptable only in in-memory test
+fixtures.
+
+Meaning conflicts use non-clearable derived keys such as:
+
+```text
+abbreviation-conflict:<scope>:<kind>:<code>
+```
+
+Missing components are row-local correction issues, not registry-confirmation
+issues:
+
+```text
+abbreviation-missing-component:<poolId>:<uid>:<field>
+```
 
 This direction is tracked by
 `proposals/rule_changes/PROP-0002-abbreviation-issue-resolution-contract.md`.
