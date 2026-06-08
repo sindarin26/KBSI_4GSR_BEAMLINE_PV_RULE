@@ -1,0 +1,12 @@
+pool_id: BL9ASIM
+title: BL9ASIM Semantic Import Pool
+status: pilot
+schema_version: database_pool_seo_v3
+source_inputs:
+  - inputs/BL9ASIM/
+source_note: |
+  Reviewable semantic-import rows generated from BL9ASIM EH equipment,
+  UR3e, Eurotherm, and Rayonix/marCCD source inventories. Rows remain
+  reviewStatus: needs_input and are not approved naming policy. Third-party
+  EPICS suffixes are preserved in metadata and wrapped into SEO_V3-compatible
+  candidate signal tokens only for review.

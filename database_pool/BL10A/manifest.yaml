@@ -1,11 +1,13 @@
 pool_id: BL10A
-title: BL10A Beamline Database Pool
-status: empty
+title: BL10A Semantic Import Pool
+status: pilot
 schema_version: database_pool_seo_v3
 source_inputs:
   - inputs/BL10A/
 source_note: |
-  BL10A pool. Source material under inputs/BL10A/ awaits conversion
-  (mechanical importer or agent conversion) into source-backed rows.
-  Sources and decisions were reset on 2026-06-02 during the SEO_V3
-  hard-reset alignment.
+  Reviewable semantic-import rows generated from BL10A source notes.
+  Rows are source-backed candidates and remain reviewStatus: needs_input;
+  they are not approved naming policy. Rows use metadata.noteContract:
+  standard_pv_evidence_v1 and include component evidence for abbreviation
+  issue grouping. Mechanical importer output was used only as advisory
+  inventory evidence and was not promoted directly.
